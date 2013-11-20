@@ -20,8 +20,5 @@ WHERE TO BEGIN
 First, you need to include the JAR file (and its dependencies) 
 into your lib (and build path).
 
-Basically, your application may use the service classes 
-(GlobeOAuthService, PaymentService, and SmsService).
-
-Also, kindly refer to the documentation.
-
+For an idea on how to use the classes (OAuth, SMS, and Payment), 
+kindly check out the tests and the documentation.
