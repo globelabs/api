@@ -12,13 +12,14 @@ module.exports = function() {
     }, p = c.prototype;
 
     /* Static Properties
-    -------------------------------*/
+     -------------------------------*/
     /* Private Properties
-    -------------------------------*/
+     -------------------------------*/
     var http = require('http');
+    var querystring = require('querystring');
 
     /* Construct
-    -------------------------------*/
+     -------------------------------*/
     /**
      * Load defaults.
      * 
@@ -49,7 +50,7 @@ module.exports = function() {
     };
 
     /* Public Methods
-    -------------------------------*/
+     -------------------------------*/
     /**
      * Sets the logger.
      * 
@@ -61,7 +62,7 @@ module.exports = function() {
 
         return this;
     };
-    
+
     /**
      * Gets the logger.
      * 
@@ -223,7 +224,7 @@ module.exports = function() {
     };
 
     /* Private Methods
-    -------------------------------*/
+     -------------------------------*/
     /**
      * Gets the response.
      * 
@@ -322,18 +323,26 @@ module.exports = function() {
 
             // event on end of response
             response.on('end', function() {
-                // check if content-type is application/json
-                if (response.headers['content-type']
-                        && response.headers['content-type'].indexOf('application/json') === 0) {
-                    try {
-                        buffer = JSON.parse(buffer); // parse buffer to a JSON Object
-                    } catch (err) {
-                        // TODO your control
+                // check if is has content-type
+                if (response.headers['content-type']) {
+                    // if content-type is using json
+                    if (response.headers['content-type'].indexOf('application/json') === 0) {
+                        try {
+                            buffer = JSON.parse(buffer); // parse buffer to a JSON Object
+                        } catch (err) {
+                            response.error = err.stack;
+                        }
+                    } else if (response.headers['content-type'].
+                            indexOf('application/x-www-form-urlencoded') === 0) { // if content-type is using form
+                        buffer = querystring.parse(buffer);
                     }
                 }
 
+                // set response.body
+                response.body = buffer;
+
                 // fire the request
-                callback(request, response, buffer);
+                callback(request, response);
             });
         });
 
@@ -366,7 +375,7 @@ module.exports = function() {
     };
 
     /* Adaptor
-    -------------------------------*/
+     -------------------------------*/
     var module = function(host, port) {
         return new c(host, port);
     };
