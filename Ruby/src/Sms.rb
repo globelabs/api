@@ -14,12 +14,12 @@ class Sms
         @@shortCode   = shortCode
     end
 	
-	# Catch and Format the incoming SMS
+    # Catch and Format the incoming SMS
     def inbound(request)
         return JSON.parse request
     end
 	
-	# Sends an SMS to subscriber
+    # Sends an SMS to subscriber
     def outbound(subscriber, message)
         #POST Parameters
         @@params = {
@@ -30,7 +30,7 @@ class Sms
         return self
     end
 	
-	# Sends an SMS
+    # Sends an SMS
     #
     # * Sets the string query for the parameters
     # * Sends data using POST METHOD
@@ -55,7 +55,7 @@ class Sms
         return response.body
     end
 	
-	# Set the API version
+    # Set the API version
     def setVersion(version)
         @@version = version
         return self
