@@ -1,6 +1,6 @@
 ## Introduction
 
-The Globe Payment API lets you develop client applications to charge subscribers using the most basic form of electronic communication. This document describes how to use the OAUTH/RESTful calling style and client libraries for various programming languages (currently Java, Python, PHP, NodeJS and Ruby). For other languages and libraries you can access the Payment protocol manually. The following documentation describes how you can access the Payment API directly with examples of request types, options and responses.
+The Globe Payment API lets you develop client applications to charge subscribers using the most basic form of electronic communication. This document describes how to use the OAUTH/RESTful calling style and client libraries for various programming languages (currently Java, Python, PHP, NodeJS and PHP). For other languages and libraries you can access the Payment protocol manually. The following documentation describes how you can access the Payment API directly with examples of request types, options and responses.
 
 ## Getting Started
 
@@ -37,13 +37,14 @@ From here you should be returned to the APP Detail Page in *Figure PROTO.4*. The
 
 ## How to Include
 
-First thing before you do any calls for Globe API using ruby wrapper class is to include the base class called GlobeApi.
+First thing before you do any calls for Globe API using PHP wrapper class is to include the base class called GlobeApi.
 
 ##### Figure PROTO.5 - Include Base Class
 
 **Note:** To include these you have to point the location of the file and require it in your app. In my case, I am using the test script inside the test folder and it will look like this.
 
-    require './../src/GlobeApi.rb'
+    require ('path/to/directory/GlobeApi.php');
+    $globe = new GlobeApi([version]);
 
 ## Authentication
 
@@ -53,8 +54,12 @@ Once we obtain the **APP ID** and **APP SECRET** we can begin to understand how 
 
 Now, initialize the `Auth` class inside GlobeApi and get the login URL using the `getLoginUrl` method.
 
-    auth = GlobeApi.new().auth([APP_ID], [APP_SECRET])
-    loginUrl = auth.getLoginUrl
+    auth = $globe->oAuth(
+        [YOUR APP ID],
+        [YOUR APP SECRET]
+    );
+    loginUrl = auth->getAuthUrl();
+    header('Location: '.$loginUrl);
 
 Before invoking your redirect, please replace `[YOUR APP ID]` and `[YOUR APP SECRET]` in the figure above with your actual **APP ID** and **APP SECRET**. Based on what you inputed as your **Redirect URI** in your app details. Globe will authenticate permissions first with the user which should look like *Figure PROTO.7a* and *Figure PROTO.7b*.
 
@@ -82,18 +87,16 @@ Once the user gives permission, Globe will redirect the user to your Redirect UR
 
 Using the `Auth` object we initialized in **Figure PROTO.6**, we can get the access token using the script below.
 
-    auth.getAccessToken([CODE])
+    $response = $oAuth->getAccessToken([CODE]);
     
 Before sending, please replace `[CODE]` in the figure above with the code given from Figure PROTO.8.
 
 Finally, Globe will return an access token you can use to start using the Charge API. **Figure PROTO.10** shows how this response will look like
 
-##### Figure PROTO.10 - Access Token via JSON
+##### Figure PROTO.10 - Access Token
 
-    {
-      "access_token": "GesiE2YhZlxB9VVMhv-PoI8RwNTsmX0D38g",
-      "subscriber_number": "9051234567"'
-    }
+    $response["access_token"] = "GesiE2YhZlxB9VVMhv-PoI8RwNTsmX0D38g";
+    $response["subscriber_number"] = "9051234567";
 
 ##
 
@@ -120,8 +123,15 @@ To use charge API you will need to send a POST request to the URL given below.
 
 ##### Figure PROTO.11 - Sample Charge Request
 
-    globe.payment([YOUR_ACCESS_TOKEN], [SUBSCRIBER_NUMBER])
-    .charge([AMOUNT], [REFERENCE_NUMBER])
+    $charge = $globe->payment(
+        [YOUR_ACCESS_TOKEN],
+        [SUBSCRIBER_NUMBER]
+    );
+
+    $response = $charge->charge(
+        [AMOUNT],
+        [REFERENCE_NUMBER]
+    )
     
 ##
 
@@ -129,10 +139,8 @@ To use charge API you will need to send a POST request to the URL given below.
       
 ##### Figure PROTO.12 - Sample Charge Response
 
-    {
-      "access_token": "GesiE2YhZlxB9VVMhv-PoI8RwNTsmX0D38g",
-      "endUserId": "9171234567",
-      "amount": "10",
-      "referenceCode": "1234567",
-      "success": true
-    }
+    $response["access_token"] = "GesiE2YhZlxB9VVMhv-PoI8RwNTsmX0D38g";
+    $response["endUserId"] = "9171234567";
+    $response["amount"] = "10";
+    $response["referenceCode"] = "1234567";
+    $response["success"] = true;
