@@ -17,7 +17,7 @@ class GlobeApi
         return Auth.new(appId, appSecret)
     end
 	
-	# Returns Payment
+    # Returns Payment
     def payment(accessToken)
         return Payment.new(accessToken)
     end
