@@ -154,7 +154,7 @@ To use charge API you will need to send a POST request to the URL given below.
 
 ##### Figure PROTO.11 - Sample Charge Request
 
-    var payment = globe.Payment([YOUR_ACCESS_TOKEN], [SUBSCRIBER_NUMBER]);
+    var payment = globe.Payment([SUBSCRIBER_NUMBER], [YOUR_ACCESS_TOKEN]);
     payment.charge([AMOUNT], [REFERENCE_NUMBER], [YOUR_CALLBACK_FUNCTION]);
 
 **Note**: Please see *Figure PROTO.10* for the explanation of `[YOUR_CALLBACK_FUNCTION]`.;
