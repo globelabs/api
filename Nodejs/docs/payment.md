@@ -162,6 +162,7 @@ To use charge API you will need to send a POST request to the URL given below.
 ##### Figure PROTO.12 - Sample Charge Response
 
 The charge response is already parse to object.
+
     {
         access_token: "GesiE2YhZlxB9VVMhv-PoI8RwNTsmX0D38g",
         endUserId: "9171234567",
