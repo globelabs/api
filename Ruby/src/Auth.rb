@@ -13,15 +13,7 @@ class Auth
         @@appSecret  = appSecret
     end
 	
-    # Returns the login URL
-    def getLoginUrl
-        params = { 'app_id'	=> @@appId }
-        query  = URI.encode_www_form(params)
-		
-        return OAUTH_URL+'?'+query
-    end
-	
-    # Return the Access Token
+	# Return the Access Token
     def getAccessToken(code)
         #Request Parameters
         params = {
@@ -39,5 +31,13 @@ class Auth
         response     = http.request(request)
 		
         return response.body
+    end
+	
+    # Returns the login URL
+    def getLoginUrl
+        params = { 'app_id'	=> @@appId }
+        query  = URI.encode_www_form(params)
+		
+        return OAUTH_URL+'?'+query
     end
 end

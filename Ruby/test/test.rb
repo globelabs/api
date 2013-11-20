@@ -7,10 +7,10 @@ globe = GlobeApi.new()
 #auth = globe.auth([APP_ID], [APP_SECRET])
 
 # Get Login URL
-#puts auth.getLoginUrl
+puts auth.getLoginUrl
 
 # Get Access Token
-#puts auth.getAccessToken([CODE])
+puts auth.getAccessToken([CODE])
 
 
 ###### SMS ######
