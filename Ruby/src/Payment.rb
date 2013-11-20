@@ -41,7 +41,7 @@ class Payment
         return response.body
     end
 	
-	# Set the API Version
+    # Set the API Version
     def setVersion(version)
         @@version = version
         return self
