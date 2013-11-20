@@ -14,7 +14,7 @@ class Sms
     end
 	
     # Catch and Format the incoming SMS
-    def inbound(request)
+    def getMessage(request)
         return JSON.parse request
     end
 	
