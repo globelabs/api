@@ -1,6 +1,6 @@
 ## Introduction
 
-The Globe Payment API lets you develop client applications to charge people using the most basic form of electronic communication. This document describes how to use the OAUTH/RESTful calling style and client libraries for various programming languages (currently Java, Python, PHP, NodeJS and Ruby) to charge the subscribers. For other languages and libraries you can access the Payment protocol manually. The following documentation describes how you can access the Payment API directly with examples of request types, options and responses.
+The Globe Payment API lets you develop client applications to charge subscribers using the most basic form of electronic communication. This document describes how to use the OAUTH/RESTful calling style and client libraries for various programming languages (currently Java, Python, PHP, NodeJS and Ruby). For other languages and libraries you can access the Payment protocol manually. The following documentation describes how you can access the Payment API directly with examples of request types, options and responses.
 
 ## Getting Started
 
@@ -37,19 +37,13 @@ From here you should be returned to the APP Detail Page in *Figure PROTO.4*. The
 
 ## How to Include
 
-First thing before you do an authentication using ruby wrapper class is to include some files or library as listed below:
+First thing before you do any calls for Globe API using ruby wrapper class is to include the base class called GlobeApi.
 
-+ net/https - To be able to do a HTTP request (which is default library in ruby).
-+ Auth.rb - Oauth Methods for Globe API.
-+ GlobeApi.rb - Globe API Base class.
+##### Figure PROTO.5 - Include Base Class
 
-##### Figure PROTO.5 - Include libraries and/or files
+**Note:** To include these you have to point the location of the file and require it in your app. In my case, I am using the test script inside the test folder and it will look like this.
 
-**Note:** To include these you have to point the location of the file and require it in your app
-
-    require 'net/https'
-    require './globe/Auth.rb'
-    require './globe/GlobeApi.rb'
+    require './../src/GlobeApi.rb'
 
 ## Authentication
 
@@ -57,10 +51,10 @@ Once we obtain the **APP ID** and **APP SECRET** we can begin to understand how 
 
 ##### Figure PROTO.6 - Invoke a Redirection
 
-Now, initialize the `Auth` class and get the login URL using the `getLoginUrl` method.
+Now, initialize the `Auth` class inside GlobeApi and get the login URL using the `getLoginUrl` method.
 
-    object = Auth.new([YOUR APP ID], [YOUR APP SECRET])
-    loginUrl = object.getLoginUrl
+    auth = GlobeApi.new().auth([APP_ID], [APP_SECRET])
+    loginUrl = auth.getLoginUrl
 
 Before invoking your redirect, please replace `[YOUR APP ID]` and `[YOUR APP SECRET]` in the figure above with your actual **APP ID** and **APP SECRET**. Based on what you inputed as your **Redirect URI** in your app details. Globe will authenticate permissions first with the user which should look like *Figure PROTO.7a* and *Figure PROTO.7b*.
 
@@ -86,9 +80,11 @@ Once the user gives permission, Globe will redirect the user to your Redirect UR
 
 ##### Figure PROTO.9 - Get the Access Token
 
-Using the object we initialized in `Authentication`, lets call the `getAccessToken` method and pass the `code` we got from **Figure PROTO.8**
+Using the `Auth` object we initialized in **Figure PROTO.6**, we can get the access token using the script below.
 
-    object.getAccessToken(code)
+    auth.getAccessToken([CODE])
+    
+Before sending, please replace `[CODE]` in the figure above with the code given from Figure PROTO.8.
 
 Finally, Globe will return an access token you can use to start using the Charge API. **Figure PROTO.10** shows how this response will look like
 
@@ -114,18 +110,18 @@ To use charge API you will need to send a POST request to the URL given below.
     
 **Parameters**
 
-| Field | Definition | Data Type |
+| Parameters | Definition | Data Type |
 |-------|:----------:|:---------:|
-| access_token | which contains security information for transacting with a subscriber. Subscriber needs to grant an app first via SMS or Web Form Subscriber Consent Workflow. | String |
-| endUserId | is the MSISDN (mobile number) which you will charge to. Parameter format can be 09xxxxxxxx | String or Integer |
-| amount | can be a whole number or decimal | String |
-| referenceCode | (string, unique per charge event) is your reference for reconciliation purposes. The operator should include it in reports so that you can match their view of what has been sold with yours by matching the referenceCodes. | String or Integer |
+| [YOUR_ACCESS_TOKEN] | which contains security information for transacting with a subscriber. Subscriber needs to grant an app first via SMS or Web Form Subscriber Consent Workflow. | String |
+| [SUBSCRIBER_NUMBER] | is the MSISDN (mobile number) which you will charge to. Parameter format can be 09xxxxxxxx | String or Integer |
+| [AMOUNT] | can be a whole number or decimal | String |
+| [REFERENCE_NUMBER] | (string, unique per charge event) is your reference for reconciliation purposes. The operator should include it in reports so that you can match their view of what has been sold with yours by matching the referenceCodes. | String or Integer |
 
 
 ##### Figure PROTO.11 - Sample Charge Request
 
-    globe = GlobeApi.new([YOUR ACCESS TOKEN], [YOUR SHORT CODE])
-    globe.createSms([MOBILE NUMBER], [MESSAGE])
+    globe.payment([YOUR_ACCESS_TOKEN], [SUBSCRIBER_NUMBER])
+    .charge([AMOUNT], [REFERENCE_NUMBER])
     
 ##
 
