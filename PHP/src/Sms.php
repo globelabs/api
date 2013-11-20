@@ -1,8 +1,8 @@
 <?php
-    class SendSMS extends GlobeAPI
+    class Sms extends GlobeApi
     {
         //PUBLIC VARIABLES
-        public $apiVersion;
+        public $version;
         public $recepient;
         public $message;
         public $address;
@@ -14,29 +14,37 @@
         const CURL_URL = 'http://%s/smsmessaging/%s/outbound/%s/';
 
         /**
-         * Constructor for the SendSMS
+         * creates an sms
          *
-         * @param string|null   $apiVersion         the api version to be used
-         * @param string|null   $recepient          the recepient's number
-         * @param string|null   $message            the message to be sent
-         * @param string|null   $address            the shortcode
-         * @param string|null   $accessToken        the access token
-         * @param string|null   $clientCorrelator   the client correlator
+         * @param string|null   $version        the api version to be used
+         * @param string|null   $address        the shortcode
          */
         public function __construct(
-            $apiVersion = null,
-            $recepient = null,
-            $message = null,
             $address = null,
-            $clientCorrelator = null
+            $version = null
         ) {
-            $this->apiVersion = $apiVersion;
-            $this->recepient = $recepient;
-            $this->message = $message;
+            $this->version = $version;
             $this->address = $address;
-            $this->clientCorrelator = $clientCorrelator;
         }
 
+        /**
+         * This is not yet implemented in the API
+         * @param  [type] $registrationID [description]
+         * @param  [type] $maxBatchSize   [description]
+         * @return [type]                 [description]
+         */
+        public function receiveSMS(
+            $registrationID = null,
+            $maxBatchSize = null
+        ) {
+            $this->ReceiveSMS = new ReceiveSMS(
+                $this->version,
+                $registrationID,
+                $maxBatchSize
+            );
+
+            return $this->ReceiveSMS;
+        }
 
         /**
          * Triggers the send of the sms
@@ -44,8 +52,23 @@
          * @param  boolean|null $bodyOnly tells the wrapper to send the headers if set to false
          * @return array
          */
-        public function send($accesstoken, $bodyOnly = true)
-        {
+        public function send(
+            $accesstoken = null,
+            $number = null,
+            $message = null,
+            $bodyOnly = true
+        ) {
+            if($accesstoken) {
+                $this->accessToken = $accesstoken;
+            }
+
+            if($number) {
+                $this->recepient = $number;
+            }
+
+            if($message) {
+                $this->message = $message;
+            }
 
             if(!$this->recepient) {
                 throw new Exception('recepient is required');
@@ -60,9 +83,9 @@
             }
 
             $url = sprintf(
-                SendSMS::CURL_URL,
+                Sms::CURL_URL,
                 GlobeAPI::API_ENDPOINT,
-                $this->apiVersion,
+                $this->version,
                 urlencode($this->address)
             );
 
@@ -70,7 +93,7 @@
             $format = "";
 
             $postFields = array(
-                'access_token' => $accesstoken,
+                'access_token' => $this->accessToken,
                 'address' => $this->recepient,
                 'message' => $this->message,
                 'senderAddress' => $this->address,

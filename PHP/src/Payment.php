@@ -1,12 +1,13 @@
 <?php
-    class Charge extends GlobeAPI
+    class Payment extends GlobeAPI
     {
-        public $apiVersion;
+        public $version;
         public $endUserId;
         public $referenceCode;
         public $transactionOperationStatus;
         public $description;
         public $currency;
+        public $accessToken;
         public $amount;
         public $code;
         public $clientCorrelator;
@@ -22,23 +23,20 @@
         /**
          * COnstructor of the Charge class
          *
-         * @param string|null $apiVersion    the api version to use
+         * @param string|null $version    the api version to use
          * @param string|null $endUserId     the number to charge
          * @param string|null $referenceCode the reference code
          * @param string|null $amount        the amount to be charged
          */
         public function __construct(
-            $apiVersion = null,
+            $version = null,
             $endUserId = null,
-            $referenceCode = null,
-            $amount = null
+            $accessToken = null
         ) {
 
-            $this->apiVersion = $apiVersion;
+            $this->version = $version;
             $this->endUserId = $endUserId;
-            $this->referenceCode = $referenceCode;
-            $this->transactionOperationStatus = 'charged';
-            $this->amount = $amount;
+            $this->accessToken = $accessToken;
         }
 
         /**
@@ -61,7 +59,15 @@
          * @param  boolean $bodyOnly        returns the headers if set to false
          * @return array
          */
-        public function charge($accessToken, $bodyOnly = true) {
+        public function charge($amount=null, $refNo=null, $bodyOnly = true) {
+            if($amount!=null) {
+                $this->amount = $amount;
+            }
+
+            if($refNo) {
+                $this->referenceCode = $refNo;
+            }
+
             if(!$this->endUserId) {
                 throw new Exception('charge expects an endUserId.');
             }
@@ -70,18 +76,14 @@
                 throw new Exception('charge expects a referenceCode.');
             }
 
-            if(!$this->transactionOperationStatus) {
-                throw new Exception('charge expects a transactionOperationStatus.');
-            }
-
-            if(!$this->amount) {
+            if($this->amount == null) {
                 throw new Exception('charge expects an amount.');
             }
 
             $url = sprintf(
                 $this->curlURL,
                 GlobeAPI::API_ENDPOINT,
-                $this->apiVersion
+                $this->version
             );
 
             $fields = array(
@@ -89,8 +91,10 @@
                 'referenceCode' => $this->referenceCode,
                 'transactionOperationStatus' => $this->transactionOperationStatus,
                 'amount' => $this->amount,
-                'access_token' => $accessToken
+                'access_token' => $this->accessToken
             );
+
+            print_r($fields);
 
             $fields = array_filter($fields);
 

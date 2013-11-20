@@ -1,5 +1,5 @@
 <?php
-    class OAuth extends GlobeAPI
+    class OAuth extends GlobeApi
     {
         const LOGIN_URL = 'http://%s/dialog/oauth';
         const AUTH_URL = 'http://%s/oauth/access_token';
