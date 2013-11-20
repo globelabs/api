@@ -56,7 +56,7 @@ Now, initialize the `Auth` class inside GlobeApi and get the login URL using the
     auth = GlobeApi.new().auth([APP_ID], [APP_SECRET])
     loginUrl = auth.getLoginUrl
 
-Before invoking your redirect, please replace `[YOUR APP ID]` in the figure above with your actual **APP ID**. Based on what you inputed as your **Redirect URI** in your app details. Globe will authenticate permissions first with the user which should look like *Figure PROTO.7a* and *Figure PROTO.7b*.
+Before invoking your redirect, please replace `[YOUR APP ID]` and `[YOUR APP SECRET]` in the figure above with your actual **APP ID** and **APP SECRET**. Based on what you inputed as your **Redirect URI** in your app details. Globe will authenticate permissions first with the user which should look like *Figure PROTO.7a* and *Figure PROTO.7b*.
 
 ##### Figure PROTO.7a - User Flow
 ![User Flow](https://raw.github.com/Openovate/rest-docs/master/sms/assets/user.jpg)
@@ -80,13 +80,11 @@ Once the user gives permission, Globe will redirect the user to your Redirect UR
 
 ##### Figure PROTO.9 - Get the Access Token
 
-Using the `Auth` object in Figure PROTO.6, we can get the access token using the script below.
+Using the `Auth` object we initialized in **Figure PROTO.6**, we can get the access token using the script below.
 
     auth.getAccessToken([CODE])
 
 Before sending, please replace `[CODE]` in the figure above with the code given from *Figure PROTO.8*. 
-
-    **Note:** Remember set your access token request to globe using the POST method.
 
 Finally, Globe will return an access token you can use to start using the SMS API. **Figure PROTO.10** shows how this response will look like
 
