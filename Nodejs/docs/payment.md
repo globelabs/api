@@ -91,9 +91,9 @@ Once the user gives permission, Globe will redirect the user to your Redirect UR
 ##### Figure PROTO.9 - Get the Access Token
 
 Using the `Auth` object we initialized in **Figure PROTO.6**, we can get the access token using the script below.
-Callback functions will received 3 parameters. *http.ClientRequest*, *http.ServerResponse* and *data*. *Please see (http://nodejs.org/api/http.html) for documentation of http.*
+Callback functions will received 3 parameters. *http.ClientRequest* and *http.ServerResponse*. *Please see (http://nodejs.org/api/http.html) for documentation of http.*
 
-    var callback = function(request, response, data) {};
+    var callback = function(request, response) {};
 
     auth.getAccessToken([CODE], callback);
 **Note**: Please replace the `callback` function with your own callback function. The callback function above is just an example.
@@ -104,13 +104,14 @@ Finally, Globe will return an access token you can use to start using the Charge
 
 ##### Figure PROTO.10 - Access Token via JSON
 
-Inside your callback function, *Figure PROTO.9*, the the 3rd parameter, *data*, is where you can find the access token.
+Inside your callback function, *Figure PROTO.9*, the request object will automatically parse the received data from the server. To get the parse body received from the server, use this call `request.body`.
 
 We assumed that the request is successful.
 
-    var callback = function(request, response, data) {
-        console.log('Access Token:', data['access_token']);
-        console.log('Subscriber Number:', data['subscriber_number']);
+    var callback = function(request, response) {
+        var body = request.body; // get the response body
+        console.log('Access Token:', body['access_token']);
+        console.log('Subscriber Number:', body['subscriber_number']);
     };
     
     // The output above code
@@ -123,8 +124,9 @@ Not all request always success if the server failed to validate the code you req
 
 We assumed that the request fails.
 
-    var callback = function(request, response, data) {
-        console.log('Error Message:', data['error']);
+    var callback = function(request, response) {
+        var body = request.body; // get the response body
+        console.log('Error Message:', body['error']);
     };
     
     // The output above code
@@ -161,12 +163,18 @@ To use charge API you will need to send a POST request to the URL given below.
       
 ##### Figure PROTO.12 - Sample Charge Response
 
-The charge response is already parse to object.
+We assumed that we already charged the user and we are receiving the server response.
 
-    {
-        access_token: "GesiE2YhZlxB9VVMhv-PoI8RwNTsmX0D38g",
-        endUserId: "9171234567",
-        amount: "10",
-        referenceCode: "1234567",
-        success: true
-    }
+    var callback = function(request, response) {
+        var body = request.body;
+        console.log(body);
+        
+        // Output above code
+        // {
+        //     access_token: "GesiE2YhZlxB9VVMhv-PoI8RwNTsmX0D38g",
+        //     endUserId: "9171234567",
+        //     amount: "10",
+        //     referenceCode: "1234567",
+        //     success: true
+        // }
+    };
