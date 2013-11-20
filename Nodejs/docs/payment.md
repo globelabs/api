@@ -37,13 +37,22 @@ From here you should be returned to the APP Detail Page in *Figure PROTO.4*. The
 
 ## How to Include
 
-First thing before you do any calls for Globe API using ruby wrapper class is to include the base class called GlobeApi.
+First thing before you do any calls for Globe API using Node.JS wrapper class is to include main class called globelabs.
 
-##### Figure PROTO.5 - Include Base Class
+##### Figure PROTO.5 - Include Main Class
 
-**Note:** To include these you have to point the location of the file and require it in your app. In my case, I am using the test script inside the test folder and it will look like this.
+**Note:** To include these you have to place the Globe API Node.JS inside the node_modules and name it to globelabs.
 
-    require './../src/GlobeApi.rb'
+    myapp
+    - node_module
+      - globelabs
+        - [nodejs files]
+      - [other libraries you will use]
+    - [your application files]
+
+Now, you can include the GlobeAPI Node.JS.
+
+    var globe = require('globelabs')();
 
 ## Authentication
 
@@ -51,10 +60,11 @@ Once we obtain the **APP ID** and **APP SECRET** we can begin to understand how 
 
 ##### Figure PROTO.6 - Invoke a Redirection
 
-Now, initialize the `Auth` class inside GlobeApi and get the login URL using the `getLoginUrl` method.
+Now, initialize the `Auth` class inside globe and get the login URL using the `getLoginUrl` method.
 
-    auth = GlobeApi.new().auth([APP_ID], [APP_SECRET])
-    loginUrl = auth.getLoginUrl
+    var auth = globe.Auth([APP_ID], [APP_SECRET]);
+    var loginUrl = auth.getLoginUrl();
+**Note**: The variable globe we use in here is initialize on *Figure PROTO.5*.
 
 Before invoking your redirect, please replace `[YOUR APP ID]` and `[YOUR APP SECRET]` in the figure above with your actual **APP ID** and **APP SECRET**. Based on what you inputed as your **Redirect URI** in your app details. Globe will authenticate permissions first with the user which should look like *Figure PROTO.7a* and *Figure PROTO.7b*.
 
@@ -81,24 +91,46 @@ Once the user gives permission, Globe will redirect the user to your Redirect UR
 ##### Figure PROTO.9 - Get the Access Token
 
 Using the `Auth` object we initialized in **Figure PROTO.6**, we can get the access token using the script below.
+Callback functions will received 3 parameters. *http.ClientRequest*, *http.ServerResponse* and *data*. *Please see (http://nodejs.org/api/http.html) for documentation of http.*
 
-    auth.getAccessToken([CODE])
-    
+    var callback = function(request, response, data) {};
+
+    auth.getAccessToken([CODE], callback);
+**Note**: Please replace the `callback` function with your own callback function. The callback function above is just an example.
+
 Before sending, please replace `[CODE]` in the figure above with the code given from Figure PROTO.8.
 
 Finally, Globe will return an access token you can use to start using the Charge API. **Figure PROTO.10** shows how this response will look like
 
 ##### Figure PROTO.10 - Access Token via JSON
 
-    {
-      "access_token": "GesiE2YhZlxB9VVMhv-PoI8RwNTsmX0D38g",
-      "subscriber_number": "9051234567"'
-    }
+Inside your callback function, *Figure PROTO.9*, the the 3rd parameter, *data*, is where you can find the access token.
+
+We assumed that the request is successful.
+
+    var callback = function(request, response, data) {
+        console.log('Access Token:', data['access_token']);
+        console.log('Subscriber Number:', data['subscriber_number']);
+    };
+    
+    // The output above code
+    // Access Token: GesiE2YhZlxB9VVMhv-PoI8RwNTsmX0D38g
+    // Subscriber Number: 9051234567
+
+You notice that the `access_token` and `subscriber_number` is already JSON Object.
+
+Not all request always success if the server failed to validate the code you request. How can you get the error message? Good news! The callback function also received an error message. See sample code below.
+
+We assumed that the request fails.
+
+    var callback = function(request, response, data) {
+        console.log('Error Message:', data['error']);
+    };
+    
+    // The output above code
+    // Error Message: <The error message thrown by the server>
 
 ##
-
-    **Note:** The data in above doesn't actually work. Please don't assume something went wrong 
-    because you tried to use it.
 
 ## Charge
 
@@ -107,7 +139,7 @@ To use charge API you will need to send a POST request to the URL given below.
 **Request URL**
 
     http://devapi.globelabs.com.ph/payment/v1/transactions/amount
-    
+
 **Parameters**
 
 | Parameters | Definition | Data Type |
@@ -120,19 +152,20 @@ To use charge API you will need to send a POST request to the URL given below.
 
 ##### Figure PROTO.11 - Sample Charge Request
 
-    globe.payment([YOUR_ACCESS_TOKEN], [SUBSCRIBER_NUMBER])
-    .charge([AMOUNT], [REFERENCE_NUMBER])
-    
-##
+    var payment = globe.Payment([YOUR_ACCESS_TOKEN], [SUBSCRIBER_NUMBER]);
+    payment.charge([AMOUNT], [REFERENCE_NUMBER], [YOUR_CALLBACK_FUNCTION]);
 
-    **Note:** You can get your Short Code value from your Globe App Details in `Figure PROTO.4. You also need to remove the `2158` digit in your short code.
+**Note**: Please see *Figure PROTO.10* for the explanation of `[YOUR_CALLBACK_FUNCTION]`.;
+
+##
       
 ##### Figure PROTO.12 - Sample Charge Response
 
+The charge response is already parse to object.
     {
-      "access_token": "GesiE2YhZlxB9VVMhv-PoI8RwNTsmX0D38g",
-      "endUserId": "9171234567",
-      "amount": "10",
-      "referenceCode": "1234567",
-      "success": true
+        access_token: "GesiE2YhZlxB9VVMhv-PoI8RwNTsmX0D38g",
+        endUserId: "9171234567",
+        amount: "10",
+        referenceCode: "1234567",
+        success: true
     }
