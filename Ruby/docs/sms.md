@@ -37,7 +37,7 @@ From here you should be returned to the APP Detail Page in *Figure PROTO.4*. The
 
 ## How to Include
 
-First thing before you do any calls for Globe API using ruby wrapper class is to include the base class called GlobeApi:
+First thing before you do any calls for Globe API using ruby wrapper class is to include the base class called GlobeApi.
 
 ##### Figure PROTO.5 - Include Base Class
 
