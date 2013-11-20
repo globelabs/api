@@ -18,12 +18,12 @@ class GlobeApi
     end
 	
     # Returns Payment
-    def payment(accessToken)
-        return Payment.new(accessToken)
+    def payment(accessToken, subscriber)
+        return Payment.new(accessToken, subscriber)
     end
 	
     # Returns SMS
-    def sms(accessToken, shortCode)
-        return Sms.new(accessToken, shortCode)
+    def sms(shortCode)
+        return Sms.new(shortCode)
     end
 end

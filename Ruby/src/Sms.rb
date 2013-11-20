@@ -9,8 +9,7 @@ class Sms
     @@version     = 'v1'
 	
     # Initialize Access Token and Short Code
-    def initialize(accessToken, shortCode)
-        @@accessToken = accessToken
+    def initialize(shortCode)
         @@shortCode   = shortCode
     end
 	
@@ -19,25 +18,14 @@ class Sms
         return JSON.parse request
     end
 	
-    # Sends an SMS to subscriber
-    def outbound(subscriber, message)
-        #POST Parameters
-        @@params = {
-            'address' => subscriber,
-            'message' => message
-        }
-		
-        return self
-    end
-	
     # Sends an SMS
     #
     # * Sets the string query for the parameters
     # * Sends data using POST METHOD
-    def send
+    def sendMessage(accessToken, subscriber, message)
         #Build HTTP parameters for access token
-        params = { 'access_token' => @@accessToken }
-        query  = URI.encode_www_form(params)
+        token = { 'access_token' => accessToken }
+        query  = URI.encode_www_form(token)
 		
         #Setting up the request URL
         requestUrl = sprintf(URL, @@version, @@shortCode)
@@ -48,7 +36,13 @@ class Sms
         http      = Net::HTTP.new(uri.host, uri.port)
         request   = Net::HTTP::Post.new(requestUrl)
 		
-        request.set_form_data(@@params)
+		#POST Parameters
+        params = {
+            'address' => subscriber,
+            'message' => message
+        }
+		
+        request.set_form_data(params)
 		
         response  = http.request(request)
 		
