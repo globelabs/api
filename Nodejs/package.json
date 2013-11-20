@@ -1,0 +1,23 @@
+{
+    "name": "globelabs",
+    "description": "Globe Labs Wrapper API implemented in Nodejs",
+    "version": "0.0.1",
+    "author": {
+        "name": "Ian Mark Muninio",
+        "email": "ianmuninio@gmail.com"
+    },
+    "keywords": [
+        "globe",
+        "globelabs",
+        "wrapper"
+    ],
+    "main": "./lib/index.js",
+    "engines": {
+        "node": ">= 0.8.x"
+    },
+    "license": "mit",
+    "readme": "",
+    "readmeFilename": "README.md",
+    "_id": "globelabs@0.0.1",
+    "_from": "globelabs@"
+}
