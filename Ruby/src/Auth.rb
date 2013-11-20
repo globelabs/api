@@ -13,7 +13,7 @@ class Auth
         @@appSecret  = appSecret
     end
 	
-	# Return the Access Token
+    # Return the Access Token
     def getAccessToken(code)
         #Request Parameters
         params = {
