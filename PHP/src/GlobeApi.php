@@ -1,25 +1,15 @@
 <?php
-    require_once('SendSMS.php');
-    require_once('ReceiveSMS.php');
-    require_once('Charge.php');
+    require_once('Sms.php');
     require_once('OAuth.php');
+    require_once('Payment.php');
 
 
-    class GlobeAPI {
+    class GlobeApi {
         //THE BASE URL OF THE API
         const API_ENDPOINT = 'devapi.globelabs.com.ph';
         const AUTH_POINT = 'developer.globelabs.com.ph';
 
-        //private variables
-        private $SendSMS;
-        private $ReceiveSMS;
-        private $Charge;
-        private $OAuth;
-        private $accessToken;
-
         //protected variables
-        protected $key;
-        protected $secret;
         protected $version;
         protected $shortCode;
 
@@ -30,89 +20,42 @@
          * @param string $apisecret - the app_secret
          * @param string|null $version - the version to be used, default to v1
          */
-        public function __construct($apikey, $apisecret, $shortCode, $version = 'v1') {
-            $this->key = $apikey;
-            $this->secret = $apisecret;
+        public function __construct($version = 'v1') {
             $this->version = $version;
-            $this->shortCode = $shortCode;
-
-            $this->SendSMS = new SendSMS();
-            $this->ReceiveSMS = new ReceiveSMS();
-            $this->Charge = new Charge();
-            $this->OAuth = new OAuth($apikey, $apisecret);
         }
 
-        /**
-         * Creates a SendSMS  with the parameters if set. test
-         *
-         * @param  string|null  $recepient          the recepient's number
-         * @param  string|null  $message            the message to be sent
-         * @param  string|null  $address            the short code
-         * @param  string|null  $accessToken        the access token
-         * @param  string|null  $clientCorrelator   the client correlator
-         *
-         * @return SendSMS
-         */
-        public function createSMS(
-            $recepient = null,
-            $message = null,
-            $clientCorrelator = null,
-            $senderName = null,
-            $notifyURL = null
-        ) {
-            $this->SendSMS = new SendSMS(
-                $this->version,
-                $recepient,
-                $message,
-                $this->shortCode,
-                $clientCorrelator,
-                $senderName,
-                $notifyURL);
+        public function sms($shortCode, $version = null)
+        {
+            $ver = $version ? $version : $this->version;
+            if($shortCode) {
+                $this->shortCode = $shortCode;
+            }
 
-            return $this->SendSMS;
-
+            return new Sms($this->shortCode, $ver);
         }
 
-        /**
-         * This is not yet implemented in the API
-         * @param  [type] $registrationID [description]
-         * @param  [type] $maxBatchSize   [description]
-         * @return [type]                 [description]
-         */
-        public function receiveSMS(
-            $registrationID = null,
-            $maxBatchSize = null
-        ) {
-            $this->ReceiveSMS = new ReceiveSMS(
-                $this->version,
-                $registrationID,
-                $maxBatchSize
-            );
-
-            return $this->ReceiveSMS;
-        }
-
-        public function createCharges(
+        public function payment(
+            $accessToken = null,
             $endUserId = null,
-            $referenceCode = null,
-            $amount = null
+            $version = null
         ) {
-            $this->Charge = new Charge(
-                $this->version,
+            $ver = $version ? $version : $this->version;
+            $this->Charge = new Payment(
+                $ver,
                 $endUserId,
-                $referenceCode,
-                $amount
+                $accessToken
             );
 
             return $this->Charge;
         }
 
-        public function oAuth()
+        public function oAuth($apikey, $apisecret)
         {
-            return $this->OAuth;
+            return new OAuth($apikey, $apisecret);
+            
         }
 
-        public function __call ( $name, $arguments )
+        public function __call($name, $arguments)
         {
             $prefix = strtolower(substr($name, 0, 3));
             $property = lcfirst(substr($name, 3));
