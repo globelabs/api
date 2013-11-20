@@ -12,7 +12,7 @@ class Payment
         @@accessToken = accessToken
     end
 	
-	# Set the parameters need for charging a Subscriber
+    # Set the parameters need for charging a Subscriber
     def charge(chargeTo, amount, referenceCode)
         @@params = {
             'transactionOperationStatus' => 'charged',
@@ -25,8 +25,8 @@ class Payment
         return self
     end
 	
-	# Sends a request using POST method
-	def send
+    # Sends a request using POST method
+    def send
         url = sprintf(URL, @@version)
 		
         #Request as POST METHOD
