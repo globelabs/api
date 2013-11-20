@@ -43,7 +43,7 @@
         }
 
         /**
-         * Creates a SendSMS  with the parameters if set
+         * Creates a SendSMS  with the parameters if set. test
          *
          * @param  string|null  $recepient          the recepient's number
          * @param  string|null  $message            the message to be sent
