@@ -84,13 +84,13 @@ Using the `Auth` object in Figure PROTO.6, we can get the access token using the
 
     auth.getAccessToken([CODE])
 
-Before sending, please replace `[YOUR APP ID]` in the figure above with your actual **APP ID**, replace `[YOUR APP SECRET]` in the figure above with your actual **APP SECRET** and replace `[CODE]` in the figure above with the code given from *Figure PROTO.7*. 
+Before sending, please replace `[CODE]` in the figure above with the code given from *Figure PROTO.8*. 
 
     **Note:** Remember set your access token request to globe using the POST method.
 
-Finally, Globe will return an access token you can use to start using the SMS API. **Figure PROTO.9** shows how this response will look like
+Finally, Globe will return an access token you can use to start using the SMS API. **Figure PROTO.10** shows how this response will look like
 
-##### Figure PROTO.9 - Access Token via JSON
+##### Figure PROTO.10 - Access Token via JSON
 
     {
       "access_token": "GesiE2YhZlxB9VVMhv-PoI8RwNTsmX0D38g",
@@ -104,21 +104,20 @@ Finally, Globe will return an access token you can use to start using the SMS AP
 
 ## Sending
 
-##### Figure PROTO.10 - Sample Send Message Request
+##### Figure PROTO.11 - Sample Send Message Request
 
-    POST http://devapi.globelabs.com.ph/smsmessaging/v1/outbound/[YOUR SHORT CODE]/requests?access_token=[YOUR ACCESS TOKEN]
-      -F "address=[MOBILE NUMBER]" \
-      -F "message=[MESSAGE]" \
+First we need to initialize the `GlobeApi` class and then use that object to send SMS.
+
+    globe = GlobeApi.new()
+    globe.sms([SHORTCODE]).sendMessage([YOUR_ACCESS_TOKEN], [SUBSCRIBER_NUMBER], [MESSAGE])
 
 
-##### Figure PROTO.11 - Sample Send Message Response
+##### Figure PROTO.12 - Sample Send Message Response
 
     {
       "success": true,
-      "address": "9175646847",
+      "address": "9171234567",
       "message": "hello",
-      "senderAddress": "5416",
-      "access_token": "a8UuVwe6Rp2xvKhD65GrPcSvR3-OJqr4fWZJOYX9UrE"
+      "senderAddress": "1234",
+      "access_token": "a8UuVwe6Rp2xv234we35GrPcSvR3-OJq22f34ty4rfw9UrE"
     }
-
-## Receiving
