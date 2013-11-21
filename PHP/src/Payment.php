@@ -23,10 +23,9 @@
         /**
          * COnstructor of the Charge class
          *
-         * @param string|null $version    the api version to use
-         * @param string|null $endUserId     the number to charge
-         * @param string|null $referenceCode the reference code
-         * @param string|null $amount        the amount to be charged
+         * @param string|null $version          the api version to use
+         * @param string|null $endUserId        the number to charge
+         * @param string|null $accessToken      the access token of the user to be charged
          */
         public function __construct(
             $version = null,
@@ -55,9 +54,9 @@
 
         /**
          * Triggers charge
-         * @param  string  $accessToken     the access token to be sued
-         * @param  boolean $bodyOnly        returns the headers if set to false
-         * @return array
+         * @param  string|number    $amount         the access token to be sued
+         * @param  number|string     $bodyOnly      returns the headers if set to false
+         * @return array 
          */
         public function charge($amount=null, $refNo=null, $bodyOnly = true) {
             if($amount!=null) {
@@ -93,8 +92,6 @@
                 'amount' => $this->amount,
                 'access_token' => $this->accessToken
             );
-
-            print_r($fields);
 
             $fields = array_filter($fields);
 

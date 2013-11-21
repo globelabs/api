@@ -47,9 +47,12 @@
         }
 
         /**
-         * Triggers the send of the sms
-         *
-         * @param  boolean|null $bodyOnly tells the wrapper to send the headers if set to false
+         * triggers the send or the message
+         * 
+         * @param  string|null  $accesstoken        the access token of the user to be charged
+         * @param  string|null  $number             the number of the user to be charged
+         * @param  string|null  $message            the message to be sent
+         * @param  boolean $bodyOnly                returns the header if set to false
          * @return array
          */
         public function send(

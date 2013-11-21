@@ -14,16 +14,21 @@
         protected $shortCode;
 
         /**
-         * The constructor for the Wrapper Class
-         *
-         * @param string $apikey - the app_id
-         * @param string $apisecret - the app_secret
-         * @param string|null $version - the version to be used, default to v1
+         * constructor of the Wrapper Class
+         * 
+         * @param string $version   the version to be used
          */
         public function __construct($version = 'v1') {
             $this->version = $version;
         }
 
+        /**
+         * Used to instantiate an sms object to be sent
+         * 
+         * @param  string|number    $shortCode
+         * @param  string|null      $version        included for extensibility
+         * @return [type]
+         */
         public function sms($shortCode, $version = null)
         {
             $ver = $version ? $version : $this->version;
@@ -34,25 +39,36 @@
             return new Sms($this->shortCode, $ver);
         }
 
+        /**
+         * used to instantiate a payment object to be charged to a user
+         * 
+         * @param  string|null      $accessToken        the access token of the user to be charged
+         * @param  string|null      $endUserId          the number of the user to be charged
+         * @param  string|null      $version            included fo extensibility
+         * @return Payment
+         */
         public function payment(
             $accessToken = null,
             $endUserId = null,
             $version = null
         ) {
             $ver = $version ? $version : $this->version;
-            $this->Charge = new Payment(
+            return new Payment(
                 $ver,
                 $endUserId,
                 $accessToken
             );
-
-            return $this->Charge;
         }
 
+        /**
+         * used to instantiate an oauth class
+         * @param  string   $apikey         the api key of the app
+         * @param  string   $apisecret      the api secret of the app
+         * @return OAuth
+         */
         public function oAuth($apikey, $apisecret)
         {
             return new OAuth($apikey, $apisecret);
-            
         }
 
         public function __call($name, $arguments)
