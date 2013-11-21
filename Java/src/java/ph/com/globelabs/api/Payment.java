@@ -75,7 +75,6 @@ public class Payment {
             parameters.put("endUserId", subscriberNumber);
             parameters.put("amount", amount.toString());
             parameters.put("referenceCode", referenceCode);
-            parameters.put("access_token", accessToken);
             client.setJsonStringEntity(parameters);
             HttpResponse response = client.execute(getRequestURI());
 
