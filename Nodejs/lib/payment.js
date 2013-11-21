@@ -64,8 +64,8 @@ module.exports = function() {
     /**
      * Charge an amount to the end user’s bill.
      * 
-     * @param {string}   referenceCode
      * @param {string}   amount
+     * @param {string}   referenceCode
      * @param {string}   [description]
      * @param {string}   [clientCorrelator]
      * @param {string}   [onBehalfOf]
@@ -77,7 +77,7 @@ module.exports = function() {
      * @param {function} callback
      * @return {Payment}
      */
-    p.charge = function(referenceCode, amount, description, clientCorrelator,
+    p.charge = function(amount, referenceCode, description, clientCorrelator,
             onBehalfOf, purchaseCategoryCode, channel, taxAmount, serviceID,
             productID, callback) {
         // finds the callback function

@@ -13,7 +13,8 @@ console.log('Login URL:', auth.getLoginUrl()); // Prints out the login url
 
 // Getting the access token and subscriber number using the code received by the app's redirect uri
 var code = '<CODE>'; // code received from app's redirect uri
-auth.getAccessToken(code, function(req, res, data) {
+auth.getAccessToken(code, function(req, res) {
+    var data = req.body;
     console.log('Code Response:', data);
 
     // we assumed that the request is successful
@@ -28,8 +29,8 @@ auth.getAccessToken(code, function(req, res, data) {
 
         // Sends a message
         var message = 'Hello World ' + new Date().toISOString(); // set your custom message here
-        sms.sendMessage(message, function(req, res, data) {
-            console.log('SMS Response:', data);
+        sms.sendMessage(message, function(req, res) {
+            console.log('SMS Response:', req.body);
         });
 
         // Build up Payment
@@ -39,8 +40,8 @@ auth.getAccessToken(code, function(req, res, data) {
         var amount = '0'; // set amount to 0 as charge amount
 
         // Charge the subscriber
-        payment.charge(refCode, amount, function(req, res, data) {
-            console.log('Payment Response:', data);
+        payment.charge(amount, refCode, function(req, res) {
+            console.log('Payment Response:', req.body);
         });
     }
 });
