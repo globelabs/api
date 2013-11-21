@@ -95,8 +95,10 @@ Finally, Globe will return an access token you can use to start using the Charge
 
 ##### Figure PROTO.10 - Access Token
 
-    $response["access_token"] = "GesiE2YhZlxB9VVMhv-PoI8RwNTsmX0D38g";
-    $response["subscriber_number"] = "9051234567";
+   Array (
+      "access_token"        => "GesiE2YhZlxB9VVMhv-PoI8RwNTsmX0D38g",
+      "subscriber_number"   => "9051234567"
+    )
 
 ##
 
@@ -139,8 +141,10 @@ To use charge API you will need to send a POST request to the URL given below.
       
 ##### Figure PROTO.12 - Sample Charge Response
 
-    $response["access_token"] = "GesiE2YhZlxB9VVMhv-PoI8RwNTsmX0D38g";
-    $response["endUserId"] = "9171234567";
-    $response["amount"] = "10";
-    $response["referenceCode"] = "1234567";
-    $response["success"] = true;
+    Array (
+        "access_token"      => "GesiE2YhZlxB9VVMhv-PoI8RwNTsmX0D38g",
+        "endUserId"         => "9171234567",
+        "amount"            => "10",
+        "referenceCode"     => "1234567",
+       "success"            => true
+    )
