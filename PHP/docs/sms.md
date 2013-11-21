@@ -95,8 +95,10 @@ Finally, Globe will return an access token you can use to start using the SMS AP
 
 ##### Figure PROTO.10 - Access Token via JSON
 
-    $response["access_token"] = "GesiE2YhZlxB9VVMhv-PoI8RwNTsmX0D38g";
-    $response["subscriber_number"] = "9051234567";
+    Array (
+      "access_token"        => "GesiE2YhZlxB9VVMhv-PoI8RwNTsmX0D38g",
+      "subscriber_number"   => "9051234567"
+    )
 
 ##
 
@@ -115,9 +117,11 @@ First we need to initialize the `GlobeApi` class and then use that object to sen
 
 
 ##### Figure PROTO.12 - Sample Send Message Response
-    $response["success"] = true;
-    $response["address"] = "9171234567";
-    $response["message"] = "hello";
-    $response["senderAddress"] = "1234";
-    $response[ "access_token"] = "a8UuVwe6Rp2xv234we35GrPcSvR3-OJq22f34ty4rfw9UrE";
+    Array (
+      "success"         => true,
+      "address"         => "9171234567",
+      "message"         => "hello",
+      "senderAddress"   => "1234",
+       "access_token"   => "a8UuVwe6Rp2xv234we35GrPcSvR3-OJq22f34ty4rfw9UrE"
+    )
     
