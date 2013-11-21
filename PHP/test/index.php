@@ -6,8 +6,8 @@
     $globe = new GlobeApi('v1');
 
     $oAuth = $globe->oAuth(
-        '47jbeudg4MkfjgiBaaT4oyfExjzkuRjB',
-        '92fbf46bc42ddb6a768681b8f18e95454f2ba7d9bfea877ec04ab4e2f96723a3'
+        'app_key',
+        'app_secret'
     );
 
     if(!isset($_SESSION['code']) && !isset($_SESSION['access_token'])) {
@@ -48,16 +48,5 @@
 
     //$response = $charge->charge('0', 'asdfasdfasdfasdf123123');
     echo 'charge response: ';print_r($response);echo '<br/>';
-    // $response = $sms->send($_SESSION['access_token']);
-    // echo 'send response: ';print_r($response);echo '<br/>';
-
-    // $charge = $globe->payment(
-    //     '29268292535',
-    //     '100',
-    //     '1'
-    // );
-
-    // $response = $charge->charge($_SESSION['access_token']);
-    // echo 'charge response: ';print_r($response);echo '<br/>';
 
 ?>
