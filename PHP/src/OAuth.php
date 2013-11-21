@@ -26,7 +26,7 @@
          *
          * @return string
          */
-        public function getAuthUrl()
+        public function getLoginUrl()
         {
             return sprintf(OAuth::LOGIN_URL, GlobeAPI::AUTH_POINT).'?app_id='.$this->api_key;
         }

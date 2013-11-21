@@ -58,7 +58,7 @@ Now, initialize the `Auth` class inside GlobeApi and get the login URL using the
         [YOUR APP ID],
         [YOUR APP SECRET]
     );
-    loginUrl = auth->getAuthUrl();
+    loginUrl = auth->getLoginUrl();
     header('Location: '.$loginUrl);
 
 Before invoking your redirect, please replace `[YOUR APP ID]` and `[YOUR APP SECRET]` in the figure above with your actual **APP ID** and **APP SECRET**. Based on what you inputed as your **Redirect URI** in your app details. Globe will authenticate permissions first with the user which should look like *Figure PROTO.7a* and *Figure PROTO.7b*.
