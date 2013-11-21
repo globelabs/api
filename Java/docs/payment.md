@@ -119,7 +119,7 @@ To use the Payment API you will need to send a POST request to the URL given bel
 |-------|:----------:|:---------:|
 | [ACCESS_TOKEN] | which contains security information for transacting with a subscriber. Subscriber needs to grant an app first via SMS or Web Form Subscriber Consent Workflow. | String |
 | [SUBSCRIBER_NUMBER] | is the 10-digit MSISDN (mobile number) which you will charge to. Parameter format can be 9xxxxxxxx | String |
-| [AMOUNT] | can be a whole number or decimal up to two places | BigDecimal |
+| [AMOUNT] | amount to be charged to the subscriber | String |
 | [REFERENCE_NUMBER] | (string, unique per charge event) is your reference for reconciliation purposes. The operator should include it in reports so that you can match their view of what has been sold with yours by matching the referenceCodes. | String |
 
 
