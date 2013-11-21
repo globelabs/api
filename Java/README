@@ -21,4 +21,5 @@ First, you need to include the JAR file (and its dependencies)
 into your lib (and build path).
 
 For an idea on how to use the classes (OAuth, SMS, and Payment), 
-kindly check out the tests and the documentation.
+kindly check out the sample runners, tests and the documentation.
+
