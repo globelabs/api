@@ -54,7 +54,7 @@ Once we obtain the **APP ID** and **APP SECRET** we can begin to understand how 
 
 Now, initialize the `Auth` class inside GlobeApi and get the login URL using the `getLoginUrl` method.
 
-    $auth = $globe->oAuth(
+    $auth = $globe->auth(
         [YOUR APP ID],
         [YOUR APP SECRET]
     );
@@ -87,7 +87,7 @@ Once the user gives permission, Globe will redirect the user to your Redirect UR
 
 Using the `Auth` object we initialized in **Figure PROTO.6**, we can get the access token using the script below.
 
-    $response = $oAuth->getAccessToken([CODE]);
+    $response = $auth->getAccessToken([CODE]);
     
 Before sending, please replace `[CODE]` in the figure above with the code given from Figure PROTO.8.
 
