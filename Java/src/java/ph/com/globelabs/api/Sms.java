@@ -48,12 +48,6 @@ public class Sms {
         }
     }
 
-    public boolean isValid(String message, String subscriberNumber,
-            String accessToken) {
-        return message == null || message.length() > 160
-                || subscriberNumber == null || accessToken == null;
-    }
-
     /**
      * Sends an SMS to a subscriber who has already completed the authorization
      * process.
@@ -74,7 +68,7 @@ public class Sms {
             String message) throws ParameterRequiredException,
             GlobeApiException {
         try {
-            validateParameters(message, subscriberNumber, accessToken);
+            validateParameters(subscriberNumber, accessToken, message);
 
             Map<String, String> parameters = new HashMap<String, String>();
             parameters.put("address", subscriberNumber);
@@ -102,9 +96,10 @@ public class Sms {
         }
     }
 
-    private void validateParameters(String message, String subscriberNumber,
-            String accessToken) throws ParameterRequiredException {
-        if (isValid(message, subscriberNumber, accessToken)) {
+    private void validateParameters(String subscriberNumber,
+            String accessToken, String message)
+            throws ParameterRequiredException {
+        if (isValid(subscriberNumber, accessToken, message)) {
             String exceptionMessage = "";
             if (message == null) {
                 exceptionMessage += "Message must not be null. ";
@@ -116,6 +111,12 @@ public class Sms {
             }
             throw new ParameterRequiredException(exceptionMessage);
         }
+    }
+
+    private boolean isValid(String subscriberNumber, String accessToken,
+            String message) {
+        return message == null || message.length() > 160
+                || subscriberNumber == null || accessToken == null;
     }
 
     private String getRequestURI(String accessToken) throws URISyntaxException,
@@ -132,7 +133,7 @@ public class Sms {
 
         return UriBuilder.buildToString(uri, parameters);
     }
-    
+
     /**
      * Parses a raw body sent by the system to the configured notifyURL (in the
      * Globe Labs developer site) into an SMS response.

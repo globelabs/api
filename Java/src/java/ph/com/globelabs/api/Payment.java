@@ -53,12 +53,6 @@ public class Payment {
         }
     }
 
-    public boolean isValid(BigDecimal amount, String referenceCode) {
-        return referenceCode == null || amount == null
-                || amount.compareTo(BigDecimal.ZERO) == -1
-                || subscriberNumber == null || accessToken == null;
-    }
-
     /**
      * Charges a subscriber who has already completed the authorization process.
      * 
@@ -122,6 +116,12 @@ public class Payment {
             }
             throw new ParameterRequiredException(exceptionMessage);
         }
+    }
+
+    private boolean isValid(BigDecimal amount, String referenceCode) {
+        return referenceCode == null || amount == null
+                || amount.compareTo(BigDecimal.ZERO) == -1
+                || subscriberNumber == null || accessToken == null;
     }
 
     private String getRequestURI() throws URISyntaxException,

@@ -43,7 +43,7 @@ public class ChargeUserResponse extends Response {
         }
 
         if (responseContent.has("error")) {
-            this.error = (responseContent.getString("error") == null) ? responseContent
+            this.error = (responseContent.getString("error") != null) ? responseContent
                     .getString("error") : "Subscriber may be out of balance";
         }
     }

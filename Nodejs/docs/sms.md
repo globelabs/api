@@ -37,13 +37,22 @@ From here you should be returned to the APP Detail Page in *Figure PROTO.4*. The
 
 ## How to Include
 
-First thing before you do any calls for Globe API using ruby wrapper class is to include the base class called GlobeApi.
+First thing before you do any calls for Globe API using Node.JS wrapper class is to include main class called globelabs.
 
-##### Figure PROTO.5 - Include Base Class
+##### Figure PROTO.5 - Include Main Class
 
-**Note:** To include these you have to point the location of the file and require it in your app. In my case, I am using the test script inside the test folder and it will look like this.
+**Note:** To include these you have to place the Globe API Node.JS inside the node_modules and name it to globelabs.
 
-    require './../src/GlobeApi.rb'
+    myapp
+    - node_module
+      - globelabs
+        - [nodejs files]
+      - [other libraries you will use]
+    - [your application files]
+
+Now, you can include the GlobeAPI Node.JS.
+
+    var globe = require('globelabs')();
 
 ## Authentication
 
@@ -51,10 +60,11 @@ Once we obtain the **APP ID** and **APP SECRET** we can begin to understand how 
 
 ##### Figure PROTO.6 - Invoke a Redirection
 
-Now, initialize the `Auth` class inside GlobeApi and get the login URL using the `getLoginUrl` method.
+Now, initialize the `Auth` class inside globe and get the login URL using the `getLoginUrl` method.
 
-    auth = GlobeApi.new().auth([APP_ID], [APP_SECRET])
-    loginUrl = auth.getLoginUrl
+    var auth = globe.Auth([APP_ID], [APP_SECRET]);
+    var loginUrl = auth.getLoginUrl();
+**Note**: The variable globe we use in here is initialize on *Figure PROTO.5*.
 
 Before invoking your redirect, please replace `[YOUR APP ID]` and `[YOUR APP SECRET]` in the figure above with your actual **APP ID** and **APP SECRET**. Based on what you inputed as your **Redirect URI** in your app details. Globe will authenticate permissions first with the user which should look like *Figure PROTO.7a* and *Figure PROTO.7b*.
 
@@ -81,41 +91,88 @@ Once the user gives permission, Globe will redirect the user to your Redirect UR
 ##### Figure PROTO.9 - Get the Access Token
 
 Using the `Auth` object we initialized in **Figure PROTO.6**, we can get the access token using the script below.
+Callback functions will received 3 parameters. *http.ClientRequest* and *http.ServerResponse*. *Please see (http://nodejs.org/api/http.html) for documentation of http.*
 
-    auth.getAccessToken([CODE])
+    var callback = function(request, response) {};
 
-Before sending, please replace `[CODE]` in the figure above with the code given from *Figure PROTO.8*. 
+    auth.getAccessToken([CODE], callback);
+**Note**: Please replace the `callback` function with your own callback function. The callback function above is just an example.
 
-Finally, Globe will return an access token you can use to start using the SMS API. **Figure PROTO.10** shows how this response will look like
+Before sending, please replace `[CODE]` in the figure above with the code given from Figure PROTO.8.
+
+Finally, Globe will return an access token you can use to start using the Charge API. **Figure PROTO.10** shows how this response will look like
 
 ##### Figure PROTO.10 - Access Token via JSON
 
-    {
-      "access_token": "GesiE2YhZlxB9VVMhv-PoI8RwNTsmX0D38g",
-      "subscriber_number": "9051234567"'
-    }
+Inside your callback function, *Figure PROTO.9*, the request object will automatically parse the received data from the server. To get the parse body received from the server, use this call `request.body`.
+
+We assumed that the request is successful.
+
+    var callback = function(request, response) {
+        var body = request.body; // get the response body
+        console.log('Access Token:', body['access_token']);
+        console.log('Subscriber Number:', body['subscriber_number']);
+    };
+    
+    // The output above code
+    // Access Token: GesiE2YhZlxB9VVMhv-PoI8RwNTsmX0D38g
+    // Subscriber Number: 9051234567
+
+You notice that the `access_token` and `subscriber_number` is already JSON Object.
+
+Not all request always success if the server failed to validate the code you request. How can you get the error message? Good news! The callback function also received an error message. See sample code below.
+
+We assumed that the request fails.
+
+    var callback = function(request, response) {
+        var body = request.body; // get the response body
+        console.log('Error Message:', body['error']);
+    };
+    
+    // The output above code
+    // Error Message: <The error message thrown by the server>
 
 ##
 
-    **Note:** The data in above doesn't actually work. Please don't assume something went wrong 
-    because you tried to use it.
-
 ## Sending
+
+To use charge API you will need to send a POST request to the URL given below.
+
+**Request URL**
+
+    http://devapi.globelabs.com.ph/smsmessaging/v1/outbound/[SHORT_CODE]/requests
+
+**Parameters**
+
+| Parameters | Definition | Data Type |
+|-------|:----------:|:---------:|
+| [SHORT_CODE] | your application's short code. | String or Integer |
+| [SUBSCRIBER_NUMBER] | is the MSISDN (mobile number) which you will charge to. Parameter format can be 9xxxxxxxx | String or Integer |
+| [YOUR_ACCESS_TOKEN] | which contains security information for transacting with a subscriber. Subscriber needs to grant an app first via SMS or Web Form Subscriber Consent Workflow. | String |
+| [MESSAGE] | the message you want to send. | String |
+| [YOUR_CALLBACK_FUNCTION] | is the function who will be trigger if the request is completed. | Function |
 
 ##### Figure PROTO.11 - Sample Send Message Request
 
-First we need to initialize the `GlobeApi` class and then use that object to send SMS.
+    var sms = globe.SMS([SHORT_CODE], [SUBSCRIBER_NUMBER], [YOUR_ACCESS_TOKEN]);
+    sms.sendMessage([MESSAGE], [YOUR_CALLBACK_FUNCTION]);
 
-    globe = GlobeApi.new()
-    globe.sms([SHORTCODE]).sendMessage([YOUR_ACCESS_TOKEN], [SUBSCRIBER_NUMBER], [MESSAGE])
-
+**Note**: Please see *Figure PROTO.10* for the explanation of `[YOUR_CALLBACK_FUNCTION]`.;
 
 ##### Figure PROTO.12 - Sample Send Message Response
 
-    {
-      "success": true,
-      "address": "9171234567",
-      "message": "hello",
-      "senderAddress": "1234",
-      "access_token": "a8UuVwe6Rp2xv234we35GrPcSvR3-OJq22f34ty4rfw9UrE"
-    }
+We assumed that we already sent the message to the user and we are receiving the server response.
+
+    var callback = function(request, response) {
+        var body = request.body;
+        console.log(body);
+        
+        // Output above code
+        // {
+        //     access_token: "GesiE2YhZlxB9VVMhv-PoI8RwNTsmX0D38g",
+        //     address: "9171234567",
+        //     amount: "10",
+        //     senderAddress: "1234",
+        //     success: true
+        // }
+    };
