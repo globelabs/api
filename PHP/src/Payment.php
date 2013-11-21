@@ -1,103 +1,104 @@
 <?php
-    class Payment extends GlobeAPI
-    {
-        public $version;
-        public $endUserId;
-        public $referenceCode;
-        public $transactionOperationStatus;
-        public $description;
-        public $currency;
-        public $accessToken;
-        public $amount;
-        public $code;
-        public $clientCorrelator;
-        public $onBehalfOf;
-        public $purchaseCategoryCode;
-        public $channel;
-        public $taxAmount;
-        public $serviceId;
-        public $productId;
+class Payment extends GlobeAPI
+{
+    public $version;
+    public $endUserId;
+    public $referenceCode;
+    public $transactionOperationStatus;
+    public $description;
+    public $currency;
+    public $accessToken;
+    public $amount;
+    public $code;
+    public $clientCorrelator;
+    public $onBehalfOf;
+    public $purchaseCategoryCode;
+    public $channel;
+    public $taxAmount;
+    public $serviceId;
+    public $productId;
 
-        public $curlURL = 'http://%s/payment/%s/transactions/amount';
+    public $curlURL = 'http://%s/payment/%s/transactions/amount';
 
-        /**
-         * COnstructor of the Charge class
-         *
-         * @param string|null $version          the api version to use
-         * @param string|null $endUserId        the number to charge
-         * @param string|null $accessToken      the access token of the user to be charged
-         */
-        public function __construct(
-            $version = null,
-            $endUserId = null,
-            $accessToken = null
-        ) {
+    /**
+     * COnstructor of the Charge class
+     *
+     * @param string|null $version          the api version to use
+     * @param string|null $endUserId        the number to charge
+     * @param string|null $accessToken      the access token of the user to be charged
+     */
+    public function __construct(
+        $version = null,
+        $endUserId = null,
+        $accessToken = null
+    ) {
 
-            $this->version = $version;
-            $this->endUserId = $endUserId;
-            $this->accessToken = $accessToken;
-        }
-
-        /**
-         * sets $this->amount to the amount parameter
-         *
-         * @param number $amount the ammount to charge
-         */
-        public function setAmount($amount) {
-            if(!is_float($amount) || !is_integer($amount)) {
-                throw new Exception('amount should be float or integer');
-            }
-
-            $this->amount = $amount;
-            return $this;
-        }
-
-        /**
-         * Triggers charge
-         * @param  string|number    $amount         the access token to be sued
-         * @param  number|string     $bodyOnly      returns the headers if set to false
-         * @return array 
-         */
-        public function charge($amount=null, $refNo=null, $bodyOnly = true) {
-            if($amount!=null) {
-                $this->amount = $amount;
-            }
-
-            if($refNo) {
-                $this->referenceCode = $refNo;
-            }
-
-            if(!$this->endUserId) {
-                throw new Exception('charge expects an endUserId.');
-            }
-
-            if(!$this->referenceCode) {
-                throw new Exception('charge expects a referenceCode.');
-            }
-
-            if($this->amount == null) {
-                throw new Exception('charge expects an amount.');
-            }
-
-            $url = sprintf(
-                $this->curlURL,
-                GlobeAPI::API_ENDPOINT,
-                $this->version
-            );
-
-            $fields = array(
-                'endUserId' => $this->endUserId,
-                'referenceCode' => $this->referenceCode,
-                'transactionOperationStatus' => $this->transactionOperationStatus,
-                'amount' => $this->amount,
-                'access_token' => $this->accessToken
-            );
-
-            $fields = array_filter($fields);
-
-            $response = $this->_curlPost($url, $fields);
-
-            return $this->getReturn($response, $bodyOnly);
-        }
+        $this->version = $version;
+        $this->endUserId = $endUserId;
+        $this->accessToken = $accessToken;
     }
-?>
+
+    /**
+     * sets $this->amount to the amount parameter
+     *
+     * @param number $amount the ammount to charge
+     */
+    public function setAmount($amount) {
+        if(!is_float($amount) && !is_integer($amount) && $amount!==0) {
+            throw new Exception('amount should be float or integer');
+        }
+
+        $this->amount = $amount;
+        return $this;
+    }
+
+    /**
+     * Triggers charge
+     * @param  string|number    $amount         the access token to be sued
+     * @param  number|string     $bodyOnly      returns the headers if set to false
+     * @return array 
+     */
+    public function charge($amount=null, $refNo=null, $bodyOnly = true) {
+        if($amount!=null) {
+            $this->amount = $amount;
+        }
+
+        if($refNo) {
+            $this->referenceCode = $refNo;
+        }
+
+        if(!$this->endUserId) {
+            throw new Exception('charge expects an endUserId.');
+        }
+
+        if(!$this->referenceCode) {
+            throw new Exception('charge expects a referenceCode.');
+        }
+
+        if($this->amount === null) {
+            throw new Exception('charge expects an amount.');
+        }
+
+        $url = sprintf(
+            $this->curlURL,
+            GlobeAPI::API_ENDPOINT,
+            $this->version
+        );
+
+        $fields = array(
+            'endUserId' => $this->endUserId,
+            'referenceCode' => $this->referenceCode,
+            'transactionOperationStatus' => $this->transactionOperationStatus,
+            'amount' => ''.$this->amount,
+            'access_token' => $this->accessToken
+        );
+
+        $fields = array_filter($fields);
+
+        $fields['amount'] = (string) $this->amount;
+
+        $response = $this->_curlPost($url, $fields);
+
+        return $this->getReturn($response, $bodyOnly);
+    }
+}
