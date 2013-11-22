@@ -115,7 +115,7 @@ To use charge API you will need to send a POST request to the URL given below.
 | [YOUR_ACCESS_TOKEN] | which contains security information for transacting with a subscriber. Subscriber needs to grant an app first via SMS or Web Form Subscriber Consent Workflow. | String |
 | [SUBSCRIBER_NUMBER] | is the MSISDN (mobile number) which you will charge to. Parameter format can be 09xxxxxxxx | String or Integer |
 | [AMOUNT] | can be a whole number or decimal | String |
-| [REFERENCE_NUMBER] | (string, unique per charge event) is your reference for reconciliation purposes. The operator should include it in reports so that you can match their view of what has been sold with yours by matching the referenceCodes. | String or Integer |
+| [REFERENCE_NUMBER] | Is a unique transaction ID with a format of `[SHORTCODE]`+`#######` where `#######` is an incremented number beginning from `1000001`. | Integer |
 
 
 ##### Figure PROTO.11 - Sample Charge Request

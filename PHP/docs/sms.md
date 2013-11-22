@@ -1,6 +1,6 @@
 ## Introduction
 
-The Globe Short Message Service(SMS) API lets you develop client applications to communicate with people using the most basic form of electronic communication, text messaging. This document describes how to use the OAUTH/RESTful calling style and client libraries for various programming languages (currently Java, Python, PHP, NodeJS and Ruby) to access and create Globe message data. For other languages and libraries you can access the SMS protocol manually. The following documentation describes how you can access the SMS API directly with examples of request types, options and responses.
+The Globe Short Message Service(SMS) API lets you develop client applications to communicate with people using the most basic form of electronic communication, text messaging. This document describes how to use the OAUTH/RESTful calling style and client libraries for various programming languages (currently Java, Python, PHP, NodeJS and PHP) to access and create Globe message data. For other languages and libraries you can access the SMS protocol manually. The following documentation describes how you can access the SMS API directly with examples of request types, options and responses.
 
 ## Getting Started
 
@@ -37,13 +37,14 @@ From here you should be returned to the APP Detail Page in *Figure PROTO.4*. The
 
 ## How to Include
 
-First thing before you do any calls for Globe API using ruby wrapper class is to include the base class called GlobeApi.
+First thing before you do any calls for Globe API using PHP wrapper class is to include the base class called GlobeApi.
 
 ##### Figure PROTO.5 - Include Base Class
 
 **Note:** To include these you have to point the location of the file and require it in your app. In my case, I am using the test script inside the test folder and it will look like this.
 
-    require './../src/GlobeApi.rb'
+    require ('path/to/directory/GlobeApi.php');
+    $globe = new GlobeApi([version]);
 
 ## Authentication
 
@@ -53,8 +54,12 @@ Once we obtain the **APP ID** and **APP SECRET** we can begin to understand how 
 
 Now, initialize the `Auth` class inside GlobeApi and get the login URL using the `getLoginUrl` method.
 
-    auth = GlobeApi.new().auth([APP_ID], [APP_SECRET])
-    loginUrl = auth.getLoginUrl
+    $auth = $globe->auth(
+        [YOUR APP ID],
+        [YOUR APP SECRET]
+    );
+    $loginUrl = auth->getLoginUrl();
+    header('Location: '.$loginUrl);
 
 Before invoking your redirect, please replace `[YOUR APP ID]` and `[YOUR APP SECRET]` in the figure above with your actual **APP ID** and **APP SECRET**. Based on what you inputed as your **Redirect URI** in your app details. Globe will authenticate permissions first with the user which should look like *Figure PROTO.7a* and *Figure PROTO.7b*.
 
@@ -82,7 +87,7 @@ Once the user gives permission, Globe will redirect the user to your Redirect UR
 
 Using the `Auth` object we initialized in **Figure PROTO.6**, we can get the access token using the script below.
 
-    auth.getAccessToken([CODE])
+    $response = $auth->getAccessToken([CODE]);
 
 Before sending, please replace `[CODE]` in the figure above with the code given from *Figure PROTO.8*. 
 
@@ -90,10 +95,10 @@ Finally, Globe will return an access token you can use to start using the SMS AP
 
 ##### Figure PROTO.10 - Access Token via JSON
 
-    {
-      "access_token": "GesiE2YhZlxB9VVMhv-PoI8RwNTsmX0D38g",
-      "subscriber_number": "9051234567"'
-    }
+    Array (
+      "access_token"        => "GesiE2YhZlxB9VVMhv-PoI8RwNTsmX0D38g",
+      "subscriber_number"   => "9051234567"
+    )
 
 ##
 
@@ -106,16 +111,17 @@ Finally, Globe will return an access token you can use to start using the SMS AP
 
 First we need to initialize the `GlobeApi` class and then use that object to send SMS.
 
-    globe = GlobeApi.new()
-    globe.sms([SHORTCODE]).sendMessage([YOUR_ACCESS_TOKEN], [SUBSCRIBER_NUMBER], [MESSAGE])
+    $globe = new GlobeApi('v1');
+    $sms = $globe->sms([short_code]);
+    $response = $sms->send([access_token], [number], [message]);
 
 
 ##### Figure PROTO.12 - Sample Send Message Response
-
-    {
-      "success": true,
-      "address": "9171234567",
-      "message": "hello",
-      "senderAddress": "1234",
-      "access_token": "a8UuVwe6Rp2xv234we35GrPcSvR3-OJq22f34ty4rfw9UrE"
-    }
+    Array (
+      "success"         => true,
+      "address"         => "9171234567",
+      "message"         => "hello",
+      "senderAddress"   => "1234",
+       "access_token"   => "a8UuVwe6Rp2xv234we35GrPcSvR3-OJq22f34ty4rfw9UrE"
+    )
+    
