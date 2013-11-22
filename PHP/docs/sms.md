@@ -1,6 +1,6 @@
 ## Introduction
 
-The Globe Short Message Service(SMS) API lets you develop client applications to communicate with people using the most basic form of electronic communication, text messaging. This document describes how to use the OAUTH/RESTful calling style and client library for PHP.
+The Globe Short Message Service(SMS) API lets you develop client applications to communicate with people using text messaging. This document describes how to use the OAUTH/RESTful calling style and client library for PHP.
 
 ## Getting Started
 
