@@ -1,7 +1,7 @@
 import Sms
 import Payment
 import Base
-import Oauth
+import Auth
 
 class GlobeApi(object):
 
@@ -21,5 +21,5 @@ class GlobeApi(object):
         return payment
 
     def oAuth(self, key, secret):
-        return Oauth.Oauth(key, secret)
+        return Auth.Auth(key, secret)
 
