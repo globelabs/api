@@ -175,7 +175,7 @@ We assumed that we already charged the user and we are receiving the server resp
         //     access_token: "GesiE2YhZlxB9VVMhv-PoI8RwNTsmX0D38g",
         //     endUserId: "9171234567",
         //     amount: "10",
-        //     referenceCode: "1234567",
+        //     referenceCode: "12341000001",
         //     success: true
         // }
     };
