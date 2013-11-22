@@ -1,8 +1,8 @@
 import urllib
 import requests
-import base
+import Base
 
-class Oauth(base.Base):
+class Oauth(Base.Base):
 	def __init__(self, key, secret):
 		super(Oauth, self).__init__()
 
