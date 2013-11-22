@@ -1,6 +1,6 @@
 ## Introduction
 
-The Globe Payment API lets you develop client applications to charge subscribers using the most basic form of electronic communication. This document describes how to use the OAUTH/RESTful calling style and client libraries for various programming languages (currently Java, Python, PHP, NodeJS and PHP). For other languages and libraries you can access the Payment protocol manually. The following documentation describes how you can access the Payment API directly with examples of request types, options and responses.
+The Globe Payment API lets you develop client applications to charge subscribers. This document describes how to use the OAUTH/RESTful calling style and client library for Pyhon.
 
 ## Getting Started
 
@@ -20,7 +20,7 @@ Next, login with your given credentials to get to the APP screen. When you get t
 
 This will bring you to a form with required information that Globe will need to process your app creation. Fill out this form with the required fields at the very least and press Submit found at the bottom right in *Figure PROTO.3*.
 
-##### Figure PROTO.3 - Create App Form
+##### Figure Python.Payment.3 - Create App Form
 ![Create App Form](https://raw.github.com/Openovate/rest-docs/master/sms/assets/form.jpg)
 ====
 
