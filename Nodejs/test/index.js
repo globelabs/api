@@ -1,5 +1,5 @@
 // Use require('globe') if globe is on node_module folder
-var globe = require('./../lib/globeapi.js')(); // default application version is v1
+var globe = require('./../src/globeapi.js')(); // default application version is v1
 
 // Application Settings
 var appShortCode = '<APP_SHORT_CODE>'; // full short code

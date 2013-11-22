@@ -1,6 +1,6 @@
 // Sample code of receiving code using Nodejs HTTP
 // Use require('globe') if globe is on node_module folder
-var globe = require('./../../lib/globeapi.js')(); // default application version is v1
+var globe = require('./../../src/globeapi.js')(); // default application version is v1
 var http = require('http');
 var url = require('url'); // url parser
 
