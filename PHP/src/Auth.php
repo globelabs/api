@@ -20,6 +20,39 @@ class Auth extends GlobeApi
         $this->api_key = $api_key;
         $this->api_secret = $api_secret;
     }
+    
+    /**
+     * Parses the request and returns the access token
+     * 
+     * @param  string|array   the request parameter
+     * @return array
+     */
+    public function getAccessToken($request)
+    {
+        return (isset($request['access_token'])) ? $request['access_token'] : NULL;
+    }
+    
+    /**
+     * Parses the request and returns the subscriber's number'
+     * 
+     * @param  string|array   the request parameter
+     * @return array
+     */
+    public function getSubscriberNumber($request)
+    {
+        return (isset($request['subscriber_number'])) ? $request['subscriber_number'] : NULL;
+    }
+    
+    /**
+     * Parses the request and returns the code
+     * 
+     * @param  string|array   the request parameter
+     * @return array
+     */
+    public function getCode($request)
+    {
+        return (isset($request['code'])) ? $request['code'] : NULL;
+    }
 
     /**
      * generates the login/auth url\
