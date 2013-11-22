@@ -79,7 +79,7 @@ class GlobeApi {
     public function __call($name, $arguments)
     {
         $prefix = strtolower(substr($name, 0, 3));
-        $property = lcfirst(substr($name, 3));
+        $property = $this->lcfirst(substr($name, 3));
 
         if ($prefix === 'set') {
             if (!property_exists($this, $property)) {
@@ -177,5 +177,10 @@ class GlobeApi {
         }
 
         return $response;
+    }
+
+    protected function lcfirst($str) {
+        $str[0] = strtolower($str[0]);
+        return $str;
     }
 }
