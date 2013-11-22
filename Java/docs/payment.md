@@ -130,6 +130,8 @@ To use the Payment API you will need to send a POST request to the URL given bel
 
     Payment payment = new Payment([SUBSCRIBER_NUMBER], [ACCESS_TOKEN]);
     payment.charge([AMOUNT], [REFERENCE_NUMBER]);
+    
+    **Note:** You can get your Short Code value from your Globe App Details in `Figure JAVA.PAYMENT.4. You also need to remove the `2158` digit in your short code.
       
 ##### Figure JAVA.PAYMENT.12 - Sample Charge Response
 

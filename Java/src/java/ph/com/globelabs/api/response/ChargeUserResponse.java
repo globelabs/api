@@ -11,7 +11,7 @@ import org.json.JSONObject;
 /**
  * This object is created from the expected response of the server. Obtainable
  * information include the following: success, amount, subscriberNumber,
- * referenceCode, accessToken, and error (if any).
+ * transactionOperationStatus, referenceCode, accessToken, and error (if any).
  * 
  * This response also has a responseCode, responseMessage, and holds the raw
  * HttpResponse. See {@link Response}.
@@ -22,6 +22,7 @@ public class ChargeUserResponse extends Response {
     private boolean success;
     private BigDecimal amount;
     private String subscriberNumber;
+    private String transactionOperationStatus;
     private String referenceCode;
     private String accessToken;
 
@@ -34,9 +35,12 @@ public class ChargeUserResponse extends Response {
         JSONObject responseContent = new JSONObject(super.getContent());
 
         if (responseContent.has("success")) {
-            this.amount = new BigDecimal(responseContent.getString("amount")).setScale(2, RoundingMode.CEILING);
+            this.amount = new BigDecimal(responseContent.getString("amount"))
+                    .setScale(2, RoundingMode.CEILING);
             this.success = responseContent.getBoolean("success");
             this.subscriberNumber = responseContent.getString("endUserId");
+            this.transactionOperationStatus = responseContent
+                    .getString("transactionOperationStatus");
             this.referenceCode = responseContent.getString("referenceCode");
             this.accessToken = responseContent.getString("access_token");
         }
@@ -57,6 +61,10 @@ public class ChargeUserResponse extends Response {
 
     public String getSubscriberNumber() {
         return subscriberNumber;
+    }
+
+    public String getTransactionOperationStatus() {
+        return transactionOperationStatus;
     }
 
     public String getAccessToken() {
@@ -80,8 +88,10 @@ public class ChargeUserResponse extends Response {
         if (success == true) {
             return "ChargeUserResponse [success=" + success + ", amount="
                     + amount.toString() + ", subscriberNumber="
-                    + subscriberNumber + ", referenceCode=" + referenceCode
-                    + ", accessToken=" + accessToken + "] " + super.toString();
+                    + subscriberNumber + ", transactionOperationStatus="
+                    + transactionOperationStatus + ", referenceCode="
+                    + referenceCode + ", accessToken=" + accessToken + "] "
+                    + super.toString();
         } else {
             return "ChargeUserResponse [error=" + error + "] "
                     + super.toString();
