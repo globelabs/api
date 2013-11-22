@@ -2,6 +2,8 @@ package ph.com.globelabs.api;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.net.URISyntaxException;
 import java.net.URLEncoder;
 import java.util.HashMap;
@@ -58,16 +60,18 @@ public class Payment {
      *            How much will be charged to the subscriber.
      * @param referenceCode
      *            A unique transaction ID with a format of
-     *            `[SHORTCODE]`+`#######` where `#######` is an incremented
-     *            number beginning from `1000001`.
+     *            `[SHORTCODE_WITHOUT_2158]`+`#######` where `#######` is an
+     *            incremented number beginning from `1000001`.
      * @return See {@link ChargeUserResponse}
      * @throws GlobeApiException
      * @throws ParameterRequiredException
      */
-    public ChargeUserResponse charge(String amount, String referenceCode)
+    public ChargeUserResponse charge(BigDecimal amount, String referenceCode)
             throws GlobeApiException, ParameterRequiredException {
         try {
             validateParameters(amount, referenceCode);
+
+            amount = amount.setScale(2, RoundingMode.CEILING);
 
             Map<String, String> parameters = new HashMap<String, String>();
             parameters.put("endUserId", subscriberNumber);
@@ -96,7 +100,7 @@ public class Payment {
         }
     }
 
-    private void validateParameters(String amount, String referenceCode)
+    private void validateParameters(BigDecimal amount, String referenceCode)
             throws ParameterRequiredException {
         if (isValid(amount, referenceCode)) {
             String exceptionMessage = "";
@@ -105,6 +109,8 @@ public class Payment {
             }
             if (amount == null) {
                 exceptionMessage += "Amount must not be null. ";
+            } else if (amount.compareTo(BigDecimal.ZERO) == -1) {
+                exceptionMessage += "Amount must not be negative. ";
             }
             if (subscriberNumber == null || accessToken == null) {
                 exceptionMessage += "Subscriber number and access token must not be null. ";
@@ -113,8 +119,9 @@ public class Payment {
         }
     }
 
-    private boolean isValid(String amount, String referenceCode) {
+    private boolean isValid(BigDecimal amount, String referenceCode) {
         return referenceCode == null || amount == null
+                || amount.compareTo(BigDecimal.ZERO) == -1
                 || subscriberNumber == null || accessToken == null;
     }
 

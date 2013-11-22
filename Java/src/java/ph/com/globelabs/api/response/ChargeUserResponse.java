@@ -1,6 +1,8 @@
 package ph.com.globelabs.api.response;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import org.apache.http.HttpResponse;
 import org.json.JSONException;
@@ -18,7 +20,7 @@ import org.json.JSONObject;
 public class ChargeUserResponse extends Response {
 
     private boolean success;
-    private String amount;
+    private BigDecimal amount;
     private String subscriberNumber;
     private String referenceCode;
     private String accessToken;
@@ -32,7 +34,7 @@ public class ChargeUserResponse extends Response {
         JSONObject responseContent = new JSONObject(super.getContent());
 
         if (responseContent.has("success")) {
-            this.amount = responseContent.getString("amount");
+            this.amount = new BigDecimal(responseContent.getString("amount")).setScale(2, RoundingMode.CEILING);
             this.success = responseContent.getBoolean("success");
             this.subscriberNumber = responseContent.getString("endUserId");
             this.referenceCode = responseContent.getString("referenceCode");
@@ -61,7 +63,7 @@ public class ChargeUserResponse extends Response {
         return accessToken;
     }
 
-    public String getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
 
@@ -77,7 +79,7 @@ public class ChargeUserResponse extends Response {
     public String toString() {
         if (success == true) {
             return "ChargeUserResponse [success=" + success + ", amount="
-                    + amount + ", subscriberNumber="
+                    + amount.toString() + ", subscriberNumber="
                     + subscriberNumber + ", referenceCode=" + referenceCode
                     + ", accessToken=" + accessToken + "] " + super.toString();
         } else {

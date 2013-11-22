@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpResponseFactory;
@@ -57,10 +58,10 @@ public class PaymentTest {
             UnsupportedEncodingException, IOException, JSONException,
             GlobeApiException, ParameterRequiredException {
         String referenceCode = "99991000001";
-        ChargeUserResponse response = payment.charge("1", referenceCode);
+        ChargeUserResponse response = payment.charge(new BigDecimal("1"), referenceCode);
         assertEquals(201, response.getResponseCode());
         assertEquals("Created", response.getResponseMessage());
-        assertEquals("1", response.getAmount().toString());
+        assertEquals("1.00", response.getAmount().toString());
     }
 
     private HttpResponse mockHttpResponse()

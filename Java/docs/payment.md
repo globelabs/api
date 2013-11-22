@@ -122,8 +122,8 @@ To use the Payment API you will need to send a POST request to the URL given bel
 |-------|:----------:|:---------:|
 | [ACCESS_TOKEN] | which contains security information for transacting with a subscriber. Subscriber needs to grant an app first via SMS or Web Form Subscriber Consent Workflow. | String |
 | [SUBSCRIBER_NUMBER] | is the 10-digit MSISDN (mobile number) which you will charge to. Parameter format can be `9xxxxxxxx` | String |
-| [AMOUNT] | amount to be charged to the subscriber | String |
-| [REFERENCE_NUMBER] | a unique transaction ID with a format of `[SHORTCODE]`+`#######` where `#######` is an incremented number beginning from `1000001`. | (numeric) String |
+| [AMOUNT] | amount to be charged to the subscriber | BigDecimal |
+| [REFERENCE_NUMBER] | a unique transaction ID with a format of `[SHORTCODE_WITHOUT_2158]`+`#######` where `#######` is an incremented number beginning from `1000001`. | (numeric) String |
 
 
 ##### Figure JAVA.PAYMENT.11 - Sample Charge Request
