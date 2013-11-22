@@ -105,12 +105,13 @@ Finally, Globe will return an access token you can use to start using the Charge
     **Note:** The data above doesn't actually work. Please don't assume something went wrong 
     because you tried to use it.
 
+
 ## Sending an SMS to a subscriber
 
 ##### Figure PROTO.11 - Sample Send Message Request
 
     Sms sms = new Sms([SHORTCODE]);
-    sms.send([SUBSCRIBER_NUMBER], [ACCESS_TOKEN], [MESSAGE]);
+    sms.sendMessage([SUBSCRIBER_NUMBER], [ACCESS_TOKEN], [MESSAGE]);
 
 **Parameters**
 
@@ -118,10 +119,32 @@ Finally, Globe will return an access token you can use to start using the Charge
 |-------|:----------:|:---------:|
 | [SHORTCODE] | the last 4 digits of your shortcode. 2158XXXX. | String |
 | [ACCESS_TOKEN] | which contains security information for transacting with a subscriber. Subscriber needs to grant an app first via SMS or Web Form Subscriber Consent Workflow. | String |
-| [SUBSCRIBER_NUMBER] | is the 10-digit MSISDN (mobile number) which you will charge to. Parameter format can be 9xxxxxxxx | String |
+| [SUBSCRIBER_NUMBER] | is the 10-digit MSISDN (mobile number) which you will charge to. Parameter format can be `9xxxxxxxx` | String |
 | [MESSAGE] | the SMS body. Must be 160 characters or less. | String |
 
 
 ##### Figure PROTO.12 - Sample Send Message Response
 
     SendSmsResponse [success=true, message=Hello World, address=9173849494, senderAddress=9999, accessToken=_Ak28sdfl32r908sdf0q843qjlkjdf90234jlkasd98] Response [responseCode=201, responseMessage=Created, statusLine=HTTP/1.1 201 Created, content={"message":"Hello World","senderAddress":"9999","address":"9173849494","success":"true","access_token":"_Ak28sdfl32r908sdf0q843qjlkjdf90234jlkasd98"}]
+
+
+## Parsing a Received SMS
+
+##### Figure PROTO.11 - Sample Get Message Request
+
+    Sms sms = new Sms([SHORTCODE]);
+    sms.getMessage([RAW_BODY]);
+
+**Parameters**
+
+| Parameters | Definition | Data Type |
+|-------|:----------:|:---------:|
+| [RAW_BODY] | the raw body sent by the Globe Server to the notify URL. | String |
+
+Sample raw body
+
+    command_length=71&command_id=5&command_status=0&sequence_number=70&command=deliver_sm&service_type=&source_addr_ton=2&source_addr_npi=1&source_addr=9173849494&dest_addr_ton=4&dest_addr_npi=9&destination_addr=21589999&esm_class=0&protocol_id=0&priority_flag=0&schedule_delivery_time=&validity_period=&registered_delivery=0&replace_if_present_flag=0&data_coding=0&sm_default_msg_id=0&short_message[message]=&source_network_type=1&dest_network_type=1&message_payload[message]=A%20%20B%20C%20D%20.E
+
+##### Figure PROTO.12 - Sample Send Message Response
+
+    SmsResponse [sourceAddr=9173849494, destinationAddr=21589999, message=A  B C D .E]
