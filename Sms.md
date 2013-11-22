@@ -116,11 +116,23 @@ To be able to use the SMS sending, you will need to send a POST Request.
 ##### Figure PROTO.SMS.11 - Sample Send Message Response
 
     {
-      "success": true,
-      "address": "9171234567",
-      "message": "hello",
-      "senderAddress": "1234",
-      "access_token": "GesiE2YhZlxB9VVMhv-PoI8RwNTsmX0D38g"
+      "outboundSMSMessageRequest": {
+        "address": "09171234567",
+        "deliveryInfoList": {
+          "deliveryInfo": [],
+          "resourceURL": null
+        },
+        "senderAddress": "1234",
+        "outboundSMSTextMessage": {
+          "message": "hello"
+        },
+        "reciptRequest": {
+          "notifyURL": null,
+          "callbackData": null,
+          "senderName": null,
+          "resourceURL": null
+        }
+      }
     }
 
 ## Receiving
@@ -130,32 +142,21 @@ In receiving SMS, globe will send a data to your Notify URL (that you provided w
 ##### Figure PROTO.SMS.12 - Sample JSON Response
 
     {
-        "registered_delivery" : "0",
-        "command_length": "68",
-        "source_addr_npi": "1",
-        "service_type": "",
-        "esm_class": "0",
-        "validity_period": "",
-        "command_status": "0",
-        "message_payload[message]": "Get",
-        "sequence_number": "14",
-        "sm_default_msg_id": "0",
-        "dest_addr_npi": "9",
-        "source_addr_ton": "2",
-        "source_network_type": "1",
-        "priority_flag": "0",
-        "dest_network_type": "1",
-        "command": "deliver_sm",
-        "replace_if_present_flag": "0",
-        "source_addr": "9171234567",
-        "destination_addr": "12345678",
-        "dest_addr_ton": "4",
-        "short_message[message]": "",
-        "protocol_id": "0",
-        "schedule_delivery_time": "",
-        "data_coding": "0",
-        "dest_addr_npi": "9",
-        "command_id": "5"
+       "inboundSMSMessageList":{
+           "inboundSMSMessage":[
+              {
+                 "dateTime":"Fri Nov 22 2013 12:12:13 GMT+0000 (UTC)",
+                 "destinationAddress":"21581234",
+                 "messageId":null,
+                 "message":"Hello",
+                 "resourceURL":null,
+                 "senderAddress":"9171234567"
+              }
+            ],
+            "numberOfMessagesInThisBatch":1,
+            "resourceURL":null,
+            "totalNumberOfPendingMessages":null
+        }
     }
 
 

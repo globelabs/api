@@ -52,7 +52,7 @@ class Payment extends GlobeAPI
             throw new Exception('amount should be float or integer');
         }
 
-        $this->amount = $amount;
+        $this->amount = sprintf('%0.2f', $amount);;
         return $this;
     }
 
@@ -64,7 +64,7 @@ class Payment extends GlobeAPI
      */
     public function charge($amount=null, $refNo=null, $bodyOnly = true) {
         if($amount!=null) {
-            $this->amount = $amount;
+            $this->setAmount($amount);
         }
 
         if($refNo) {
@@ -91,13 +91,13 @@ class Payment extends GlobeAPI
 
         $fields = array(
             'endUserId' => $this->endUserId,
-            'referenceCode' => $this->shortCode.$this->referenceCode,
+            'referenceCode' => $this->referenceCode,
+            'amount' => $this->amount,
             'transactionOperationStatus' => $this->transactionOperationStatus,
             'access_token' => $this->accessToken
         );
 
         $fields = array_filter($fields);
-        $fields['amount'] = (string) $this->amount;
 
         $response = $this->_curlPost($url, $fields);
 
