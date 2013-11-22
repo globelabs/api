@@ -43,7 +43,7 @@ module.exports = function() {
      * @returns {globe.Auth}
      */
     p.Auth = function(appId, appSecret) {
-        return load.call(this, 'oauth', appId, appSecret, null, REQUEST_URL, ACCESS_URL);
+        return load.call(this, 'auth', appId, appSecret, null, REQUEST_URL, ACCESS_URL);
     };
 
     /**

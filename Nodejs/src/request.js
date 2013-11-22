@@ -12,14 +12,14 @@ module.exports = function() {
     }, p = c.prototype;
 
     /* Static Properties
-     -------------------------------*/
+    -------------------------------*/
     /* Private Properties
-     -------------------------------*/
+    -------------------------------*/
     var http = require('http');
     var querystring = require('querystring');
 
     /* Construct
-     -------------------------------*/
+    -------------------------------*/
     /**
      * Load defaults.
      * 
@@ -50,7 +50,7 @@ module.exports = function() {
     };
 
     /* Public Methods
-     -------------------------------*/
+    -------------------------------*/
     /**
      * Sets the logger.
      * 
@@ -84,7 +84,7 @@ module.exports = function() {
      */
     p.get = function(path, query, post, headers, callback) {
         // get the response of the request
-        getResponse.call(this, 'GET', path, query, post, headers, callback);
+        _getResponse.call(this, 'GET', path, query, post, headers, callback);
 
         return this;
     };
@@ -101,7 +101,7 @@ module.exports = function() {
      */
     p.post = function(path, query, post, headers, callback) {
         // get the response of the request
-        getResponse.call(this, 'POST', path, query, post, headers, callback);
+        _getResponse.call(this, 'POST', path, query, post, headers, callback);
 
         return this;
     };
@@ -118,7 +118,7 @@ module.exports = function() {
      */
     p.put = function(path, query, post, headers, callback) {
         // get the response of the request
-        getResponse.call(this, 'PUT', path, query, post, headers, callback);
+        _getResponse.call(this, 'PUT', path, query, post, headers, callback);
 
         return this;
     };
@@ -135,7 +135,7 @@ module.exports = function() {
      */
     p.delete = function(path, query, post, headers, callback) {
         // get the response of the request
-        getResponse.call(this, 'DELETE', path, query, post, headers, callback);
+        _getResponse.call(this, 'DELETE', path, query, post, headers, callback);
 
         return this;
     };
@@ -224,7 +224,7 @@ module.exports = function() {
     };
 
     /* Private Methods
-     -------------------------------*/
+    -------------------------------*/
     /**
      * Gets the response.
      * 
@@ -235,7 +235,7 @@ module.exports = function() {
      * @param {function} callback
      * @return {request}
      */
-    var getResponse = function(method, path, query, post, headers, callback) {
+    var _getResponse = function(method, path, query, post, headers, callback) {
         // finds the callback function
         if (typeof path === 'function') {
             callback = path;
@@ -301,7 +301,7 @@ module.exports = function() {
         options['path'] += query;
 
         // logged request
-        loggedRequest.call(self, options, query, post);
+        _loggedRequest.call(self, options, query, post);
 
         // send the request
         var request = http.request(options, function(response) {
@@ -368,14 +368,14 @@ module.exports = function() {
      * @param {string} query
      * @param {string} data
      */
-    var loggedRequest = function(options, query, data) {
+    var _loggedRequest = function(options, query, data) {
         this.logger.info('HTTP Options:', options);
         this.logger.info('Query:', query);
         this.logger.info('Body:', data);
     };
 
     /* Adaptor
-     -------------------------------*/
+    -------------------------------*/
     var module = function(host, port) {
         return new c(host, port);
     };

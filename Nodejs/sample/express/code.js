@@ -1,6 +1,6 @@
 // Sample code of receiving code from GlobeLabs Callback URI using Express Framework
 // Use require('globe') if globe is on node_module folder
-var globe = require('./../../lib/index.js')(); // default application version is v1
+var globe = require('./../../src/globeapi.js')(); // default application version is v1
 var express = require('express'); // express framework: npm install express
 
 // Express Settings
@@ -11,6 +11,9 @@ app.use(express.bodyParser());
 var appShortCode = '<APP_SHORT_CODE>'; // full short code
 var appId = '<APP_ID>'; // application id
 var appSecret = '<APP_SECRET>'; // application secret
+
+// Getting the login url
+var auth = globe.Auth(appId, appSecret);
 
 var callbackUrlPath = '<CALLBACK_URL_PATH>'; // sample: /callback
 app.get(callbackUrlPath, function(request, response, next) {
@@ -32,7 +35,8 @@ app.get(callbackUrlPath, function(request, response, next) {
 
 //    // Sample code of getting the access token
 //    // Get the access token now using the code
-//    auth.getAccessToken(code, function(req, res, data) {
+//    auth.getAccessToken(code, function(req, res) {
+//        var data = res.body;
 //        // we assumed that the request is successful
 //        if (res.statusCode === 200 && data && data['access_token']) {
 //            // Get the access_token and subscriber number

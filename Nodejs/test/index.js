@@ -1,5 +1,5 @@
 // Use require('globe') if globe is on node_module folder
-var globe = require('./../lib/index.js')(); // default application version is v1
+var globe = require('./../src/globeapi.js')(); // default application version is v1
 
 // Application Settings
 var appShortCode = '<APP_SHORT_CODE>'; // full short code
@@ -14,7 +14,7 @@ console.log('Login URL:', auth.getLoginUrl()); // Prints out the login url
 // Getting the access token and subscriber number using the code received by the app's redirect uri
 var code = '<CODE>'; // code received from app's redirect uri
 auth.getAccessToken(code, function(req, res) {
-    var data = req.body;
+    var data = res.body;
     console.log('Code Response:', data);
 
     // we assumed that the request is successful
@@ -37,11 +37,11 @@ auth.getAccessToken(code, function(req, res) {
         var payment = globe.Payment(subscriberNumber, accessToken);
 //        payment.setLogger(console); // uncomment to log request
         var refCode = new Date().getTime().toString(); // ref code
-        var amount = '0'; // set amount to 0 as charge amount
+        var amount = '1'; // set amount to 0 as charge amount
 
         // Charge the subscriber
         payment.charge(amount, refCode, function(req, res) {
-            console.log('Payment Response:', req.body);
+            console.log('Payment Response:', res.body);
         });
     }
 });
