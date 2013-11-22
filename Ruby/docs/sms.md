@@ -116,9 +116,21 @@ First we need to initialize the `GlobeApi` class and then use that object to sen
 ##### Figure RUBY.SMS.12 - Sample Send Message Response
 
     {
-      "success": true,
-      "address": "9171234567",
-      "message": "hello",
-      "senderAddress": "1234",
-      "access_token": "a8UuVwe6Rp2xv234we35GrPcSvR3-OJq22f34ty4rfw9UrE"
+      "outboundSMSMessageRequest": {
+        "address": "09171234567",
+        "deliveryInfoList": {
+          "deliveryInfo": [],
+          "resourceURL": null
+        },
+        "senderAddress": "1234",
+        "outboundSMSTextMessage": {
+          "message": "hello"
+        },
+        "reciptRequest": {
+          "notifyURL": null,
+          "callbackData": null,
+          "senderName": null,
+          "resourceURL": null
+        }
+      }
     }
