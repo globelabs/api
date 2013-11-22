@@ -57,7 +57,9 @@ public class Payment {
      * @param amount
      *            How much will be charged to the subscriber.
      * @param referenceCode
-     *            Unique reference code to identify the transaction.
+     *            A unique transaction ID with a format of
+     *            `[SHORTCODE]`+`#######` where `#######` is an incremented
+     *            number beginning from `1000001`.
      * @return See {@link ChargeUserResponse}
      * @throws GlobeApiException
      * @throws ParameterRequiredException
