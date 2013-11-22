@@ -134,3 +134,30 @@ First we need to initialize the `GlobeApi` class and then use that object to sen
         }
       }
     }
+
+
+## Receiving
+
+In receiving SMS, globe will send a data to your Notify URL (that you provided when you created your app) when the subscriber sends an SMS or replied to your short code number.
+
+    **Note:** They will send a POST data to your Notify URL.
+    
+##### Figure RUBY.SMS.13 - Sample JSON Response
+
+    {
+       "inboundSMSMessageList":{
+           "inboundSMSMessage":[
+              {
+                 "dateTime":"Fri Nov 22 2013 12:12:13 GMT+0000 (UTC)",
+                 "destinationAddress":"21581234",
+                 "messageId":null,
+                 "message":"Hello",
+                 "resourceURL":null,
+                 "senderAddress":"9171234567"
+              }
+            ],
+            "numberOfMessagesInThisBatch":1,
+            "resourceURL":null,
+            "totalNumberOfPendingMessages":null
+        }
+    }
