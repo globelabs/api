@@ -10,7 +10,7 @@ class Payment
     # Initialize Access Token
     def initialize(accessToken, subscriber)
         @@accessToken = accessToken
-	    @@subscriber  = subscriber
+	@@subscriber  = subscriber
     end
 	
     # Sends a request using POST method
