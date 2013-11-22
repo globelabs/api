@@ -1,21 +1,17 @@
+#require 'hashie'
+require 'json'
+
 class Sms
     # CONSTANTS
     URL = 'http://devapi.globelabs.com.ph/smsmessaging/%s/outbound/%s/requests'
 	
     # CLASS VARIABLES
-    @@accessToken = String.new
     @@shortCode   = String.new
-    @@params      = Array.new
     @@version     = 'v1'
 	
     # Initialize Access Token and Short Code
     def initialize(shortCode)
         @@shortCode   = shortCode
-    end
-	
-    # Catch and Format the incoming SMS
-    def getMessage(request)
-        return JSON.parse request
     end
 	
     # Sends an SMS

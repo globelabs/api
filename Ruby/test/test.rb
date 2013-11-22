@@ -4,7 +4,7 @@ require './../src/GlobeApi.rb'
 globe = GlobeApi.new()
 
 ###### Authentication #######
-auth = globe.auth([APP_ID], [APP_SECRET])
+auth = globe.auth([APP_ID], APP_SECRET)
 
 # Get Login URL
 puts auth.getLoginUrl

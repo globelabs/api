@@ -22,28 +22,6 @@ class Auth extends GlobeApi
     }
     
     /**
-     * Parses the request and returns the access token
-     * 
-     * @param  string|array   the request parameter
-     * @return array
-     */
-    public function getAccessToken($request)
-    {
-        return (isset($request['access_token'])) ? $request['access_token'] : NULL;
-    }
-    
-    /**
-     * Parses the request and returns the subscriber's number'
-     * 
-     * @param  string|array   the request parameter
-     * @return array
-     */
-    public function getSubscriberNumber($request)
-    {
-        return (isset($request['subscriber_number'])) ? $request['subscriber_number'] : NULL;
-    }
-    
-    /**
      * Parses the request and returns the code
      * 
      * @param  string|array   the request parameter
@@ -71,8 +49,14 @@ class Auth extends GlobeApi
      * @param  boolean|null $bodyOnly returns the headers if set to false
      * @return array
      */
-    public function getAccessToken($code, $bodyOnly = true)
+    public function getAccessToken($code, $sms = false, $bodyOnly = true)
     {
+        if($sms && $code['access_token']) {
+            return $code;
+        } else if($sms) {
+            return NULL;
+        }
+
         $url = sprintf(Auth::AUTH_URL, GlobeApi::AUTH_POINT);
 
         $fields = array(

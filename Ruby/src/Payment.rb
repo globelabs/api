@@ -6,7 +6,6 @@ class Payment
     @@accessToken  = String.new
     @@subscriber   = String.new
     @@version      = 'v1'
-    @@params       = Array.new
 	
     # Initialize Access Token
     def initialize(accessToken, subscriber)
@@ -23,7 +22,7 @@ class Payment
         http     = Net::HTTP.new(uri.host, uri.port)
         request  = Net::HTTP::Post.new(url)
 		
-	params = {
+        params = {
             'transactionOperationStatus' => 'charged',
             'access_token'               => @@accessToken,
             'endUserId'                  => @@subscriber,
