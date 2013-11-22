@@ -116,11 +116,23 @@ To be able to use the SMS sending, you will need to send a POST Request.
 ##### Figure PROTO.SMS.11 - Sample Send Message Response
 
     {
-      "success": true,
-      "address": "9171234567",
-      "message": "hello",
-      "senderAddress": "1234",
-      "access_token": "GesiE2YhZlxB9VVMhv-PoI8RwNTsmX0D38g"
+      "outboundSMSMessageRequest": {
+        "address": "09171234567",
+        "deliveryInfoList": {
+          "deliveryInfo": [],
+          "resourceURL": null
+        },
+        "senderAddress": "1234",
+        "outboundSMSTextMessage": {
+          "message": "hello"
+        },
+        "reciptRequest": {
+          "notifyURL": null,
+          "callbackData": null,
+          "senderName": null,
+          "resourceURL": null
+        }
+      }
     }
 
 ## Receiving
