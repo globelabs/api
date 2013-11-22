@@ -5,7 +5,9 @@ class Sms extends GlobeApi
     public $version;
     public $recepient;
     public $message;
+    public $description;
     public $address;
+    public $senderName;
     public $clientCorrelator;
     public $criteria;
     public $subscriptionId;
@@ -92,6 +94,7 @@ class Sms extends GlobeApi
             'address' => $this->recepient,
             'message' => $this->message,
             'senderAddress' => $this->address,
+            'description' => $this->description,
             'clientCorrelator' => $this->clientCorrelator
         );
 

@@ -20,6 +20,17 @@ class Auth extends GlobeApi
         $this->api_key = $api_key;
         $this->api_secret = $api_secret;
     }
+    
+    /**
+     * Parses the request and returns the code
+     * 
+     * @param  string|array   the request parameter
+     * @return array
+     */
+    public function getCode($request)
+    {
+        return (isset($request['code'])) ? $request['code'] : NULL;
+    }
 
     /**
      * generates the login/auth url\
@@ -38,8 +49,14 @@ class Auth extends GlobeApi
      * @param  boolean|null $bodyOnly returns the headers if set to false
      * @return array
      */
-    public function getAccessToken($code, $bodyOnly = true)
+    public function getAccessToken($code, $sms = false, $bodyOnly = true)
     {
+        if($sms && $code['access_token']) {
+            return $code;
+        } else if($sms) {
+            return NULL;
+        }
+
         $url = sprintf(Auth::AUTH_URL, GlobeApi::AUTH_POINT);
 
         $fields = array(
