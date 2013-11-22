@@ -64,14 +64,14 @@ class GlobeApi {
     }
 
     /**
-     * used to instantiate an oauth class
+     * used to instantiate an Auth class
      * @param  string   $apikey         the api key of the app
      * @param  string   $apisecret      the api secret of the app
-     * @return OAuth
+     * @return Auth
      */
     public function auth($apikey, $apisecret)
     {
-        return new OAuth($apikey, $apisecret);
+        return new Auth($apikey, $apisecret);
     }
 
     public function __call($name, $arguments)
