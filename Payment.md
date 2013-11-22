@@ -99,6 +99,7 @@ To use charge API you will need to send a POST request to the URL given below.
 
 | Field | Definition | Data Type |
 |-------|:----------:|:---------:|
+| transactionOperationStatus | set this field to `charged` |
 | access_token | which contains security information for transacting with a subscriber. Subscriber needs to grant an app first via SMS or Web Form Subscriber Consent Workflow. | String |
 | endUserId | is the MSISDN (mobile number) which you will charge to. Parameter format can be 09xxxxxxxx | String or Integer |
 | amount | can be a whole number or decimal | String |
@@ -108,6 +109,7 @@ To use charge API you will need to send a POST request to the URL given below.
 ##### Figure PROTO.10 - Sample Charge Request
 
     POST http://devapi.globelabs.com.ph/payment/v1/transactions/amount
+      -F "transactionOperationStatus=[STATUS]"\
       -F "access_token=[YOUR ACCESS TOKEN]" \
       -F "endUserId=[MOBILE NUMBER]" \
       -F "amount=[AMOUNT]" \
@@ -117,8 +119,9 @@ To use charge API you will need to send a POST request to the URL given below.
 
     {
       "access_token": "GesiE2YhZlxB9VVMhv-PoI8RwNTsmX0D38g",
+      "transactionOperationStatus": "charged",
       "endUserId": "9171234567",
       "amount": "10",
-      "referenceCode": "1234567",
+      "referenceCode": "12341000001",
       "success": true
     }
