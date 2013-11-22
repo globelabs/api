@@ -77,6 +77,7 @@ public class Payment {
             parameters.put("endUserId", subscriberNumber);
             parameters.put("amount", amount.toString());
             parameters.put("referenceCode", referenceCode);
+            parameters.put("transactionOperationStatus", "charged");
             client.setJsonStringEntity(parameters);
             HttpResponse response = client.execute(getRequestURI());
 
