@@ -133,6 +133,6 @@ To use charge API you will need to send a POST request to the URL given below.
       "access_token": "GesiE2YhZlxB9VVMhv-PoI8RwNTsmX0D38g",
       "endUserId": "9171234567",
       "amount": "10",
-      "referenceCode": "1234567",
+      "referenceCode": "12341000001",
       "success": true
     }
