@@ -59,10 +59,10 @@ Once we obtain the **APP ID** and **APP SECRET** we can begin to understand how 
 
 ##### Figure PROTO.6 - Invoke a Redirection
 
-Now, initialize the `OAuth` class and get the login URL using the `getLoginUrl` method.
+Now, initialize the `Auth` class and get the login URL using the `getLoginUrl` method.
 
-    OAuth oAuth = new OAuth();
-    String loginUrl = oAuth.getLoginUrl([APP_ID]);
+    Auth auth = new Auth();
+    String loginUrl = auth.getLoginUrl([APP_ID]);
 
 Before invoking your redirect, please replace `[YOUR APP ID]` in the figure above with your actual **APP ID**. Globe will authenticate permissions first with the user which should look like *Figure PROTO.7a* and *Figure PROTO.7b*.
 
@@ -88,9 +88,9 @@ Once the user gives permission, Globe will redirect the user to your **Redirect 
 
 ##### Figure PROTO.9 - Get the Access Token
 
-Using the `OAuth` object we initialized in **Figure PROTO.6**, we can get the access token using the script below.
+Using the `Auth` object we initialized in **Figure PROTO.6**, we can get the access token using the script below.
 
-    AccessTokenResponse response = oAuth.getAccessToken([APP_ID], [APP_SECRET], [CODE]);
+    AccessTokenResponse response = auth.getAccessToken([APP_ID], [APP_SECRET], [CODE]);
     
 Before sending, please replace `[APP_ID]`, `[APP_SECRET]`, and `[CODE]` in the figure above with the your respective given app ID, app secret, and the code given from Figure PROTO.8.
 

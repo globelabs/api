@@ -15,14 +15,14 @@ import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 
-import ph.com.globelabs.api.OAuth;
+import ph.com.globelabs.api.Auth;
 import ph.com.globelabs.api.exception.GlobeApiException;
 import ph.com.globelabs.api.request.HttpPostClient;
 import ph.com.globelabs.api.response.AccessTokenResponse;
 
-public class OAuthTest {
+public class AuthTest {
 
-    private OAuth oAuth;
+    private Auth auth;
 
     @Before
     public void setUp() throws Exception {
@@ -40,8 +40,8 @@ public class OAuthTest {
             }
         };
 
-        oAuth = new OAuth() {
-            public OAuth setClient(HttpPostClient client) {
+        auth = new Auth() {
+            public Auth setClient(HttpPostClient client) {
                 this.client = client;
                 return this;
             }
@@ -53,7 +53,7 @@ public class OAuthTest {
         String appId = "345SDxcblesfUSDoifw3ljsdfwou35aj";
 
         String expectedLoginURL = "http://developer.globelabs.com.ph/dialog/oauth?app_id=345SDxcblesfUSDoifw3ljsdfwou35aj";
-        String actualLoginURL = oAuth.getLoginUrl(appId);
+        String actualLoginURL = auth.getLoginUrl(appId);
 
         assertEquals(expectedLoginURL, actualLoginURL);
     }
@@ -64,7 +64,7 @@ public class OAuthTest {
         String appSecret = "93SDf34587SDflk345u98SDFH359875987F3489SfdfESF45897egjldkfjgW348";
         String code = "93SDf34587SDflk345u98SDFH359875987F3489SfdfESF45897egjldkfjgW348967ES3648SDFJOi3u489df346jDSFkl34598sdfD34897DGXLkj987ZFnzljfdioSDF342987OCIIzn43fszxvnZV89w2324uiDFDS458fSDCzjkxczwer82349ZSDF23798dl2k4hkh2lSDf23894jhdskjfhkjhkjhjDKJSJFH34458394578989234FDS";
 
-        AccessTokenResponse response = oAuth.getAccessToken(appId,
+        AccessTokenResponse response = auth.getAccessToken(appId,
                 appSecret, code);
         assertEquals(200, response.getResponseCode());
         assertEquals("OK", response.getResponseMessage());
@@ -77,7 +77,7 @@ public class OAuthTest {
     public void getAccessTokenViaURL() throws GlobeApiException {
         String url = "http://www.callback-123.com/?access_token=_Ak28sdfl32r908sdf0q843qjlkjdf90234jlkasd98&subscriber_number=9173849494";
 
-        AccessTokenResponse response = oAuth.getAccessToken(url);
+        AccessTokenResponse response = auth.getAccessToken(url);
         assertEquals(200, response.getResponseCode());
         assertEquals("OK", response.getResponseMessage());
         assertEquals("_Ak28sdfl32r908sdf0q843qjlkjdf90234jlkasd98",
