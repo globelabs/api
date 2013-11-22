@@ -1,6 +1,8 @@
 package ph.com.globelabs.api.response;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import org.apache.http.HttpResponse;
 import org.json.JSONException;
@@ -9,7 +11,7 @@ import org.json.JSONObject;
 /**
  * This object is created from the expected response of the server. Obtainable
  * information include the following: success, amount, subscriberNumber,
- * referenceCode, accessToken, and error (if any).
+ * transactionOperationStatus, referenceCode, accessToken, and error (if any).
  * 
  * This response also has a responseCode, responseMessage, and holds the raw
  * HttpResponse. See {@link Response}.
@@ -18,8 +20,9 @@ import org.json.JSONObject;
 public class ChargeUserResponse extends Response {
 
     private boolean success;
-    private String amount;
+    private BigDecimal amount;
     private String subscriberNumber;
+    private String transactionOperationStatus;
     private String referenceCode;
     private String accessToken;
 
@@ -32,9 +35,12 @@ public class ChargeUserResponse extends Response {
         JSONObject responseContent = new JSONObject(super.getContent());
 
         if (responseContent.has("success")) {
-            this.amount = responseContent.getString("amount");
+            this.amount = new BigDecimal(responseContent.getString("amount"))
+                    .setScale(2, RoundingMode.CEILING);
             this.success = responseContent.getBoolean("success");
             this.subscriberNumber = responseContent.getString("endUserId");
+            this.transactionOperationStatus = responseContent
+                    .getString("transactionOperationStatus");
             this.referenceCode = responseContent.getString("referenceCode");
             this.accessToken = responseContent.getString("access_token");
         }
@@ -57,11 +63,15 @@ public class ChargeUserResponse extends Response {
         return subscriberNumber;
     }
 
+    public String getTransactionOperationStatus() {
+        return transactionOperationStatus;
+    }
+
     public String getAccessToken() {
         return accessToken;
     }
 
-    public String getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
 
@@ -77,9 +87,11 @@ public class ChargeUserResponse extends Response {
     public String toString() {
         if (success == true) {
             return "ChargeUserResponse [success=" + success + ", amount="
-                    + amount + ", subscriberNumber="
-                    + subscriberNumber + ", referenceCode=" + referenceCode
-                    + ", accessToken=" + accessToken + "] " + super.toString();
+                    + amount.toString() + ", subscriberNumber="
+                    + subscriberNumber + ", transactionOperationStatus="
+                    + transactionOperationStatus + ", referenceCode="
+                    + referenceCode + ", accessToken=" + accessToken + "] "
+                    + super.toString();
         } else {
             return "ChargeUserResponse [error=" + error + "] "
                     + super.toString();

@@ -1,6 +1,6 @@
 ## Introduction
 
-The Globe Short Message Service(SMS) API lets you develop client applications to communicate with people using the most basic form of electronic communication, text messaging. This document describes how to use the OAUTH/RESTful calling style and client library using NodeJS to access and create Globe message data. For other languages and libraries you can access the SMS protocol manually. The following documentation describes how you can access the SMS API directly with examples of request types, options and responses.
+The Globe Short Message Service(SMS) API lets you develop client applications to communicate with people via text messaging. This document describes how to use the OAUTH/RESTful calling style and client library for NodeJS to access and create Globe message data.
 
 ## Getting Started
 
