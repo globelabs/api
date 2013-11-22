@@ -8,16 +8,17 @@
     },
     "keywords": [
         "globe",
+        "globeapi",
         "globelabs",
         "wrapper"
     ],
-    "main": "./lib/index.js",
+    "main": "./src/globeapi.js",
     "engines": {
         "node": ">= 0.8.x"
     },
     "license": "mit",
     "readme": "",
     "readmeFilename": "README.md",
-    "_id": "globelabs@0.0.1",
-    "_from": "globelabs@"
+    "_id": "globeapi@0.0.1",
+    "_from": "globeapi@"
 }

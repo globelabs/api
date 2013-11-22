@@ -50,6 +50,7 @@ class GlobeApi {
      * @return Payment
      */
     public function payment(
+        $shortCode = null, 
         $accessToken = null,
         $endUserId = null,
         $version = null
@@ -57,6 +58,7 @@ class GlobeApi {
         //check if the user passed a version parameter and use if any
         $ver = $version ? $version : $this->version;
         return new Payment(
+            $this->shortCode,
             $ver,
             $endUserId,
             $accessToken
@@ -64,14 +66,14 @@ class GlobeApi {
     }
 
     /**
-     * used to instantiate an oauth class
+     * used to instantiate an Auth class
      * @param  string   $apikey         the api key of the app
      * @param  string   $apisecret      the api secret of the app
-     * @return OAuth
+     * @return Auth
      */
     public function auth($apikey, $apisecret)
     {
-        return new OAuth($apikey, $apisecret);
+        return new Auth($apikey, $apisecret);
     }
 
     public function __call($name, $arguments)

@@ -57,9 +57,11 @@ public class Payment {
      * Charges a subscriber who has already completed the authorization process.
      * 
      * @param amount
-     *            Currency format. Must be only up to two decimal places.
+     *            How much will be charged to the subscriber.
      * @param referenceCode
-     *            Unique reference code to identify the transaction.
+     *            A unique transaction ID with a format of
+     *            `[SHORTCODE_WITHOUT_2158]`+`#######` where `#######` is an
+     *            incremented number beginning from `1000001`.
      * @return See {@link ChargeUserResponse}
      * @throws GlobeApiException
      * @throws ParameterRequiredException
@@ -70,7 +72,7 @@ public class Payment {
             validateParameters(amount, referenceCode);
 
             amount = amount.setScale(2, RoundingMode.CEILING);
-            
+
             Map<String, String> parameters = new HashMap<String, String>();
             parameters.put("endUserId", subscriberNumber);
             parameters.put("amount", amount.toString());

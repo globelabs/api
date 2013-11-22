@@ -34,8 +34,7 @@ public class ChargeUserResponse extends Response {
         JSONObject responseContent = new JSONObject(super.getContent());
 
         if (responseContent.has("success")) {
-            this.amount = new BigDecimal(responseContent.getString("amount"))
-                    .setScale(2, RoundingMode.CEILING);
+            this.amount = new BigDecimal(responseContent.getString("amount")).setScale(2, RoundingMode.CEILING);
             this.success = responseContent.getBoolean("success");
             this.subscriberNumber = responseContent.getString("endUserId");
             this.referenceCode = responseContent.getString("referenceCode");

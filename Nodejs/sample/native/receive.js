@@ -1,12 +1,9 @@
 // Sample code of receiving message using Nodejs HTTP
-// Use require('globe') if globe is on node_module folder
-var globe = require('./../../lib/index.js')(); // default application version is v1
 var http = require('http');
 var url = require('url'); // url parser
 var querystring = require('querystring'); // query/post string parser
 
 //var callbackUrlPath = '<NOTIFY_URL_PATH>'; // sample: /notify
-var callbackUrlPath = '/notify'; // sample: /notify
 var newConnection = function(request, response) {
     // Manually parse the url to get the pathname and query request
     var urlParse = url.parse(request.url, true);
