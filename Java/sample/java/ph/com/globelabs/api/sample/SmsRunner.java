@@ -14,7 +14,7 @@ public class SmsRunner {
         String subscriberNumber = "9173849494";
         String accessToken = "_Ak28sdfl32r908sdf0q843qjlkjdf90234jlkasd98";
         String message = "Hello World";
-        System.out.println(sms.send(subscriberNumber, accessToken, message));
+        System.out.println(sms.sendMessage(subscriberNumber, accessToken, message));
     }
 
 }

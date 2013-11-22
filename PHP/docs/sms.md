@@ -113,7 +113,7 @@ First we need to initialize the `GlobeApi` class and then use that object to sen
 
     $globe = new GlobeApi('v1');
     $sms = $globe->sms([short_code]);
-    $response = $sms->send([access_token], [number], [message]);
+    $response = $sms->sendMessage([access_token], [number], [message]);
 
 
 ##### Figure PROTO.12 - Sample Send Message Response

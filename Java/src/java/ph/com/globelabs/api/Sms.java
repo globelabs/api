@@ -64,7 +64,7 @@ public class Sms {
      * @throws ParameterRequiredException
      * @throws GlobeApiException
      */
-    public SendSmsResponse send(String subscriberNumber, String accessToken,
+    public SendSmsResponse sendMessage(String subscriberNumber, String accessToken,
             String message) throws ParameterRequiredException,
             GlobeApiException {
         try {
@@ -154,7 +154,7 @@ public class Sms {
      *         the message came from), and destAddr (to which number the message
      *         was sent) among other fields parsed from the rawBody.
      */
-    public SmsResponse getSmsResponse(String rawBody) {
+    public SmsResponse getMessage(String rawBody) {
         List<NameValuePair> nameValuePairs = URLEncodedUtils.parse(rawBody,
                 Charset.defaultCharset());
         SmsResponse response = new SmsResponse(nameValuePairs);

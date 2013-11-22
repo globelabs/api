@@ -13,7 +13,7 @@ public class PaymentRunner {
         Payment payment = new Payment(subscriberNumber, accessToken);
 
         String amount = "1";
-        String referenceCode = System.currentTimeMillis() + "";
+        String referenceCode = "99991000001";
         System.out.println(payment.charge(amount, referenceCode));
     }
 
