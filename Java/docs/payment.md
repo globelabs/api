@@ -122,15 +122,17 @@ To use the Payment API you will need to send a POST request to the URL given bel
 |-------|:----------:|:---------:|
 | [ACCESS_TOKEN] | which contains security information for transacting with a subscriber. Subscriber needs to grant an app first via SMS or Web Form Subscriber Consent Workflow. | String |
 | [SUBSCRIBER_NUMBER] | is the 10-digit MSISDN (mobile number) which you will charge to. Parameter format can be `9xxxxxxxx` | String |
-| [AMOUNT] | amount to be charged to the subscriber | String |
-| [REFERENCE_NUMBER] | a unique transaction ID with a format of `[SHORTCODE]`+`#######` where `#######` is an incremented number beginning from `1000001`. | (numeric) String |
+| [AMOUNT] | amount to be charged to the subscriber | BigDecimal |
+| [REFERENCE_NUMBER] | a unique transaction ID with a format of `[SHORTCODE_WITHOUT_2158]`+`#######` where `#######` is an incremented number beginning from `1000001`. | (numeric) String |
 
 
 ##### Figure JAVA.PAYMENT.11 - Sample Charge Request
 
     Payment payment = new Payment([SUBSCRIBER_NUMBER], [ACCESS_TOKEN]);
     payment.charge([AMOUNT], [REFERENCE_NUMBER]);
+    
+    **Note:** You can get your Short Code value from your Globe App Details in `Figure JAVA.PAYMENT.4. You also need to remove the `2158` digit in your short code.
       
 ##### Figure JAVA.PAYMENT.12 - Sample Charge Response
 
-    ChargeUserResponse [success=true, amount=10.00, subscriberNumber=9173849494, referenceCode=REF-12345, accessToken=_Ak28sdfl32r908sdf0q843qjlkjdf90234jlkasd98] Response [responseCode=201, responseMessage=Created, statusLine=HTTP/1.1 201 Created, content={"amount":"10","endUserId":"9173849494","referenceCode":"REF-12345","success":"true","access_token":"_Ak28sdfl32r908sdf0q843qjlkjdf90234jlkasd98"}]
+    ChargeUserResponse [success=true, amount=10.00, subscriberNumber=9173849494, referenceCode=99991000001, accessToken=_Ak28sdfl32r908sdf0q843qjlkjdf90234jlkasd98] Response [responseCode=201, responseMessage=Created, statusLine=HTTP/1.1 201 Created, content={"amount":"10","endUserId":"9173849494","referenceCode":"REF-12345","success":"true","access_token":"_Ak28sdfl32r908sdf0q843qjlkjdf90234jlkasd98"}]

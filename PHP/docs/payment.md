@@ -120,7 +120,7 @@ To use charge API you will need to send a POST request to the URL given below.
 | [YOUR_ACCESS_TOKEN] | which contains security information for transacting with a subscriber. Subscriber needs to grant an app first via SMS or Web Form Subscriber Consent Workflow. | String |
 | [SUBSCRIBER_NUMBER] | is the MSISDN (mobile number) which you will charge to. Parameter format can be 09xxxxxxxx | String or Integer |
 | [AMOUNT] | can be a whole number or decimal | String |
-| [REFERENCE_NUMBER] | Is a unique transaction ID with a format of `[SHORTCODE]`+`#######` where `#######` is an incremented number beginning from `1000001`. | Integer |
+| [REFERENCE_NUMBER] | Is a unique transaction ID with a format of `[SHORT_CODE_WITHOUT_2158]`+`#######` where `#######` is an incremented number beginning from `1000001`. | Integer |
 
 
 ##### Figure PHP.PAYMENT.11 - Sample Charge Request
@@ -145,7 +145,7 @@ To use charge API you will need to send a POST request to the URL given below.
         "access_token"      => "GesiE2YhZlxB9VVMhv-PoI8RwNTsmX0D38g",
         "endUserId"         => "9171234567",
         "amount"            => "10",
-        "referenceCode"     => "1234567",
+        "referenceCode"     => "12341000001",
         "success"            => true
     )
     

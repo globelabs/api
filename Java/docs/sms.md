@@ -124,6 +124,7 @@ Finally, Globe will return an access token you can use to start using the Charge
 | [SUBSCRIBER_NUMBER] | is the 10-digit MSISDN (mobile number) which you will charge to. Parameter format can be `9xxxxxxxx` | String |
 | [MESSAGE] | the SMS body. Must be 160 characters or less. | String |
 
+    **Note:** You can get your Short Code value from your Globe App Details in `Figure JAVA.SMS.4. You also need to remove the `2158` digit in your short code.
 
 ##### Figure JAVA.SMS.12 - Sample Send Message Response
 
