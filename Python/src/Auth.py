@@ -18,8 +18,13 @@ class Auth(Base.Base):
 
 		return self.url['login'] % self.key
 
-	def getAccessToken(self, code):
+	def getAccessToken(self, code, sms = False):
 		""" Request for access token """
+		if sms is True:
+			if isinstance(code, dict) and isinstance(code['access_token'], str):
+				return code
+			else:
+				return None
 
 		url = self.url['token'] % (self.key, self.secret, code)
 		return self.getResponse(url, 'post')
