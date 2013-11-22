@@ -115,8 +115,12 @@ First we need to initialize the `GlobeApi` class and then use that object to sen
     $sms = $globe->sms([short_code]);
     $response = $sms->sendMessage([access_token], [number], [message]);
 
+#####
+
+    **Note:** You can get your Short Code value from your Globe App Details in `Figure PHP.SMS.4. You also need to remove the `2158` digit in your short code.
 
 ##### Figure PHP.SMS.12 - Sample Send Message Response
+    
     Array (
       "success"         => true,
       "address"         => "9171234567",
