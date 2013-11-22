@@ -12,7 +12,7 @@
         "globelabs",
         "wrapper"
     ],
-    "main": "./lib/globeapi.js",
+    "main": "./src/globeapi.js",
     "engines": {
         "node": ">= 0.8.x"
     },
