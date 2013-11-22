@@ -1,8 +1,6 @@
 package ph.com.globelabs.api.response;
 
 import java.io.IOException;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 
 import org.apache.http.HttpResponse;
 import org.json.JSONException;
@@ -20,7 +18,7 @@ import org.json.JSONObject;
 public class ChargeUserResponse extends Response {
 
     private boolean success;
-    private BigDecimal amount;
+    private String amount;
     private String subscriberNumber;
     private String referenceCode;
     private String accessToken;
@@ -34,8 +32,7 @@ public class ChargeUserResponse extends Response {
         JSONObject responseContent = new JSONObject(super.getContent());
 
         if (responseContent.has("success")) {
-            this.amount = new BigDecimal(responseContent.getString("amount"))
-                    .setScale(2, RoundingMode.CEILING);
+            this.amount = responseContent.getString("amount");
             this.success = responseContent.getBoolean("success");
             this.subscriberNumber = responseContent.getString("endUserId");
             this.referenceCode = responseContent.getString("referenceCode");
@@ -43,7 +40,7 @@ public class ChargeUserResponse extends Response {
         }
 
         if (responseContent.has("error")) {
-            this.error = (responseContent.getString("error") == null) ? responseContent
+            this.error = (responseContent.getString("error") != null) ? responseContent
                     .getString("error") : "Subscriber may be out of balance";
         }
     }
@@ -64,7 +61,7 @@ public class ChargeUserResponse extends Response {
         return accessToken;
     }
 
-    public BigDecimal getAmount() {
+    public String getAmount() {
         return amount;
     }
 
@@ -80,7 +77,7 @@ public class ChargeUserResponse extends Response {
     public String toString() {
         if (success == true) {
             return "ChargeUserResponse [success=" + success + ", amount="
-                    + amount.toString() + ", subscriberNumber="
+                    + amount + ", subscriberNumber="
                     + subscriberNumber + ", referenceCode=" + referenceCode
                     + ", accessToken=" + accessToken + "] " + super.toString();
         } else {

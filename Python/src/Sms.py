@@ -1,8 +1,7 @@
+import Base
 import urllib
-import requests
-import base
 
-class Sms(base.Base):
+class Sms(Base.Base):
 
     def __init__(self):
         super(Sms, self).__init__()
@@ -16,16 +15,16 @@ class Sms(base.Base):
 
         self.url = {}
         self.url['send'] = "%s/smsmessaging/%s/outbound/%s/requests?access_token=%s"
-    def send(self, token = ''):
+    def send(self, token):
         """ Check for the required parameters """
 
-        if not isinstance(self.address, str):
+        if not isinstance(self.recepient, str):
             raise Exception(self.error['address'])
 
         if not isinstance(self.sender, int) and not isinstance(self.sender, str):
             raise Exception(self.error['sender'])
 
-        if not isinstance(self.msg, str):
+        if not isinstance(self.message, str):
             raise Exception(self.error['msg'])
 
         if not isinstance(token, str):
@@ -34,10 +33,10 @@ class Sms(base.Base):
         """ Buillding parameters for the post request """
 
         params = {}
-        params['address'] = self.address
+        params['address'] = self.recepient
 
         params['senderAddress'] = str(self.sender)
-        params['message'] = urllib.quote_plus(self.msg)
+        params['message'] = urllib.quote_plus(self.message)
 
         if isinstance(self.correlator, str) or isinstance(self.correlator, int):
             params['clientCorrelator'] = str(self.correlator)
@@ -52,7 +51,7 @@ class Sms(base.Base):
             params['senderName'] = self.name
 
         url = self.url['send'] % (self.host, self.version, urllib.quote_plus(str(self.sender)), token)
-
+        
         """ Set request header """
 
         header = {}

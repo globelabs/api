@@ -54,11 +54,11 @@ Once we obtain the **APP ID** and **APP SECRET** we can begin to understand how 
 
 Now, initialize the `Auth` class inside GlobeApi and get the login URL using the `getLoginUrl` method.
 
-    auth = $globe->oAuth(
+    $auth = $globe->auth(
         [YOUR APP ID],
         [YOUR APP SECRET]
     );
-    loginUrl = auth->getAuthUrl();
+    $loginUrl = auth->getLoginUrl();
     header('Location: '.$loginUrl);
 
 Before invoking your redirect, please replace `[YOUR APP ID]` and `[YOUR APP SECRET]` in the figure above with your actual **APP ID** and **APP SECRET**. Based on what you inputed as your **Redirect URI** in your app details. Globe will authenticate permissions first with the user which should look like *Figure PROTO.7a* and *Figure PROTO.7b*.
@@ -87,7 +87,7 @@ Once the user gives permission, Globe will redirect the user to your Redirect UR
 
 Using the `Auth` object we initialized in **Figure PROTO.6**, we can get the access token using the script below.
 
-    $response = $oAuth->getAccessToken([CODE]);
+    $response = $auth->getAccessToken([CODE]);
     
 Before sending, please replace `[CODE]` in the figure above with the code given from Figure PROTO.8.
 
@@ -95,8 +95,10 @@ Finally, Globe will return an access token you can use to start using the Charge
 
 ##### Figure PROTO.10 - Access Token
 
-    $response["access_token"] = "GesiE2YhZlxB9VVMhv-PoI8RwNTsmX0D38g";
-    $response["subscriber_number"] = "9051234567";
+   Array (
+      "access_token"        => "GesiE2YhZlxB9VVMhv-PoI8RwNTsmX0D38g",
+      "subscriber_number"   => "9051234567"
+    )
 
 ##
 
@@ -118,7 +120,7 @@ To use charge API you will need to send a POST request to the URL given below.
 | [YOUR_ACCESS_TOKEN] | which contains security information for transacting with a subscriber. Subscriber needs to grant an app first via SMS or Web Form Subscriber Consent Workflow. | String |
 | [SUBSCRIBER_NUMBER] | is the MSISDN (mobile number) which you will charge to. Parameter format can be 09xxxxxxxx | String or Integer |
 | [AMOUNT] | can be a whole number or decimal | String |
-| [REFERENCE_NUMBER] | (string, unique per charge event) is your reference for reconciliation purposes. The operator should include it in reports so that you can match their view of what has been sold with yours by matching the referenceCodes. | String or Integer |
+| [REFERENCE_NUMBER] | Is a unique transaction ID with a format of `[SHORTCODE]`+`#######` where `#######` is an incremented number beginning from `1000001`. | Integer |
 
 
 ##### Figure PROTO.11 - Sample Charge Request
@@ -139,8 +141,10 @@ To use charge API you will need to send a POST request to the URL given below.
       
 ##### Figure PROTO.12 - Sample Charge Response
 
-    $response["access_token"] = "GesiE2YhZlxB9VVMhv-PoI8RwNTsmX0D38g";
-    $response["endUserId"] = "9171234567";
-    $response["amount"] = "10";
-    $response["referenceCode"] = "1234567";
-    $response["success"] = true;
+    Array (
+        "access_token"      => "GesiE2YhZlxB9VVMhv-PoI8RwNTsmX0D38g",
+        "endUserId"         => "9171234567",
+        "amount"            => "10",
+        "referenceCode"     => "1234567",
+       "success"            => true
+    )
