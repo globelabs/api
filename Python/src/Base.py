@@ -1,5 +1,6 @@
 import urllib
 import requests
+import json
 
 class Base(object):
 
@@ -51,6 +52,11 @@ class Base(object):
         """ Set the reponse object as property of self object so they can retrieve it when they want """
         self.requestInfo = response
 
+        try:
+            data = json.loads(response.text)
+        except:
+            data = response.text
+        
         """ Return raw text response """
-        return response.text
+        return data
 
