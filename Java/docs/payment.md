@@ -133,4 +133,4 @@ To use the Payment API you will need to send a POST request to the URL given bel
       
 ##### Figure JAVA.PAYMENT.12 - Sample Charge Response
 
-    ChargeUserResponse [success=true, amount=10.00, subscriberNumber=9173849494, referenceCode=REF-12345, accessToken=_Ak28sdfl32r908sdf0q843qjlkjdf90234jlkasd98] Response [responseCode=201, responseMessage=Created, statusLine=HTTP/1.1 201 Created, content={"amount":"10","endUserId":"9173849494","referenceCode":"REF-12345","success":"true","access_token":"_Ak28sdfl32r908sdf0q843qjlkjdf90234jlkasd98"}]
+    ChargeUserResponse [success=true, amount=10.00, subscriberNumber=9173849494, referenceCode=99991000001, accessToken=_Ak28sdfl32r908sdf0q843qjlkjdf90234jlkasd98] Response [responseCode=201, responseMessage=Created, statusLine=HTTP/1.1 201 Created, content={"amount":"10","endUserId":"9173849494","referenceCode":"REF-12345","success":"true","access_token":"_Ak28sdfl32r908sdf0q843qjlkjdf90234jlkasd98"}]
