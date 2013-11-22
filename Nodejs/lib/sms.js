@@ -44,7 +44,7 @@ module.exports = function() {
         this.clientAddress = clientAddress;
         this.clientToken = clientToken;
     };
-
+    
     /* Public Methods
     -------------------------------*/
     /**
@@ -95,7 +95,7 @@ module.exports = function() {
         }
 
         // build the url
-        var url = util.format(SEND_URL, this.version, encodeURIComponent(parseShortCode.call(this)));
+        var url = util.format(SEND_URL, this.version, encodeURIComponent(_parseShortCode.call(this)));
 
         var query = {
             'access_token' : this.clientToken
@@ -111,7 +111,6 @@ module.exports = function() {
      * @deprecated Not yet implemented
      * Queries the delivery status of an SMS.
      * 
-     * @param {string}   senderAddress
      * @param {string}   requestId
      * @param {function} callback
      * @return {SMS}
@@ -120,7 +119,7 @@ module.exports = function() {
         // prepend the protocol identifier
 
         // build the url
-        var url = util.format(SEND_STATUS_URL, this.version, encodeURIComponent(parseShortCode.call(this)), requestId);
+        var url = util.format(SEND_STATUS_URL, this.version, encodeURIComponent(_parseShortCode.call(this)), requestId);
 
         var query = {
             'access_token' : this.clientToken
@@ -174,7 +173,7 @@ module.exports = function() {
         }
 
         // build the url
-        var url = util.format(SEND_SUBSCRIBE_URL, this.version, encodeURIComponent(parseShortCode.call(this)));
+        var url = util.format(SEND_SUBSCRIBE_URL, this.version, encodeURIComponent(_parseShortCode.call(this)));
 
         var query = {
             'access_token' : this.clientToken
@@ -196,7 +195,7 @@ module.exports = function() {
      */
     p.unsubscribeDeliveryNotification = function(subscriptionID, callback) {
         // build the url
-        var url = util.format(SEND_SUBSCRIBE_URL, this.version, encodeURIComponent(parseShortCode.call(this)));
+        var url = util.format(SEND_SUBSCRIBE_URL, this.version, encodeURIComponent(_parseShortCode.call(this)));
 
         var post = {
             subscriptionID : subscriptionID
@@ -243,7 +242,7 @@ module.exports = function() {
         }
 
         // build the url
-        var url = util.format(RECEIVE_URL, this.version, encodeURIComponent(parseShortCode.call(this)));
+        var url = util.format(RECEIVE_URL, this.version, encodeURIComponent(_parseShortCode.call(this)));
 
         // sends a request get
         $.get(url, query, JSON.stringify(post), headers, callback);
@@ -346,7 +345,7 @@ module.exports = function() {
 
     /* Private Methods
     -------------------------------*/
-    var parseShortCode = function() {
+    var _parseShortCode = function() {
         return this.shortCode.toString().replace(/^2158/g, '');
     };
 
