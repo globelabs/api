@@ -56,7 +56,7 @@ public class PaymentTest {
     public void chargeUser() throws ClientProtocolException,
             UnsupportedEncodingException, IOException, JSONException,
             GlobeApiException, ParameterRequiredException {
-        String referenceCode = "REF-12345";
+        String referenceCode = "99991000001";
         ChargeUserResponse response = payment.charge("1", referenceCode);
         assertEquals(201, response.getResponseCode());
         assertEquals("Created", response.getResponseMessage());
@@ -75,7 +75,7 @@ public class PaymentTest {
         responseObject.put("success", "true");
         responseObject.put("endUserId", "9173849494");
         responseObject.put("amount", "1");
-        responseObject.put("referenceCode", "REF-12345");
+        responseObject.put("referenceCode", "99991000001");
         responseObject.put("access_token",
                 "_Ak28sdfl32r908sdf0q843qjlkjdf90234jlkasd98");
 

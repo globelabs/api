@@ -54,21 +54,21 @@ public class SmsTest {
     }
 
     @Test
-    public void sendSms() throws ClientProtocolException,
+    public void sendMessage() throws ClientProtocolException,
             UnsupportedEncodingException, IOException, JSONException,
             GlobeApiException, ParameterRequiredException {
         String subscriberNumber = "9173849494";
         String message = "Hello World";
         String accessToken = "_Ak28sdfl32r908sdf0q843qjlkjdf90234jlkasd98";
         
-        SendSmsResponse response = sms.send(subscriberNumber, accessToken, message);
+        SendSmsResponse response = sms.sendMessage(subscriberNumber, accessToken, message);
         assertEquals(201, response.getResponseCode());
         assertEquals("Created", response.getResponseMessage());
         assertEquals("Hello World", response.getMessage());
     }
     
     @Test
-    public void getSmsResponse() {
+    public void getMessage() {
         String rawBody = "command_length=71&command_id=5&command_status=0&sequence_number=70&"
                 + "command=deliver_sm&service_type=&source_addr_ton=2&source_addr_npi=1&"
                 + "source_addr=9173849494&dest_addr_ton=4&dest_addr_npi=9&destination_addr=21589999&"
@@ -76,7 +76,7 @@ public class SmsTest {
                 + "registered_delivery=0&replace_if_present_flag=0&data_coding=0&sm_default_msg_id=0&"
                 + "short_message[message]=&source_network_type=1&dest_network_type=1&"
                 + "message_payload[message]=A%20%20B%20C%20D%20.E";
-        SmsResponse response = sms.getSmsResponse(rawBody);
+        SmsResponse response = sms.getMessage(rawBody);
 
         assertEquals("A  B C D .E", response.getMessage());
         assertEquals("9173849494", response.getSourceAddr());

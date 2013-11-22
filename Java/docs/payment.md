@@ -105,6 +105,7 @@ Finally, Globe will return an access token you can use to start using the Charge
     **Note:** The data above doesn't actually work. Please don't assume something went wrong 
     because you tried to use it.
 
+
 ## Charge a User
 
 To use the Payment API you will need to send a POST request to the URL given below.
@@ -118,9 +119,9 @@ To use the Payment API you will need to send a POST request to the URL given bel
 | Parameters | Definition | Data Type |
 |-------|:----------:|:---------:|
 | [ACCESS_TOKEN] | which contains security information for transacting with a subscriber. Subscriber needs to grant an app first via SMS or Web Form Subscriber Consent Workflow. | String |
-| [SUBSCRIBER_NUMBER] | is the 10-digit MSISDN (mobile number) which you will charge to. Parameter format can be 9xxxxxxxx | String |
+| [SUBSCRIBER_NUMBER] | is the 10-digit MSISDN (mobile number) which you will charge to. Parameter format can be `9xxxxxxxx` | String |
 | [AMOUNT] | amount to be charged to the subscriber | String |
-| [REFERENCE_NUMBER] | (string, unique per charge event) is your reference for reconciliation purposes. The operator should include it in reports so that you can match their view of what has been sold with yours by matching the referenceCodes. | String |
+| [REFERENCE_NUMBER] | a unique transaction ID with a format of `[SHORTCODE]`+`#######` where `#######` is an incremented number beginning from `1000001`. | (numeric) String |
 
 
 ##### Figure PROTO.11 - Sample Charge Request

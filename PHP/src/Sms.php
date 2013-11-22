@@ -28,20 +28,14 @@ class Sms extends GlobeApi
     }
 
     /**
-     * @param  $array   the request parameter
+     * Parses the request and returns it as an array
+     * 
+     * @param  string|array   the request parameter
      * @return array
      */
-    public function receiveSMS(
-        $registrationID = null,
-        $maxBatchSize = null
-    ) {
-        $this->ReceiveSMS = new ReceiveSMS(
-            $this->version,
-            $registrationID,
-            $maxBatchSize
-        );
-
-        return $this->ReceiveSMS;
+    public function getMessage($request)
+    {
+        return (is_null($request)) ? array() : (is_array($request)) ? $request : json_decode($request);
     }
 
     /**
@@ -53,7 +47,7 @@ class Sms extends GlobeApi
      * @param  boolean $bodyOnly                returns the header if set to false
      * @return array
      */
-    public function send(
+    public function sendMessage(
         $accesstoken = null,
         $number = null,
         $message = null,

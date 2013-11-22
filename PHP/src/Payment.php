@@ -13,6 +13,7 @@ class Payment extends GlobeAPI
     public $clientCorrelator;
     public $onBehalfOf;
     public $purchaseCategoryCode;
+    public $shortCode;
     public $channel;
     public $taxAmount;
     public $serviceId;
@@ -28,14 +29,17 @@ class Payment extends GlobeAPI
      * @param string|null $accessToken      the access token of the user to be charged
      */
     public function __construct(
+        $shortCode = null, 
         $version = null,
         $endUserId = null,
         $accessToken = null
     ) {
 
         $this->version = $version;
+        $this->shortCode = $shortCode;
         $this->endUserId = $endUserId;
         $this->accessToken = $accessToken;
+        $this->transactionOperationStatus = 'charged';
     }
 
     /**
@@ -87,14 +91,12 @@ class Payment extends GlobeAPI
 
         $fields = array(
             'endUserId' => $this->endUserId,
-            'referenceCode' => $this->referenceCode,
+            'referenceCode' => $this->shortCode.$this->referenceCode,
             'transactionOperationStatus' => $this->transactionOperationStatus,
-            'amount' => ''.$this->amount,
             'access_token' => $this->accessToken
         );
 
         $fields = array_filter($fields);
-
         $fields['amount'] = (string) $this->amount;
 
         $response = $this->_curlPost($url, $fields);
