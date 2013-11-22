@@ -30,14 +30,14 @@ auth.getAccessToken(code, function(req, res) {
         // Sends a message
         var message = 'Hello World ' + new Date().toISOString(); // set your custom message here
         sms.sendMessage(message, function(req, res) {
-            console.log('SMS Response:', req.body);
+            console.log('SMS Response:', res.body);
         });
 
         // Build up Payment
         var payment = globe.Payment(subscriberNumber, accessToken);
 //        payment.setLogger(console); // uncomment to log request
-        var refCode = new Date().getTime().toString(); // ref code
-        var amount = '1'; // set amount to 0 as charge amount
+        var refCode = '<REFERENCE_CODE>'; // ref code
+        var amount = '0.00'; // set amount to 0.00 as charge amount
 
         // Charge the subscriber
         payment.charge(amount, refCode, function(req, res) {

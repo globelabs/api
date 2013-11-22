@@ -134,6 +134,17 @@ module.exports = function() {
             callback = productID;
             productID = undefined;
         }
+        
+        if (amount === null || Math.abs(amount) === NaN) {
+            throw new Error('Amount needs to be a number');
+            return;
+        } else if (!referenceCode) {
+            throw new Error('Reference code is expected on charging');
+            return;
+        } else if (!callback || typeof callback !== 'function') {
+            throw new Error('Callback must be a function');
+            return;
+        }
 
         // build the query
         var post = {
