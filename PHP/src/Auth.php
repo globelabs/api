@@ -1,5 +1,5 @@
 <?php
-class OAuth extends GlobeApi
+class Auth extends GlobeApi
 {
     const LOGIN_URL = 'http://%s/dialog/oauth';
     const AUTH_URL = 'http://%s/oauth/access_token';
@@ -8,7 +8,7 @@ class OAuth extends GlobeApi
     private $api_secret;
 
     /**
-     * Constructor of oauth
+     * Constructor of Auth
      *
      * @param string $api_key    the api key of the app
      * @param string $api_secret the api secret of the app
@@ -28,7 +28,7 @@ class OAuth extends GlobeApi
      */
     public function getLoginUrl()
     {
-        return sprintf(OAuth::LOGIN_URL, GlobeApi::AUTH_POINT).'?app_id='.$this->api_key;
+        return sprintf(Auth::LOGIN_URL, GlobeApi::AUTH_POINT).'?app_id='.$this->api_key;
     }
 
     /**
@@ -40,7 +40,7 @@ class OAuth extends GlobeApi
      */
     public function getAccessToken($code, $bodyOnly = true)
     {
-        $url = sprintf(OAuth::AUTH_URL, GlobeApi::AUTH_POINT);
+        $url = sprintf(Auth::AUTH_URL, GlobeApi::AUTH_POINT);
 
         $fields = array(
             'app_id' => $this->api_key,
