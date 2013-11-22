@@ -4,7 +4,6 @@ import requests
 class Base(object):
 
     def __init__(self):
-
         self.host = 'http://devapi.globelabs.com.ph'
         self.version = 'v1'
 
@@ -54,3 +53,4 @@ class Base(object):
 
         """ Return raw text response """
         return response.text
+

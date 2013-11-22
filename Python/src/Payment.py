@@ -1,8 +1,7 @@
+import Base
 import urllib
-import requests
-import base
 
-class Payment(base.Base):
+class Payment(Base.Base):
 	def __init__(self):
 		super(Payment, self).__init__()
 
@@ -21,11 +20,8 @@ class Payment(base.Base):
 		if not isinstance(token, str):
 			raise Exception(self.error['token'])
 
-		if not isinstance(self.user, str) and not isinstance(user, int):
+		if not isinstance(self.recepient, str) and not isinstance(self.recepient, int):
 			raise Exception(self.self.error['user'])
-
-		if not isinstance(self.description, str):
-			raise Exception(self.error['desc'])
 
 		if not isinstance(self.amount, str) and not isinstance(self.amount, int):
 			raise Exception(self.error['amount'])
@@ -36,13 +32,13 @@ class Payment(base.Base):
 		""" Building the parameters """
 		
 		params = {}
-		params['endUserId'] = self.user
+		params['endUserId'] = self.recepient
 		params['access_token'] = token
-		params['description'] = self.description
 		params['amount'] = self.amount
 		params['referenceCode'] = self.reference
 		params['transactionOperationStatus'] = 'charged'
 
 		url = self.url['charge'] % (self.host, self.version)
+		
 		return self.getResponse(url, 'post', params)
 
