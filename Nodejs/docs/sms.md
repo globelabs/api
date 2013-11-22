@@ -140,7 +140,9 @@ To use charge API you will need to send a POST request to the URL given below.
 
 **Request URL**
 
-    http://devapi.globelabs.com.ph/smsmessaging/v1/outbound/[SHORT_CODE]/requests
+    http://devapi.globelabs.com.ph/smsmessaging/v1/outbound/[SHORT_CODE_WITHOUT_2158]/requests
+
+**Note**: The `[SHORT_CODE_WITHOUT_2158]` is the path of your application. For example the short code's of your application is 21581234, your the real path of your application is 1234.
 
 **Parameters**
 
