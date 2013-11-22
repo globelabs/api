@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.math.BigDecimal;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpResponseFactory;
@@ -18,7 +17,6 @@ import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 
-import ph.com.globelabs.api.Payment;
 import ph.com.globelabs.api.exception.GlobeApiException;
 import ph.com.globelabs.api.exception.ParameterRequiredException;
 import ph.com.globelabs.api.request.HttpPostClient;
@@ -59,11 +57,10 @@ public class PaymentTest {
             UnsupportedEncodingException, IOException, JSONException,
             GlobeApiException, ParameterRequiredException {
         String referenceCode = "REF-12345";
-        BigDecimal amount = new BigDecimal("10");
-        ChargeUserResponse response = payment.charge(amount, referenceCode);
+        ChargeUserResponse response = payment.charge("1", referenceCode);
         assertEquals(201, response.getResponseCode());
         assertEquals("Created", response.getResponseMessage());
-        assertEquals("10.00", response.getAmount().toString());
+        assertEquals("1", response.getAmount().toString());
     }
 
     private HttpResponse mockHttpResponse()
@@ -77,7 +74,7 @@ public class PaymentTest {
 
         responseObject.put("success", "true");
         responseObject.put("endUserId", "9173849494");
-        responseObject.put("amount", "10");
+        responseObject.put("amount", "1");
         responseObject.put("referenceCode", "REF-12345");
         responseObject.put("access_token",
                 "_Ak28sdfl32r908sdf0q843qjlkjdf90234jlkasd98");

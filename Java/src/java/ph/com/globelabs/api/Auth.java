@@ -18,14 +18,14 @@ import ph.com.globelabs.api.request.HttpPostClient;
 import ph.com.globelabs.api.response.AccessTokenResponse;
 import ph.com.globelabs.api.util.UriBuilder;
 
-public class OAuth {
+public class Auth {
 
     private final static String REQUEST_URI = "http://developer.globelabs.com.ph/dialog/oauth";
     private final static String ACCESS_URI = "http://developer.globelabs.com.ph/oauth/access_token";
 
     protected HttpPostClient client;
 
-    public OAuth() throws GlobeApiException {
+    public Auth() throws GlobeApiException {
         super();
         try {
             client = new HttpPostClient();
