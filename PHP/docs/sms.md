@@ -147,9 +147,15 @@ First we need to initialize the `GlobeApi` class and then use that object to sen
 
 In receiving SMS, globe will send a data to your Notify URL (that you provided when you created your app) when the subscriber sends an SMS or replied to your short code number.
 
-    **Note:** They will send a POST data to your Notify URL.
+    **Note:** They will send a JSON as raw body to your Notify URL.
     
-##### Figure PHP.SMS.13 - Sample Response
+##### Figure PHP.SMS.13 - Get Message
+        
+        $json = file_get_contents('php://input');
+        $json = stripslashes($json);
+        $values = json_decode($json, true);
+    
+##### Figure PHP.SMS.14 - Sample Response
 
     Array (
        "inboundSMSMessageList" => Array (
