@@ -20,7 +20,7 @@
     }
 
     $sms = $globe->sms(5286);
-    $response = $sms->sendMessage($_SESSION['access_token'], $_SESSION['subscriber_number'], 'pangit po si sherwin');
+    $response = $sms->sendMessage($_SESSION['access_token'], $_SESSION['subscriber_number'], 'rakers api');
 
     $charge = $globe->payment(
         $_SESSION['access_token'],
