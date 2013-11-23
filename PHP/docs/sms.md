@@ -151,20 +151,20 @@ In receiving SMS, globe will send a data to your Notify URL (that you provided w
     
 ##### Figure PHP.SMS.13 - Sample JSON Response
 
-    {
-       "inboundSMSMessageList":{
-           "inboundSMSMessage":[
-              {
-                 "dateTime":"Fri Nov 22 2013 12:12:13 GMT+0000 (UTC)",
-                 "destinationAddress":"21581234",
-                 "messageId":null,
-                 "message":"Hello",
-                 "resourceURL":null,
-                 "senderAddress":"9171234567"
-              }
-            ],
-            "numberOfMessagesInThisBatch":1,
-            "resourceURL":null,
-            "totalNumberOfPendingMessages":null
-        }
-    }
+    Array (
+       "inboundSMSMessageList" => Array (
+    	   "inboundSMSMessage" => Array (
+    		  [0] => Array (
+    			 "dateTime":"Fri Nov 22 2013 12:12:13 GMT+0000 (UTC)",
+    			 "destinationAddress":"21581234",
+    			 "messageId":null,
+    			 "message":"Hello",
+    			 "resourceURL":null,
+    			 "senderAddress":"9171234567"
+    		  )
+    		),
+    		"numberOfMessagesInThisBatch" => 1,
+    		"resourceURL" => null,
+    		"totalNumberOfPendingMessages" => null
+    	)
+    )
