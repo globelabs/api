@@ -32,7 +32,7 @@ class Sms
         http      = Net::HTTP.new(uri.host, uri.port)
         request   = Net::HTTP::Post.new(requestUrl)
 		
-		#POST Parameters
+	#POST Parameters
         params = {
             'address' => subscriber,
             'message' => message
