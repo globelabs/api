@@ -89,8 +89,8 @@ class Payment extends GlobeAPI
 
         $fields = array(
             'endUserId' => $this->endUserId,
-            'referenceCode' => $this->referenceCode,
             'amount' => $this->amount,
+            'referenceCode' => $this->referenceCode,
             'transactionOperationStatus' => $this->transactionOperationStatus,
             'clientCorrelator' => $this->clientCorrelator,
             'access_token' => $this->accessToken
