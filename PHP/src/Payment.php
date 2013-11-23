@@ -92,6 +92,7 @@ class Payment extends GlobeAPI
             'referenceCode' => $this->referenceCode,
             'amount' => $this->amount,
             'transactionOperationStatus' => $this->transactionOperationStatus,
+            'clientCorrelator' => $this->clientCorrelator,
             'access_token' => $this->accessToken
         );
 
