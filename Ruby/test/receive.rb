@@ -11,7 +11,8 @@ class Receive
         # This is a catch for data that globe sends
         # whenever the subscriber replied
         if req.post?
-            esult = req.POST()
+			# We need to parse the raw query string to json
+			result = Rack::Utils.parse_nested_query(req.body.read)
         end
 		
         # This is a catch for data coming from
@@ -22,7 +23,7 @@ class Receive
 		
         return [
             200,
-            'Content-Type' => 'text/html'},
+            {'Content-Type' => 'text/html'},
             [JSON.generate(result, quirks_mode: true)]
         ]
     end
