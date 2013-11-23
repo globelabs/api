@@ -119,6 +119,30 @@ First we need to initialize the `GlobeApi` class and then use that object to sen
 
     **Note:** You can get your Short Code value from your Globe App Details in `Figure PHP.SMS.4. You also need to remove the `2158` digit in your short code.
 
+##### Figure PHP.SMS.12 - Sample Send Message Response
+    
+    Array (
+      "outboundSMSMessageRequest" => Array (
+        "address" => "09171234567",
+        "deliveryInfoList" => Array (
+          "deliveryInfo": [],
+          "resourceURL": null
+        ),
+        "senderAddress" => "1234",
+        "outboundSMSTextMessage" => Array (
+          "message": "hello"
+        ),
+        "reciptRequest" => Array (
+          "notifyURL" => null,
+          "callbackData" => null,
+          "senderName" => null,
+          "resourceURL" => null
+        )
+      )
+    )
+
+
+
 ## Receiving
 
 In receiving SMS, globe will send a data to your Notify URL (that you provided when you created your app) when the subscriber sends an SMS or replied to your short code number.
