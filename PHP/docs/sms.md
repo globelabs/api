@@ -149,7 +149,7 @@ In receiving SMS, globe will send a data to your Notify URL (that you provided w
 
     **Note:** They will send a POST data to your Notify URL.
     
-##### Figure PHP.SMS.13 - Sample JSON Response
+##### Figure PHP.SMS.13 - Sample Response
 
     Array (
        "inboundSMSMessageList" => Array (
