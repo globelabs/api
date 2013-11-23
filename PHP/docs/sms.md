@@ -125,8 +125,8 @@ First we need to initialize the `GlobeApi` class and then use that object to sen
       "outboundSMSMessageRequest" => Array (
         "address" => "09171234567",
         "deliveryInfoList" => Array (
-          "deliveryInfo": [],
-          "resourceURL": null
+          "deliveryInfo" => [],
+          "resourceURL" => null
         ),
         "senderAddress" => "1234",
         "outboundSMSTextMessage" => Array (
