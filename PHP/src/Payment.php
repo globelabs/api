@@ -29,14 +29,12 @@ class Payment extends GlobeAPI
      * @param string|null $accessToken      the access token of the user to be charged
      */
     public function __construct(
-        $shortCode = null, 
         $version = null,
         $endUserId = null,
         $accessToken = null
     ) {
 
         $this->version = $version;
-        $this->shortCode = $shortCode;
         $this->endUserId = $endUserId;
         $this->accessToken = $accessToken;
         $this->transactionOperationStatus = 'charged';
@@ -63,7 +61,7 @@ class Payment extends GlobeAPI
      * @return array 
      */
     public function charge($amount=null, $refNo=null, $bodyOnly = true) {
-        if($amount!=null) {
+        if($amount!==null) {
             $this->setAmount($amount);
         }
 
@@ -91,9 +89,11 @@ class Payment extends GlobeAPI
 
         $fields = array(
             'endUserId' => $this->endUserId,
-            'referenceCode' => $this->referenceCode,
             'amount' => $this->amount,
+            'description' => $this->description,
+            'referenceCode' => $this->referenceCode,
             'transactionOperationStatus' => $this->transactionOperationStatus,
+            'clientCorrelator' => $this->clientCorrelator,
             'access_token' => $this->accessToken
         );
 
