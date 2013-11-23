@@ -15,8 +15,8 @@ puts auth.getAccessToken([CODE])
 ###### SMS ######
 # Send SMS (Outbound)
 puts globe.sms([SHORTCODE])
-	.sendMessage([YOUR_ACCESS_TOKEN], [SUBSCRIBER_NUMBER], [MESSAGE])
+    .sendMessage([YOUR_ACCESS_TOKEN], [SUBSCRIBER_NUMBER], [MESSAGE])
 
 # Charge Subscriber
 puts globe.payment([YOUR_ACCESS_TOKEN], [SUBSCRIBER_NUMBER])
-	.charge([AMOUNT], [REFERENCE_NUMBER])
+    .charge([AMOUNT], [REFERENCE_NUMBER])
