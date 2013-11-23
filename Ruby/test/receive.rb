@@ -14,8 +14,8 @@ class Receive
         # This is a catch for data that globe sends
         # whenever the subscriber replied to your app (shortcode)
         if req.post?
-			# We need to parse the raw query string to json
-			result = Rack::Utils.parse_nested_query(req.body.read)
+	    # We need to parse the raw query string to json
+	    result = Rack::Utils.parse_nested_query(req.body.read)
         end
 		
         # This is a catch for data coming from
