@@ -122,10 +122,55 @@ First we need to initialize the `GlobeApi` class and then use that object to sen
 ##### Figure PHP.SMS.12 - Sample Send Message Response
     
     Array (
-      "success"         => true,
-      "address"         => "9171234567",
-      "message"         => "hello",
-      "senderAddress"   => "1234",
-      "access_token"   => "a8UuVwe6Rp2xv234we35GrPcSvR3-OJq22f34ty4rfw9UrE"
+      "outboundSMSMessageRequest" => Array (
+        "address" => "09171234567",
+        "deliveryInfoList" => Array (
+          "deliveryInfo" => [],
+          "resourceURL" => null
+        ),
+        "senderAddress" => "1234",
+        "outboundSMSTextMessage" => Array (
+          "message": "hello"
+        ),
+        "reciptRequest" => Array (
+          "notifyURL" => null,
+          "callbackData" => null,
+          "senderName" => null,
+          "resourceURL" => null
+        )
+      )
     )
+
+
+
+## Receiving
+
+In receiving SMS, globe will send a data to your Notify URL (that you provided when you created your app) when the subscriber sends an SMS or replied to your short code number.
+
+    **Note:** They will send a JSON as raw body to your Notify URL.
     
+##### Figure PHP.SMS.13 - Get Message
+        
+        $json = file_get_contents('php://input');
+        $json = stripslashes($json);
+        $values = json_decode($json, true);
+    
+##### Figure PHP.SMS.14 - Sample Response
+
+    Array (
+       "inboundSMSMessageList" => Array (
+    	   "inboundSMSMessage" => Array (
+    		  [0] => Array (
+    			 "dateTime" => "Fri Nov 22 2013 12:12:13 GMT+0000 (UTC)",
+    			 "destinationAddress" => "21581234",
+    			 "messageId" => null,
+    			 "message" => "Hello",
+    			 "resourceURL" => null,
+    			 "senderAddress" => "9171234567"
+    		  )
+    		),
+    		"numberOfMessagesInThisBatch" => 1,
+    		"resourceURL" => null,
+    		"totalNumberOfPendingMessages" => null
+    	)
+    )

@@ -71,9 +71,9 @@ module.exports = function() {
     /**
      * Sends a message.
      * 
-     * @param {string}          message
-     * @param {string}          [clientCorrelator]
-     * @param {function}        callback
+     * @param {string}   message
+     * @param {string}   [clientCorrelator]
+     * @param {function} callback
      * @return {SMS}
      */
     p.sendMessage = function(message, clientCorrelator, callback) {
@@ -81,6 +81,14 @@ module.exports = function() {
         if (typeof clientCorrelator === 'function') {
             callback = clientCorrelator;
             clientCorrelator = undefined;
+        }
+        
+        if (!message || typeof message !== 'string') {
+            throw new Error('Message needs to be a string');
+            return;
+        } else if (!callback || typeof callback !== 'function') {
+            throw new Error('Callback must be a function');
+            return;
         }
 
         // build the query

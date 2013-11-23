@@ -49,8 +49,7 @@ class GlobeApi {
      * @param  string|null      $version            included fo extensibility
      * @return Payment
      */
-    public function payment(
-        $shortCode = null, 
+    public function payment( 
         $accessToken = null,
         $endUserId = null,
         $version = null
@@ -58,7 +57,6 @@ class GlobeApi {
         //check if the user passed a version parameter and use if any
         $ver = $version ? $version : $this->version;
         return new Payment(
-            $this->shortCode,
             $ver,
             $endUserId,
             $accessToken
