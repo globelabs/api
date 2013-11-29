@@ -40,6 +40,11 @@ From here you should be returned to the APP Detail Page in *Figure Android.SMS.4
 First thing before you do any calls for Globe API using Android wrapper class is to include the base class called GlobeApi.
 
 ##### Figure Android.SMS.5 - Include Base Class
+![Import](https://raw.github.com/Openovate/rest-docs/master/sms/assets/figure1.png)
+Import the android project 
+
+![Use as library](https://raw.github.com/Openovate/rest-docs/master/sms/assets/figure2.png)
+Use the globe api project as a library to your android project
 
     GlobeApi globe = new GlobeApi();
 
