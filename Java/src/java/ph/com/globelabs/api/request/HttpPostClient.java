@@ -65,7 +65,7 @@ public class HttpPostClient {
 
         StringEntity stringEntity = new StringEntity(requestContent.toString(),
                 Charset.defaultCharset());
-        
+
         this.request.setEntity(stringEntity);
     }
 

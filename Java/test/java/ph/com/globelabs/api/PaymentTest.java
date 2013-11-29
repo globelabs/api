@@ -58,7 +58,8 @@ public class PaymentTest {
             UnsupportedEncodingException, IOException, JSONException,
             GlobeApiException, ParameterRequiredException {
         String referenceCode = "99991000001";
-        ChargeUserResponse response = payment.charge(new BigDecimal("1"), referenceCode);
+        ChargeUserResponse response = payment.charge(new BigDecimal("1"),
+                referenceCode);
         assertEquals(201, response.getResponseCode());
         assertEquals("Created", response.getResponseMessage());
         assertEquals("1.00", response.getAmount().toString());
