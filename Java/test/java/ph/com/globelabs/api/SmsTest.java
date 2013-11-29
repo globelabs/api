@@ -1,9 +1,10 @@
 package ph.com.globelabs.api;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpResponseFactory;
@@ -17,10 +18,10 @@ import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 
-import ph.com.globelabs.api.Sms;
 import ph.com.globelabs.api.exception.GlobeApiException;
 import ph.com.globelabs.api.exception.ParameterRequiredException;
 import ph.com.globelabs.api.request.HttpPostClient;
+import ph.com.globelabs.api.response.InboundSmsMessage;
 import ph.com.globelabs.api.response.SendSmsResponse;
 import ph.com.globelabs.api.response.SmsResponse;
 
@@ -60,26 +61,37 @@ public class SmsTest {
         String subscriberNumber = "9173849494";
         String message = "Hello World";
         String accessToken = "_Ak28sdfl32r908sdf0q843qjlkjdf90234jlkasd98";
-        
-        SendSmsResponse response = sms.sendMessage(subscriberNumber, accessToken, message);
+
+        SendSmsResponse response = sms.sendMessage(subscriberNumber,
+                accessToken, message);
         assertEquals(201, response.getResponseCode());
         assertEquals("Created", response.getResponseMessage());
         assertEquals("Hello World", response.getMessage());
     }
-    
-    @Test
-    public void getMessage() {
-        String rawBody = "command_length=71&command_id=5&command_status=0&sequence_number=70&"
-                + "command=deliver_sm&service_type=&source_addr_ton=2&source_addr_npi=1&"
-                + "source_addr=9173849494&dest_addr_ton=4&dest_addr_npi=9&destination_addr=21589999&"
-                + "esm_class=0&protocol_id=0&priority_flag=0&schedule_delivery_time=&validity_period=&"
-                + "registered_delivery=0&replace_if_present_flag=0&data_coding=0&sm_default_msg_id=0&"
-                + "short_message[message]=&source_network_type=1&dest_network_type=1&"
-                + "message_payload[message]=A%20%20B%20C%20D%20.E";
-        SmsResponse response = sms.getMessage(rawBody);
 
-        assertEquals("A  B C D .E", response.getMessage());
-        assertEquals("9173849494", response.getSourceAddr());
+    @Test
+    public void getMessage() throws GlobeApiException {
+        String rawBody = "{\"inboundSMSMessageList\":{\""
+                + "inboundSMSMessage\":[{\"dateTime\""
+                + ":\"Fri Nov 29 2013 00:16:17 GMT+0000 (UTC)\","
+                + "\"destinationAddress\":\"tel:21589999\","
+                + "\"messageId\":\"5297dcd17b8a4ead5f000032\","
+                + "\"message\":\"A B C D .E\",\"resourceURL\":null,"
+                + "\"senderAddress\":\"tel:+639173849494\"}],"
+                + "\"numberOfMessagesInThisBatch\":1,"
+                + "\"resourceURL\":null,"
+                + "\"totalNumberOfPendingMessages\":0}}";
+        SmsResponse response = sms.getMessage(rawBody);
+        assertNotNull(response);
+
+        assertEquals(1, response.getNumberOfMessagesInThisBatch());
+
+        List<InboundSmsMessage> messages = response.getInboundSmsMessages();
+        assertNotNull(messages);
+
+        InboundSmsMessage message = messages.get(0);
+        assertEquals("A B C D .E", message.getMessage());
+        assertEquals("tel:+639173849494", message.getSenderAddress());
     }
 
     private HttpResponse mockHttpResponse()

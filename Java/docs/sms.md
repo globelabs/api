@@ -146,8 +146,22 @@ Finally, Globe will return an access token you can use to start using the Charge
 
 Sample raw body
 
-    command_length=71&command_id=5&command_status=0&sequence_number=70&command=deliver_sm&service_type=&source_addr_ton=2&source_addr_npi=1&source_addr=9173849494&dest_addr_ton=4&dest_addr_npi=9&destination_addr=21589999&esm_class=0&protocol_id=0&priority_flag=0&schedule_delivery_time=&validity_period=&registered_delivery=0&replace_if_present_flag=0&data_coding=0&sm_default_msg_id=0&short_message[message]=&source_network_type=1&dest_network_type=1&message_payload[message]=A%20%20B%20C%20D%20.E
+    {
+        "inboundSMSMessageList":{
+            "inboundSMSMessage":[{
+                "dateTime":"Fri Nov 29 2013 00:16:17 GMT+0000 (UTC)",
+                "destinationAddress":"tel:21589999",
+                "messageId":"5297dcd17b8a4ead5f000032",
+                "message":"A B C D .E",
+                "resourceURL":null,
+                "senderAddress":"tel:+639173849494"
+            }],
+            "numberOfMessagesInThisBatch":1,
+            "resourceURL":null,
+            "totalNumberOfPendingMessages":0
+        }
+    }
 
 ##### Figure JAVA.SMS.12 - Sample Send Message Response
 
-    SmsResponse [sourceAddr=9173849494, destinationAddr=21589999, message=A  B C D .E]
+    SmsResponse [inboundSmsMessages=[InboundSmsMessage [senderAddress=tel:+639173849494, destinationAddress=tel:21589999, message=A B C D .E, dateTime=Fri Nov 29 2013 00:16:17 GMT+0000 (UTC), messageId=5297dcd17b8a4ead5f000032, resourceURL=null]], numberOfMessagesInThisBatch=1, resourceURL=null, totalNumberOfPendingMessages=0]
