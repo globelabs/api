@@ -43,6 +43,8 @@ First thing before you do any calls for Globe API using Android wrapper class is
 
 GlobeApi globe = new GlobeApi();
 
+#####
+
 ## Authentication
 
 Once we obtain the **APP ID** and **APP SECRET** we can begin to understand how the authentication works. Globe uses [OAUTH2](https://developers.google.com/accounts/docs/OAuth2), a common Android.SMScol to authenticate developers to use API Android.SMScols. To begin the authentication process you must redirect the user to a formatted URL using your **APP ID** and **APP SECRET** as in *Figure Android.SMS.6*.
