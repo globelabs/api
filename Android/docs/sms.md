@@ -41,7 +41,7 @@ First thing before you do any calls for Globe API using Android wrapper class is
 
 ##### Figure Android.SMS.5 - Include Base Class
 
-GlobeApi globe = new GlobeApi();
+    GlobeApi globe = new GlobeApi();
 
 #####
 
