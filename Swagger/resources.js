@@ -55,6 +55,7 @@ exports.chargeClient = {
     },
     'action' : function(req, res) {
         var urlParse = url.parse(req.url, true);
+        req.body['transactionOperationStatus'] = 'charged';
         var post = JSON.stringify(req.body);
 
         httpRequest.post(urlParse.pathname, urlParse.query, post, header, function(request, response, data) {
