@@ -19,7 +19,8 @@ exports.sendSMS = {
             param.path('senderAddress', 'The short code of your app w/o the starting 2158 number.', 'int'),
             param.query('access_token', 'Subscribers access token', 'string', true),
             param.form('message', 'The message', 'string'),
-            param.form('address', 'The subscriber number who owns the access token', 'string')
+            param.form('address', 'The subscriber number who owns the access token', 'string'),
+            param.form('clientCorrelator', 'Unique identification of string to avoid multiple sending', 'string')
         ],
         'errorResponses' : [{ 'code' : 'TODO', 'reason' : 'TODO' }],
         'nickname' : 'sendSMS'
@@ -46,7 +47,8 @@ exports.chargeClient = {
             param.query('access_token', 'Subscribers access token', 'string', true),
             param.form('endUserId', 'Subscriber\'s number', 'string'),
             param.form('referenceCode', 'Unique client identifier to avoid multiple charge', 'string', new Date().getTime().toString()),
-            param.form('amount', 'The amount', 'string', '1')
+            param.form('amount', 'The amount', 'string', '1'),
+            param.form('clientCorrelator', 'Unique identification of string to avoid multiple charging to user', 'string')
         ],
         'errorResponses' : [{ 'code' : 'TODO', 'reason' : 'TODO' }],
         'nickname' : 'chargeClient'
