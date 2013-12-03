@@ -16,6 +16,7 @@ public class PaymentRunner {
 
         BigDecimal amount = new BigDecimal("1");
         String referenceCode = "99991000001";
+        
         System.out.println(payment.charge(amount, referenceCode));
     }
 

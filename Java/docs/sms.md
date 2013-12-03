@@ -114,6 +114,7 @@ Finally, Globe will return an access token you can use to start using the Charge
 
     Sms sms = new Sms([SHORTCODE]);
     sms.sendMessage([SUBSCRIBER_NUMBER], [ACCESS_TOKEN], [MESSAGE]);
+    sms.sendMessage([SUBSCRIBER_NUMBER], [ACCESS_TOKEN], [CLIENT_CORRELATOR]);
 
 **Parameters**
 
@@ -123,6 +124,7 @@ Finally, Globe will return an access token you can use to start using the Charge
 | [ACCESS_TOKEN] | which contains security information for transacting with a subscriber. Subscriber needs to grant an app first via SMS or Web Form Subscriber Consent Workflow. | String |
 | [SUBSCRIBER_NUMBER] | is the 10-digit MSISDN (mobile number) which you will charge to. Parameter format can be `9xxxxxxxx` | String |
 | [MESSAGE] | the SMS body. Must be 160 characters or less. | String |
+| [CLIENT_CORRELATOR] | (OPTIONAL) uniquely identifies this create SMS request. If there is a communication failure during the request, using the same clientCorrelator when retrying the request allows the operator to avoid sending the same SMS twice. | String |
 
     **Note:** You can get your Short Code value from your Globe App Details in `Figure JAVA.SMS.4. You also need to remove the `2158` digit in your short code.
 
