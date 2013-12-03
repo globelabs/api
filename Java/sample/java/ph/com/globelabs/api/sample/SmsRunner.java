@@ -18,8 +18,12 @@ public class SmsRunner {
         String subscriberNumber = "9173849494";
         String accessToken = "_Ak28sdfl32r908sdf0q843qjlkjdf90234jlkasd98";
         String message = "Hello World";
+        String clientCorrelator = "9999" + System.currentTimeMillis();
+        
         System.out.println(sms.sendMessage(subscriberNumber, accessToken,
                 message));
+        System.out.println(sms.sendMessage(subscriberNumber, accessToken,
+                message, clientCorrelator));
 
         String rawBody = "{\"inboundSMSMessageList\":{\""
                 + "inboundSMSMessage\":[{\"dateTime\""
@@ -34,6 +38,7 @@ public class SmsRunner {
         SmsResponse response = sms.getMessage(rawBody);
         List<InboundSmsMessage> messages = response.getInboundSmsMessages();
         InboundSmsMessage inboundMessage = messages.get(0);
+        
         System.out.println(inboundMessage.getMessage());
     }
 
