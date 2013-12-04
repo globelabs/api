@@ -231,6 +231,7 @@ module.exports = function() {
      * @param {string}   method
      * @param {string}   [path]
      * @param {object}   [query]
+     * @param {object}   [post]
      * @param {object}   headers
      * @param {function} callback
      * @return {request}

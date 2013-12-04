@@ -12,13 +12,15 @@ class Sms(Base.Base):
         self.error['address'] = 'Address value is invalid or undefined'
         self.error['msg'] = 'Message is invalid or undefined'
         self.error['url']  = 'Notify Url is not set'
+        self.error['regID'] = 'Registration ID is required'
 
         self.url = {}
         self.url['send'] = "%s/smsmessaging/%s/outbound/%s/requests?access_token=%s"
+        self.url['receive'] = '%s/smsmessaging/%s/inbound/registrations/%s/messages'
     def send(self, token):
         """ Check for the required parameters """
 
-        if not isinstance(self.recepient, str):
+        if not isinstance(self.recepient, str) and not isinstance(self.recepient, int):
             raise Exception(self.error['address'])
 
         if not isinstance(self.sender, int) and not isinstance(self.sender, str):
@@ -59,4 +61,17 @@ class Sms(Base.Base):
         header['Accept'] = 'application/json'
 
         return self.getResponse(url, 'post', params, header)
+
+    def getMessages(self, id):
+        if not isinstance(self.id, str) and not isinstance(id, int):
+            raise Exception(self.error['regID'])
+
+        url = self.url['receive'] % (self.host, self.version, id)
+
+        header = {}
+        header['Content-Type'] = 'application/x-www-form-urlencoded'
+        header['Accept'] = 'application/json'
+
+        return self.getResponse(url, 'post', params, header)
+
 

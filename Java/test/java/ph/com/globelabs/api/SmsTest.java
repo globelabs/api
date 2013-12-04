@@ -13,6 +13,7 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.DefaultHttpResponseFactory;
 import org.apache.http.message.BasicStatusLine;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Before;
@@ -70,6 +71,24 @@ public class SmsTest {
     }
 
     @Test
+    public void sendMessageWithClientCorrelator()
+            throws ClientProtocolException, UnsupportedEncodingException,
+            IOException, JSONException, GlobeApiException,
+            ParameterRequiredException {
+        String subscriberNumber = "9173849494";
+        String message = "Hello World";
+        String accessToken = "_Ak28sdfl32r908sdf0q843qjlkjdf90234jlkasd98";
+        String clientCorrelator = "1234567890";
+
+        SendSmsResponse response = sms.sendMessage(subscriberNumber,
+                accessToken, message, clientCorrelator);
+        assertEquals(201, response.getResponseCode());
+        assertEquals("Created", response.getResponseMessage());
+        assertEquals("Hello World", response.getMessage());
+        assertEquals(clientCorrelator, response.getClientCorrelator());
+    }
+
+    @Test
     public void getMessage() throws GlobeApiException {
         String rawBody = "{\"inboundSMSMessageList\":{\""
                 + "inboundSMSMessage\":[{\"dateTime\""
@@ -102,13 +121,32 @@ public class SmsTest {
         response.setHeader("Content-Type", "application/json");
 
         JSONObject responseObject = new JSONObject();
-        responseObject.put("success", "true");
-        responseObject.put("message", "Hello World");
-        responseObject.put("address", "9173849494");
-        responseObject.put("senderAddress", "9999");
-        responseObject.put("access_token",
-                "_Ak28sdfl32r908sdf0q843qjlkjdf90234jlkasd98");
 
+        JSONObject outboundSMSMessageRequest = new JSONObject();
+        outboundSMSMessageRequest.put("address", "9173849494");
+        JSONObject deliveryInfoList = new JSONObject();
+        JSONArray deliveryInfo = new JSONArray();
+        deliveryInfoList.put("deliveryInfo", deliveryInfo);
+        deliveryInfoList
+                .put("resourceURL",
+                        "http://devapi.globelabs.com.ph/smsmessaging/v1/outbound/9999/requests?access_token=_Ak28sdfl32r908sdf0q843qjlkjdf90234jlkasd98");
+        outboundSMSMessageRequest.put("deliveryInfoList", deliveryInfoList);
+
+        outboundSMSMessageRequest.put("senderAddress", "9999");
+        JSONObject outboundSMSTextMessage = new JSONObject();
+        outboundSMSTextMessage.put("message", "Hello World");
+        outboundSMSMessageRequest.put("outboundSMSTextMessage", outboundSMSTextMessage);
+
+        outboundSMSMessageRequest.put("clientCorrelator", "1234567890");
+        
+        JSONObject receiptRequest = new JSONObject();
+        receiptRequest.put("notifyURL", "http://www.notify-url.com/");
+        receiptRequest.put("callbackData", "null");
+        receiptRequest.put("senderName", "null");
+        receiptRequest.put("resourceURL", "http://devapi.globelabs.com.ph/smsmessaging/v1/outbound/9999/requests?access_token=_Ak28sdfl32r908sdf0q843qjlkjdf90234jlkasd98");
+        outboundSMSMessageRequest.put("reciptRequest", receiptRequest);
+
+        responseObject.put("outboundSMSMessageRequest", outboundSMSMessageRequest);
         StringEntity stringEntity = new StringEntity(responseObject.toString());
         stringEntity.setContentType("application/json");
 
