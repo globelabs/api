@@ -93,6 +93,60 @@ public class Sms {
         }
     }
 
+    /**
+     * Sends an SMS to a subscriber who has already completed the authorization
+     * process.
+     * 
+     * @param subscriberNumber
+     *            The ten digit subscriber number with format 9xxxxxxxxx.
+     *            Subscriber number and access token must match.
+     * @param accessToken
+     *            Access token for the given subscriber. Subscriber number and
+     *            access token must match.
+     * @param message
+     *            Message must be 160 characters or less.
+     * @param clientCorrelator
+     *            uniquely identifies this create SMS request. If there is a
+     *            communication failure during the request, using the same
+     *            clientCorrelator when retrying the request allows the operator
+     *            to avoid sending the same SMS twice.
+     * @return See {@link SendSmsResponse}
+     * @throws ParameterRequiredException
+     * @throws GlobeApiException
+     */
+    public SendSmsResponse sendMessage(String subscriberNumber,
+            String accessToken, String message, String clientCorrelator)
+            throws ParameterRequiredException, GlobeApiException {
+        try {
+            validateParameters(subscriberNumber, accessToken, message);
+
+            Map<String, String> parameters = new HashMap<String, String>();
+            parameters.put("address", subscriberNumber);
+            parameters.put("message", message);
+            parameters.put("clientCorrelator", clientCorrelator);
+            client.setJsonStringEntity(parameters);
+            HttpResponse response = client.execute(getRequestURI(accessToken));
+
+            String contentType = response.getEntity().getContentType()
+                    .getValue();
+            String[] contentTypes = contentType.split(";");
+            contentType = contentTypes[0];
+            if ("application/json".equals(contentType)) {
+                return new SendSmsResponse(response);
+            } else {
+                return new SendSmsResponse(response.getStatusLine()
+                        .getStatusCode(), response.getStatusLine()
+                        .getReasonPhrase());
+            }
+        } catch (JSONException e) {
+            throw new GlobeApiException(e.getMessage(), e);
+        } catch (IOException e) {
+            throw new GlobeApiException(e.getMessage(), e);
+        } catch (URISyntaxException e) {
+            throw new GlobeApiException(e.getMessage(), e);
+        }
+    }
+
     private void validateParameters(String subscriberNumber,
             String accessToken, String message)
             throws ParameterRequiredException {

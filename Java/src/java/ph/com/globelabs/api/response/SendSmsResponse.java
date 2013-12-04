@@ -1,15 +1,16 @@
 package ph.com.globelabs.api.response;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.http.HttpResponse;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- * This object is created from the expected response of the server. Obtainable
- * information include the following: success, message, address, senderAddress,
- * accessToken, and error (if any).
+ * This object is created from the expected response of the server.
  * 
  * This response also has a responseCode, responseMessage, and holds the raw
  * HttpResponse. See {@link Response}.
@@ -17,12 +18,15 @@ import org.json.JSONObject;
  */
 public class SendSmsResponse extends Response {
 
-    private boolean success;
     private String message;
     private String address;
+    private List<String> deliveryInfo;
     private String senderAddress;
-    private String accessToken;
-
+    private String clientCorrelator;
+    private String notifyURL;
+    private String callbackData;
+    private String senderName;
+    private String resourceURL;
     private String error;
 
     public SendSmsResponse(HttpResponse httpResponse)
@@ -30,12 +34,53 @@ public class SendSmsResponse extends Response {
         super(httpResponse);
 
         JSONObject responseContent = new JSONObject(super.getContent());
-        if (responseContent.has("success")) {
-            this.success = responseContent.getBoolean("success");
-            this.message = responseContent.getString("message");
-            this.address = responseContent.getString("address");
-            this.senderAddress = responseContent.getString("senderAddress");
-            this.accessToken = responseContent.getString("access_token");
+
+        JSONObject outboundSMSMessageRequest = responseContent
+                .has("outboundSMSMessageRequest") ? responseContent
+                .getJSONObject("outboundSMSMessageRequest") : null;
+        if (outboundSMSMessageRequest != null) {
+            this.address = outboundSMSMessageRequest.has("address") ? outboundSMSMessageRequest
+                    .getString("address") : null;
+
+            JSONObject deliveryInfo = outboundSMSMessageRequest
+                    .has("deliveryInfoList") ? outboundSMSMessageRequest
+                    .getJSONObject("deliveryInfoList") : null;
+            this.deliveryInfo = new ArrayList<String>();
+            if (deliveryInfo != null) {
+                JSONArray deliveryInfoList = deliveryInfo.has("deliveryInfo") ? deliveryInfo
+                        .getJSONArray("deliveryInfo") : null;
+                for (int i = 0; i < deliveryInfoList.length(); i++) {
+                    this.deliveryInfo.add(deliveryInfoList.getString(i));
+                }
+            }
+
+            JSONObject outboundSMSTextMessage = outboundSMSMessageRequest
+                    .has("outboundSMSTextMessage") ? outboundSMSMessageRequest
+                    .getJSONObject("outboundSMSTextMessage") : null;
+            if (outboundSMSTextMessage != null) {
+                this.message = outboundSMSTextMessage.has("message") ? outboundSMSTextMessage
+                        .getString("message") : null;
+            }
+
+            this.senderAddress = outboundSMSMessageRequest.has("senderAddress") ? outboundSMSMessageRequest
+                    .getString("senderAddress") : null;
+            this.clientCorrelator = outboundSMSMessageRequest
+                    .has("clientCorrelator") ? outboundSMSMessageRequest
+                    .getString("clientCorrelator") : null;
+
+            JSONObject receiptRequest = outboundSMSMessageRequest
+                    .has("reciptRequest") ? outboundSMSMessageRequest
+                    .getJSONObject("reciptRequest") : null;
+            if (receiptRequest != null) {
+                this.notifyURL = receiptRequest.has("notifyURL") ? receiptRequest
+                        .getString("notifyURL") : null;
+                this.callbackData = receiptRequest.has("callbackData") ? receiptRequest
+                        .getString("callbackData") : null;
+                this.senderName = receiptRequest.has("senderName") ? receiptRequest
+                        .getString("senderName") : null;
+                this.resourceURL = receiptRequest.has("resourceURL") ? receiptRequest
+                        .getString("resourceURL") : null;
+            }
         }
 
         if (responseContent.has("error")) {
@@ -47,10 +92,6 @@ public class SendSmsResponse extends Response {
         super(statusCode, reasonPhrase);
     }
 
-    public boolean isSuccessful() {
-        return success;
-    }
-
     public String getMessage() {
         return message;
     }
@@ -59,12 +100,32 @@ public class SendSmsResponse extends Response {
         return address;
     }
 
+    public List<String> getDeliveryInfo() {
+        return deliveryInfo;
+    }
+
     public String getSenderAddress() {
         return senderAddress;
     }
 
-    public String getAccessToken() {
-        return accessToken;
+    public String getClientCorrelator() {
+        return clientCorrelator;
+    }
+
+    public String getNotifyURL() {
+        return notifyURL;
+    }
+
+    public String getCallbackData() {
+        return callbackData;
+    }
+
+    public String getSenderName() {
+        return senderName;
+    }
+
+    public String getResourceURL() {
+        return resourceURL;
     }
 
     public String getError() {
@@ -73,13 +134,17 @@ public class SendSmsResponse extends Response {
 
     @Override
     public String toString() {
-        if (success == true) {
-            return "SendSmsResponse [success=" + success + ", message="
-                    + message + ", address=" + address + ", senderAddress="
-                    + senderAddress + ", accessToken=" + accessToken + "] "
-                    + super.toString();
+        if (error == null) {
+            return "SendSmsResponse [message=\"" + message + "\", address="
+                    + address + ", deliveryInfo=" + deliveryInfo
+                    + ", senderAddress=" + senderAddress
+                    + ", clientCorrelator=" + clientCorrelator + ", notifyURL="
+                    + notifyURL + ", callbackData=" + callbackData
+                    + ", senderName=" + senderName + ", resourceURL="
+                    + resourceURL + "] " + super.toString();
         } else {
-            return "SendSmsResponse [error=" + error + "] " + super.toString();
+            return "SendSmsResponse [error=\"" + error + "\"] "
+                    + super.toString();
         }
     }
 
