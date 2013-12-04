@@ -14,6 +14,7 @@ class Sms extends GlobeApi
     public $accessToken;
 
     const CURL_URL = 'http://%s/smsmessaging/%s/outbound/%s/';
+    const RESC_URL = 'http://%s/smsmessaging/%s/inbound/registrations/%s/messages';
 
     /**
      * creates an sms
@@ -38,6 +39,19 @@ class Sms extends GlobeApi
     public function getMessage($request)
     {
         return (is_null($request)) ? array() : (is_array($request)) ? $request : json_decode($request);
+    }
+
+    /**
+     * returns the messages received by the shortcode
+     * 
+     * @param  boolean $bodyOnly returns the header when set to false
+     * @return array 
+     */
+    public function getMessages($bodyOnly = true)
+    {
+        $url = sprintf(self::RESC_URL, GlobeApi::API_ENDPOINT, $this->version, $this->address);
+        $response = $this->_curlGet($url, array());
+        return $this->getReturn($response, $bodyOnly);
     }
 
     /**
