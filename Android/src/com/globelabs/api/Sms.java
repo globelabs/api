@@ -23,6 +23,12 @@ public class Sms extends GlobeApi{
 		this.version = version;
 	}
 	
+	public void getMessages(PostRequestHandler handler) {
+		String url = "http://%s/smsmessaging/%s/inbound/registrations/%s/messages";
+		url = String.format(url, GlobeApi.API_ENDPOINT, "v1", this.address);
+		this.__curlGet(url, handler);
+	}
+	
 	public void sendMessage(String accessToken, String sendTo, String message, PostRequestHandler handler) {
 		List<NameValuePair> parameters = new ArrayList<NameValuePair>();
 		parameters.add(new BasicNameValuePair("access_token", accessToken));
