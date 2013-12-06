@@ -12,8 +12,10 @@
 @class Sms;
 @class Payment;
 @interface GlobeApi: NSObject
-- (NSString *) curlPost:(NSString *) postUrl
+- (NSString *) curlPost: (NSString *) postUrl
                        : (NSDictionary *) fields;
+- (NSString *) curlGet: (NSString *) getUrl
+                      : (NSDictionary *) fields;
 - (Auth *) auth: (NSString *) key
                : (NSString *) secret;
 - (Sms *) sms: (NSString *) shortCode;

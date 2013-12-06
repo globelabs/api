@@ -18,5 +18,5 @@
 - (NSString *) sendMessage:(NSString *) token
                           :(NSString *) sendTo
                           :(NSString *) message;
-                            
+- (NSString *) getMessages; 
 @end
