@@ -36,6 +36,32 @@ exports.sendSMS = {
     }
 };
 
+exports.retrieveSMS = {
+    'spec' : {
+        'description' : 'TODO',
+        'path' : '/smsmessaging/v1/inbound/registrations/{senderAddress}/messages',
+        'notes' : 'TODO',
+        'summary' : 'Retrieve SMS',
+        'method' : 'GET',
+        'params' : [
+            param.path('senderAddress', 'The short code of your app w/o the starting 2158 number.', 'int'),
+            param.query('access_token', 'Subscribers access token', 'string', true),
+            param.query('maxBatchSize', 'Query batch size', 'int')
+        ],
+        'errorResponses' : [{ 'code' : 'TODO', 'reason' : 'TODO' }],
+        'nickname' : 'retrieveSMS'
+    },
+    'action' : function(req, res) {
+        var urlParse = url.parse(req.url, true);
+        var post = JSON.stringify(req.body);
+
+        httpRequest.get(urlParse.pathname, urlParse.query, post, header, function(request, response, data) {
+            res.writeHead(response.statusCode);
+            res.end(JSON.stringify(data));
+        });
+    }
+};
+
 exports.chargeClient = {
     'spec' : {
         'description' : 'TODO',

@@ -13,6 +13,7 @@ swagger.setAppHandler(app);
 var models = require('./models.js'); // loads up models
 swagger.addModels(models).
         addPost(resources.sendSMS).
+        addGet(resources.retrieveSMS).
         addPost(resources.chargeClient);
 
 // Routes
