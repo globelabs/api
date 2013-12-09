@@ -52,4 +52,27 @@
     
     return returnString;
 }
+- (NSString *)curlGet:(NSString *) getUrl
+                      : (NSDictionary *) fields
+{
+    NSMutableArray *array = [[NSMutableArray alloc] init];
+    for(id key in fields) {
+        [array addObject:[[NSString stringWithFormat:@"%@=%@", key, [fields objectForKey:key]] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    }
+    
+    NSString *params = [NSString stringWithFormat:@"%@", [array componentsJoinedByString:@"&"]];    
+    
+    NSURL *URL = [NSURL URLWithString: [NSString stringWithFormat: @"%@?%@",getUrl,params]];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL];
+    // Set request type
+    request.HTTPMethod = @"GET";
+    
+    [request addValue:@"8bit" forHTTPHeaderField:@"Content-Transfer-Encoding"];
+    [request addValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+    
+    NSData *returnData = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
+    NSString *returnString = [[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding];
+    
+    return returnString;
+}
 @end
