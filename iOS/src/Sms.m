@@ -29,4 +29,8 @@
     return [ self curlPost:[NSString stringWithFormat:@"http://devapi.globelabs.com.ph/smsmessaging/v1/outbound/%@/requests", shortCode]: dictionary ];
 
 }
+- (NSString *) getMessages
+{
+    return [ self curlGet:[NSString stringWithFormat:@"http://devapi.globelabs.com.ph/smsmessaging/v1/inbound/registrations/%@/messages", shortCode ] : nil ];
+}
 @end
