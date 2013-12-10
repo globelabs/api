@@ -4,10 +4,6 @@ var url = require('url');
 var swe = sw.errors;
 var httpRequest = require('./request.js')()('http://devapi.globelabs.com.ph');
 
-var header = {
-    'Content-Type' : 'application/json'
-};
-
 exports.sendSMS = {
     'spec' : {
         'description' : 'Send and receive SMS messages',
@@ -65,6 +61,9 @@ exports.sendSMS = {
     'action' : function(req, res) {
         var urlParse = url.parse(req.url, true);
         var post = JSON.stringify(req.body);
+        var header = header = {
+            'Content-Type' : 'application/json'
+        };
 
         httpRequest.post(urlParse.pathname, urlParse.query, post, header, function(request, response, data) {
             res.writeHead(response.statusCode);
@@ -128,6 +127,9 @@ exports.retrieveSMS = {
     'action' : function(req, res) {
         var urlParse = url.parse(req.url, true);
         var post = JSON.stringify(req.body);
+        var header = header = {
+            'Content-Type' : 'application/json'
+        };
 
         httpRequest.get(urlParse.pathname, urlParse.query, post, header, function(request, response, data) {
             res.writeHead(response.statusCode);
@@ -186,6 +188,9 @@ exports.chargeClient = {
         var urlParse = url.parse(req.url, true);
         req.body['transactionOperationStatus'] = 'charged';
         var post = JSON.stringify(req.body);
+        var header = header = {
+            'Content-Type' : 'application/json'
+        };
 
         httpRequest.post(urlParse.pathname, urlParse.query, post, header, function(request, response, data) {
             res.writeHead(response.statusCode);
