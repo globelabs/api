@@ -1,4 +1,4 @@
-Contibuting to Globe API
+Contributing to Globe API
 ===
 
 Setting up your machine with the Globe API repository and your fork
