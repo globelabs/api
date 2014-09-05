@@ -67,10 +67,13 @@ namespace GlobeLabsApiTest
             L("Payment Service Testing");
             GlobeLabs api = new GlobeLabs(accessToken);
 
-            PaymentPayload payload = new PaymentPayload();
-            payload.Amount = "0.00";
-            payload.Description = "Charging API";
-            payload.Number = "9171234567";
+            var payload = new PaymentPayload
+            {
+                Amount = "0.00",
+                Description = "Charging API",
+                Number = "9171234567",
+                ReferenceCode = "45750000001"
+            };
 
             /*
              * TIPS for Reference Code:
@@ -79,7 +82,6 @@ namespace GlobeLabsApiTest
              * - IMPORTANT: Make sure that your reference code is unique. Bad Request will occur if code is repeating
              */
             // If your short code is 21554575, then your reference code prefix is 4575 + 7digit numbers
-            payload.ReferenceCode = "45750000001";
 
             var result = api.Charge(payload);
             L("Data: " + result);            
@@ -95,9 +97,11 @@ namespace GlobeLabsApiTest
             // and add more numbers ...
             //numbers.Add("917XXXXXXX");
 
-            SmsPayload payload = new SmsPayload();
-            payload.Message = "Testing multiple recipients. Sms Service for Globe.";
-            payload.Numbers = numbers;
+            var payload = new SmsPayload
+            {
+                Message = "Testing multiple recipients. Sms Service for Globe.",
+                Numbers = numbers
+            };
 
             var data = api.PushSms("SHORT_CODE - ex: 21589999", payload);
             L("Data: " + data);
