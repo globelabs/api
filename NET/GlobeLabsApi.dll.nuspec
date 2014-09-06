@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package >
+  <metadata>
+    <id>GlobeLabsApi.Net</id>
+    <title>GlobeLabs API for .NET</title>
+    <version>1.0.0</version>
+    <authors>Earljon Hidalgo</authors>
+    <owners>Earljon Hidalgo</owners>
+    <licenseUrl>https://raw.githubusercontent.com/earljon/api/language/dotnet/NET/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/earljon/api/tree/language/dotnet/NET</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>GlobeLabs API for .NET 4.5 is a simple wrapper for the GlobeLabs API (beta) that exposes functionalities in a simplified manner possible.</description>
+    <tags>api</tags>
+    <dependencies>
+      <dependency id="Newtonsoft.Json" version="6.0" />
+    </dependencies>
+  </metadata>
+</package>
