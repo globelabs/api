@@ -11,6 +11,13 @@ In order for you to compile this solution, you must be running in **.NET 4.5** v
 
 If you don't like to compile the source, you just simply download the DLL version in `/Binary` folder and start referencing it to your new or existing projects created in Windows Forms, ASP.NET and Console applications.
 
+Through Nuget Package
+On your existing project, install this library with this command in **Package Manager Console**
+
+    Install-Package GlobeLabsApi.Net
+
+For more information about this package, visit [Nuget Package Site](https://www.nuget.org/packages/GlobeLabsApi.Net/1.0.0)
+
 ## Basic Usage
 
 This library internally employs object based parameters to be passed on different GlobeLabs API service using a payload as an object to each type of services. And also, the return data for these services is also greatly simplified.
