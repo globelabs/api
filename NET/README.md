@@ -14,9 +14,9 @@ If you don't like to compile the source, you just simply download the DLL versio
 Through Nuget Package
 On your existing project, install this library with this command in **Package Manager Console**
 
-    Install-Package GlobeLabsApi.Net
+    Install-Package GlobeLabsApi
 
-For more information about this package, visit [Nuget Package Site](https://www.nuget.org/packages/GlobeLabsApi.Net/1.0.0)
+For more information about this package, visit [Nuget Package Site](https://www.nuget.org/packages/GlobeLabsApi/)
 
 ## Basic Usage
 
@@ -107,6 +107,10 @@ Developers only needs to instantiate a single class `GlobeLabs` and all API Serv
 
 **NOTE:** 
 These sample codes are also found in `GlobeLabsApi.LibraryDemo.Console` project folder. You can run and test the demo application showcasing all functionalities of this library.
+
+## Screenshot
+
+->![Demo App](Images/globelabs_console.png)<-
 
 ## LICENSE
 
