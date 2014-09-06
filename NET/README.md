@@ -82,18 +82,16 @@ Developers only needs to instantiate a single class `GlobeLabs` and all API Serv
         Amount = "0.00",
         Description = "Charging API",
         Number = "9171234567",
+        /*
+         * TIPS for Reference Code:
+         * - Fetch the latest count for payment reference in your database
+         * - Store it in a variable or update your table that holds the last reference count
+         * - IMPORTANT: Make sure that your reference code is unique. Bad Request will occur if code is repeating
+         */
+
+        // If your short code is 21554575, then your reference code prefix is 4575 + 7digit numbers        
         ReferenceCode = "45750000001"
     };
-
-    /*
-     * TIPS for Reference Code:
-     * - Fetch the latest count for payment reference in your database
-     * - Store it in a variable or update your table that holds the last reference count
-     * - IMPORTANT: Make sure that your reference code is unique. Bad Request will occur if code is repeating
-     */
-
-    // If your short code is 21554575, then your reference code prefix is 4575 + 7digit numbers
-    payload.ReferenceCode = "45750000001";
 
     var data = api.Charge(payload); // PaymentResult object
 	var result = data.Result; // PaymentResponse object
