@@ -77,6 +77,24 @@ namespace GlobeLabsApi
         public HttpStatus Status { get; set; }
     }
 
+    public class SmsIncomingResult
+    {
+        /// <summary>
+        /// Gets or sets the SMS message list.
+        /// </summary>
+        /// <value>
+        /// The SMS message list.
+        /// </value>
+        public SmsIncomingResponse SmsMessageList { get; set; }
+        /// <summary>
+        /// Gets or sets the status.
+        /// </summary>
+        /// <value>
+        /// The status.
+        /// </value>
+        public HttpStatus Status { get; set; }
+    }
+
     public class ErrorResponse
     {
         [JsonProperty("error")]
