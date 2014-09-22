@@ -51,6 +51,7 @@
     <Compile Include="GlobeLabs.cs" />
     <Compile Include="Helpers\Config.cs" />
     <Compile Include="Models\AuthResponse.cs" />
+    <Compile Include="Models\IncomingSms.cs" />
     <Compile Include="Models\JsonModels.cs" />
     <Compile Include="Models\PaymentResponse.cs" />
     <Compile Include="Models\SmsResponse.cs" />
