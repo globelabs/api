@@ -24,7 +24,7 @@ namespace GlobeLabsApiTest
             //TestSmsService(accessToken);
 
             // Uncomment to Test SMS Receive
-            TestSmsReceive(accessToken);
+            //TestSmsReceive(accessToken);
 
             // Uncomment to Test Payment Service
             //TestPaymentService(accessToken);
