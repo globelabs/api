@@ -23,6 +23,9 @@ namespace GlobeLabsApiTest
             // Uncomment to Test SMS Service
             //TestSmsService(accessToken);
 
+            // Uncomment to Test SMS Receive
+            //TestSmsReceive(accessToken);
+
             // Uncomment to Test Payment Service
             //TestPaymentService(accessToken);
             
@@ -90,7 +93,7 @@ namespace GlobeLabsApiTest
         static void TestSmsService(string accessToken)
         {
             L("SMS Service Testing");
-            GlobeLabs api =new GlobeLabs(accessToken);
+            GlobeLabs api = new GlobeLabs(accessToken);
 
             var numbers = new List<string>();
             numbers.Add("9171234567");
@@ -105,6 +108,21 @@ namespace GlobeLabsApiTest
 
             var data = api.PushSms("SHORT_CODE - ex: 21589999", payload);
             L("Data: " + data);
+        }
+
+        static void TestSmsReceive(string accessToken)
+        {
+            GlobeLabs api = new GlobeLabs(accessToken);
+
+            const string json = "{\"inboundSMSMessageList\":{\"inboundSMSMessage\":[{\"dateTime\":\"Fri Nov 22 2013 12:12:13 GMT+0000 (UTC)\",\"destinationAddress\":\"21581234\",\"messageId\":null,\"message\":\"Hello\",\"resourceURL\":null,\"senderAddress\":\"9171234567\"}],\"numberOfMessagesInThisBatch\":1,\"resourceURL\":null,\"totalNumberOfPendingMessages\":null}}";
+            var data = api.GetIncomingMessage(json);
+
+            L("Received SMS Messages: " + data.SmsMessageList.Message.InboundSMSMessage.Count());
+            L("\tId: " + data.SmsMessageList.Message.InboundSMSMessage[0].MessageId);
+            L("\tMessage: " + data.SmsMessageList.Message.InboundSMSMessage[0].Message);
+            L("\tFrom: " + data.SmsMessageList.Message.InboundSMSMessage[0].SenderAddress);
+            L("\tDate: " + data.SmsMessageList.Message.InboundSMSMessage[0].DateTime);
+
         }
     }
 }

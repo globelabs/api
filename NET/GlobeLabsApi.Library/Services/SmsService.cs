@@ -64,6 +64,31 @@ namespace GlobeLabsApi
             }
 
             return result;
-        } 
+        }
+
+        /// <summary>
+        /// Receives the message and transform the raw content to message list.
+        /// </summary>
+        /// <param name="json">The json.</param>
+        /// <returns>InboundSMSMessageList object</returns>
+        public SmsIncomingResult ReceiveMessageToMessageList(string json)
+        {
+            SmsIncomingResult result = new SmsIncomingResult();
+            result.Status = new HttpStatus();
+
+            try
+            {
+                var jsonObject = string.IsNullOrEmpty(json) ? null : JsonConvert.DeserializeObject<SmsIncomingResponse>(json);
+                result.SmsMessageList = jsonObject;
+                result.Status.StatusCode = 200;
+                result.Status.StatusDescription = "OK";
+            }
+            catch (Exception ex)
+            {
+                result.Status.StatusCode = 400;
+                result.Status.StatusDescription = ex.Message;
+            }
+            return result;
+        }
     }
 }

@@ -86,5 +86,15 @@ namespace GlobeLabsApi
         {
             return SmsService.Instance.Send(shortCode, this.AccessToken, payload);
         }
+
+        /// <summary>
+        /// Gets the incoming message from the Raw JSON body that your system fetched from NotifyURL
+        /// </summary>
+        /// <param name="json">The json.</param>
+        /// <returns>SmsIncomingResult object</returns>
+        public SmsIncomingResult GetIncomingMessage(string json)
+        {
+            return SmsService.Instance.ReceiveMessageToMessageList(json);
+        }
     }
 }

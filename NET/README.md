@@ -58,7 +58,7 @@ Developers only needs to instantiate a single class `GlobeLabs` and all API Serv
 	// Auth Service.
     string accessToken = "SUBS_ACCESS_TOKEN";
 
-    GlobeLabs api =new GlobeLabs(accessToken);
+    GlobeLabs api = new GlobeLabs(accessToken);
 
     var numbers = new List<string>();
     numbers.Add("9171234567");
@@ -78,7 +78,31 @@ Developers only needs to instantiate a single class `GlobeLabs` and all API Serv
 	var status = data.Status; // Standard Web Response Status with Code and Description
 
 	```
-3. To Charge a Subscriber with a specified amount:
+3. To Receive an SMS Incoming data from a Raw JSON content:
+
+	```csharp
+	using GlobeLabsApi;
+
+    // Fetch accessToken and subscriber number to database after it has passed on the
+	// Auth Service.
+    string accessToken = "SUBS_ACCESS_TOKEN";
+
+    GlobeLabs api = new GlobeLabs(accessToken);
+
+    const string json = "{\"inboundSMSMessageList\":{\"inboundSMSMessage\":[{\"dateTime\":\"Fri Nov 22 2013 12:12:13 GMT+0000 (UTC)\",\"destinationAddress\":\"21581234\",\"messageId\":null,\"message\":\"Hello\",\"resourceURL\":null,\"senderAddress\":\"9171234567\"}],\"numberOfMessagesInThisBatch\":1,\"resourceURL\":null,\"totalNumberOfPendingMessages\":null}}";
+
+	// From your NotifyURL, Globelabs will send a raw JSON data as POST body
+    var data = api.GetIncomingMessage(json);
+
+	// L() is a shortcut method for Console.WriteLine()
+    L("Received SMS Messages: " + data.SmsMessageList.Message.InboundSMSMessage.Count());
+    L("\tId: " + data.SmsMessageList.Message.InboundSMSMessage[0].MessageId);
+    L("\tMessage: " + data.SmsMessageList.Message.InboundSMSMessage[0].Message);
+    L("\tFrom: " + data.SmsMessageList.Message.InboundSMSMessage[0].SenderAddress);
+    L("\tDate: " + data.SmsMessageList.Message.InboundSMSMessage[0].DateTime);
+
+	```
+4. To Charge a Subscriber with a specified amount:
 	```csharp
 	using GlobeLabsApi;
 

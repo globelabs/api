@@ -51,6 +51,7 @@
     <Compile Include="GlobeLabs.cs" />
     <Compile Include="Helpers\Config.cs" />
     <Compile Include="Models\AuthResponse.cs" />
+    <Compile Include="Models\IncomingSms.cs" />
     <Compile Include="Models\JsonModels.cs" />
     <Compile Include="Models\PaymentResponse.cs" />
     <Compile Include="Models\SmsResponse.cs" />
@@ -66,7 +67,8 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy /y $(TargetPath) $(SolutionDir)\Binary</PostBuildEvent>
+    <PostBuildEvent>xcopy /y $(TargetPath) $(SolutionDir)Binary
+xcopy /y $(TargetPath) "$(SolutionDir)Nuget Source\lib\NET45"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
