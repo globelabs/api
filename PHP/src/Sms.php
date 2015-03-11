@@ -13,8 +13,8 @@ class Sms extends GlobeApi
     public $subscriptionId;
     public $accessToken;
 
-    const CURL_URL = 'http://%s/smsmessaging/%s/outbound/%s/';
-    const RESC_URL = 'http://%s/smsmessaging/%s/inbound/registrations/%s/messages';
+    const CURL_URL = 'https://%s/smsmessaging/%s/outbound/%s/';
+    const RESC_URL = 'https://%s/smsmessaging/%s/inbound/registrations/%s/messages';
 
     /**
      * creates an sms
