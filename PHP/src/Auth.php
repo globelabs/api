@@ -1,8 +1,8 @@
 <?php
 class Auth extends GlobeApi
 {
-    const LOGIN_URL = 'http://%s/dialog/oauth';
-    const AUTH_URL = 'http://%s/oauth/access_token';
+    const LOGIN_URL = 'https://%s/dialog/oauth';
+    const AUTH_URL = 'https://%s/oauth/access_token';
 
     private $api_key;
     private $api_secret;
