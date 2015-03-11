@@ -19,7 +19,7 @@ class Payment extends GlobeAPI
     public $serviceId;
     public $productId;
 
-    public $curlURL = 'http://%s/payment/%s/transactions/amount';
+    public $curlURL = 'https://%s/payment/%s/transactions/amount';
 
     /**
      * COnstructor of the Charge class
