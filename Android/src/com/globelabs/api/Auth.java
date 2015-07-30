@@ -4,8 +4,8 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 public class Auth extends GlobeApi {
-	public static final String LOGIN_URL = "http://%s/dialog/oauth";
-	public static final String AUTH_URL = "http://%s/oauth/access_token";
+	public static final String LOGIN_URL = "https://%s/dialog/oauth";
+	public static final String AUTH_URL = "https://%s/oauth/access_token";
 	
 	protected String key;
 	protected String secret;
