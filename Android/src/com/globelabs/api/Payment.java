@@ -63,7 +63,7 @@ public class Payment extends GlobeApi{
 		parameters.add(new BasicNameValuePair("referenceCode", refNo));
 		parameters.add(new BasicNameValuePair("transactionOperationStatus", "charged"));
 		parameters.add(new BasicNameValuePair("access_token", this.token));
-		String url = "http://%s/payment/%s/transactions/amount";
+		String url = "https://%s/payment/%s/transactions/amount";
 		url = String.format(url, GlobeApi.API_ENDPOINT, "v1");
 		this.__curlPost(url, parameters, handler);
 	}
