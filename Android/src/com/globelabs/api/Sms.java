@@ -7,7 +7,7 @@ import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 
 public class Sms extends GlobeApi{
-	public static final String CURL_URL = "http://%s/smsmessaging/%s/outbound/%s/";
+	public static final String CURL_URL = "https://%s/smsmessaging/%s/outbound/%s/";
 	
 	protected String version;
 	protected String address;
@@ -24,7 +24,7 @@ public class Sms extends GlobeApi{
 	}
 	
 	public void getMessages(PostRequestHandler handler) {
-		String url = "http://%s/smsmessaging/%s/inbound/registrations/%s/messages";
+		String url = "https://%s/smsmessaging/%s/inbound/registrations/%s/messages";
 		url = String.format(url, GlobeApi.API_ENDPOINT, "v1", this.address);
 		this.__curlGet(url, handler);
 	}
@@ -35,7 +35,7 @@ public class Sms extends GlobeApi{
 		parameters.add(new BasicNameValuePair("address", sendTo));
 		parameters.add(new BasicNameValuePair("message", message));
 		parameters.add(new BasicNameValuePair("senderAddress", this.address));
-		String url = "http://%s/smsmessaging/%s/outbound/%s/requests";
+		String url = "https://%s/smsmessaging/%s/outbound/%s/requests";
 		url = String.format(url, GlobeApi.API_ENDPOINT, "v1", this.address);
 		this.__curlPost(url, parameters, handler);
 	}
