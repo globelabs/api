@@ -3,7 +3,7 @@ require 'json'
 
 class Sms
     # CONSTANTS
-    URL = 'http://devapi.globelabs.com.ph/smsmessaging/%s/outbound/%s/requests'
+    URL = 'https://devapi.globelabs.com.ph/smsmessaging/%s/outbound/%s/requests'
 	
     # CLASS VARIABLES
     @@shortCode   = String.new
