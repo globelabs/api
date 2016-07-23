@@ -1,6 +1,6 @@
 class Payment
     # CONSTANTS
-    URL = 'http://devapi.globelabs.com.ph/payment/%s/transactions/amount'
+    URL = 'https://devapi.globelabs.com.ph/payment/%s/transactions/amount'
 	
     # CLASS VARIABLES
     @@accessToken  = String.new
